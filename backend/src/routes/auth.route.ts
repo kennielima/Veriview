@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
 import User from "../models/User";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const router = express.Router()
 router.post('/signup', async (request: Request, response: Response) => {
     const { fullName, email, username, password, confirmPassword } = request.body
+    console.log("accessing body:", request.body);
+
     try {
         if (!fullName || !email || !username || !password || !confirmPassword) {
             return response.status(400).json({ message: 'please input all fields' })
@@ -15,11 +18,23 @@ router.post('/signup', async (request: Request, response: Response) => {
         }
         const existingUser = await User.findOne({ where: { email } })
         if (existingUser) {
+            console.log("User already exists");
             return response.status(401).json({ message: 'User already exists, login instead' })
         }
 
         const hashedPassword = await bcryptjs.hash(password, 10)
         const newUser = await User.create({ fullName, email, username, password: hashedPassword })
+
+        const token = jwt.sign(
+            { id: newUser.id },
+            process.env.JWT_SECRET as string,
+            { expiresIn: "3d" }
+        )
+        response.cookie("tokenkey", token, {
+            httpOnly: true,
+            sameSite: true,
+            maxAge: 3 * 24 * 60 * 60 * 1000
+        })
 
         return response.status(200).json({
             message: 'User created successfully',
