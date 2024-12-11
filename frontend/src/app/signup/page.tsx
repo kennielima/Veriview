@@ -1,33 +1,28 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { User, Mail, Lock, AtSign, Eye, EyeOff } from 'lucide-react';
 import signupUser, { signupDetails } from '../hooks/useSignup';
-import toast, { Toaster } from 'react-hot-toast';
+import { redirect } from 'next/navigation';
 
 const SignupPage: React.FC = () => {
-    //   const [showPassword, setShowPassword] = useState<boolean>(false);
+    //    const [showPassword, setShowPassword] = useState<boolean>(false);
     //   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (form: FormData) => {
         "use server"
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget)
-
         const signupForm: signupDetails = {
-            fullName: formData.get('fullName'),
-            username: formData.get('username'),
-            email: formData.get('email'),
-            password: formData.get('password'),
-            confirmPassword: formData.get('confirmPassword')
+            fullName: form.get('fullName') as string,
+            username: form.get('username') as string,
+            email: form.get('email') as string,
+            password: form.get('password') as string,
+            confirmPassword: form.get('confirmPassword') as string
         }
-        // Basic validation
+
         if (signupForm.password !== signupForm.confirmPassword) {
-            toast("Passwords do not match");
+            // alert("Passwords do not match");
             return;
         }
-        if (!signupForm.fullName || !signupForm.username || !signupForm.email || !signupForm.password || !signupForm.confirmPassword) {
-        }
-        await signupUser(signupForm)
-        console.log('Signing up', formData);
+        // TODO: ERROR HADNLING IF PASSWORDS DONT MATCH
+        await signupUser(signupForm);
+        redirect('/')
     };
 
     return (
@@ -38,7 +33,7 @@ const SignupPage: React.FC = () => {
                         Create your account
                     </h2>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <form className="mt-8 space-y-6" action={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-px">
                         {/* Full Name */}
                         <div className="relative">
@@ -105,12 +100,12 @@ const SignupPage: React.FC = () => {
                                 placeholder="Password"
                             />
                             {/* <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
-                            >
-                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                            </button> */}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
+            >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button> */}
                         </div>
 
                         {/* Confirm Password */}
@@ -129,12 +124,12 @@ const SignupPage: React.FC = () => {
                                 placeholder="Confirm Password"
                             />
                             {/* <button
-                                type="button"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
-                            >
-                                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                            </button> */}
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
+            >
+                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button> */}
                         </div>
                     </div>
 
@@ -147,7 +142,6 @@ const SignupPage: React.FC = () => {
                         </button>
                     </div>
                 </form>
-
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Already have an account?{' '}
