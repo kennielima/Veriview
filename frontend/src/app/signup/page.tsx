@@ -1,30 +1,34 @@
+"use client"
 import React, { FormEvent, useState } from 'react';
 import { User, Mail, Lock, AtSign, Eye, EyeOff } from 'lucide-react';
-import signupUser, { signupDetails } from '../hooks/useSignup';
-import { redirect } from 'next/navigation';
+import signupUser from '../hooks/useSignup';
+import { useRouter } from 'next/navigation';
 
 const SignupPage: React.FC = () => {
-    //    const [showPassword, setShowPassword] = useState<boolean>(false);
-    //   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    const handleSubmit = async (form: FormData) => {
-        "use server"
-        const signupForm: signupDetails = {
-            fullName: form.get('fullName') as string,
-            username: form.get('username') as string,
-            email: form.get('email') as string,
-            password: form.get('password') as string,
-            confirmPassword: form.get('confirmPassword') as string
-        }
+    const [error, setError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter();
 
-        if (signupForm.password !== signupForm.confirmPassword) {
-            // alert("Passwords do not match");
-            return;
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setIsLoading(true)
+        setError(null)
+        const formData = new FormData(event.currentTarget)
+
+        try {
+            await signupUser(formData)
+            router.push('/')
+
+            // TODO: ERROR HADNLING IF USER DOESNT EXIST
+        } catch (error) {
+            setError((error as Error).message)
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
-        // TODO: ERROR HADNLING IF PASSWORDS DONT MATCH
-        await signupUser(signupForm);
-        redirect('/')
     };
-
     return (
         <div className="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -33,7 +37,7 @@ const SignupPage: React.FC = () => {
                         Create your account
                     </h2>
                 </div>
-                <form className="mt-8 space-y-6" action={handleSubmit}>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-px">
                         {/* Full Name */}
                         <div className="relative">
@@ -93,19 +97,19 @@ const SignupPage: React.FC = () => {
                             <input
                                 id="password"
                                 name="password"
-                                // type={showPassword ? "text" : "password"}
+                                type={showPassword ? "text" : "password"}
                                 autoComplete="new-password"
                                 required
                                 className="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
-                            {/* <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
-            >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </button> */}
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
 
                         {/* Confirm Password */}
@@ -117,19 +121,19 @@ const SignupPage: React.FC = () => {
                             <input
                                 id="confirm-password"
                                 name="confirmPassword"
-                                // type={showConfirmPassword ? "text" : "password"}
+                                type={showConfirmPassword ? "text" : "password"}
                                 autoComplete="new-password"
                                 required
                                 className="appearance-none rounded-b-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Confirm Password"
                             />
-                            {/* <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
-            >
-                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </button> */}
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
+                            >
+                                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
                     </div>
 
@@ -138,7 +142,7 @@ const SignupPage: React.FC = () => {
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Sign up
+                            {isLoading ? 'Loading...' : 'Submit'}
                         </button>
                     </div>
                 </form>

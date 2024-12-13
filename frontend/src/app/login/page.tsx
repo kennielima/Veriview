@@ -1,18 +1,33 @@
-import React, { FormEvent } from 'react';
+"use client"
+import React, { FormEvent, useState } from 'react';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { redirect } from 'next/navigation';
 import loginUser from '../hooks/useLogin';
+import { useRouter } from 'next/navigation';
 
 
-const LoginPage: React.FC = () => {
-    const handleSubmit = async (form: FormData) => {
-        "use server"
-        const email = form.get('email')
-        const password = form.get('password')
-            await loginUser(email, password)
-            redirect('/')
+const page = () => {
+    const [error, setError] = useState<string | null>(null)
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter();
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setIsLoading(true)
+        setError(null)
+        const formData = new FormData(event.currentTarget)
+
+        try {
+            await loginUser(formData)
+            router.push('/')
+            // TODO: ERROR HADNLING IF USER DOESNT EXIST
+        } catch (error) {
+            setError((error as Error).message)
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
     };
-
     return (
         <div className="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -21,7 +36,7 @@ const LoginPage: React.FC = () => {
                         Sign in to your account
                     </h2>
                 </div>
-                <form className="mt-8 space-y-6" action={handleSubmit}>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div className="relative">
                             <label htmlFor="email-address" className="sr-only">
@@ -46,19 +61,19 @@ const LoginPage: React.FC = () => {
                             <input
                                 id="password"
                                 name="password"
-                                // type={showPassword ? "text" : "password"}
+                                type={showPassword ? "text" : "password"}
                                 autoComplete="current-password"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
-                            {/* <button
+                            <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
                             >
                                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                            </button> */}
+                            </button>
                         </div>
                     </div>
 
@@ -87,11 +102,12 @@ const LoginPage: React.FC = () => {
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Sign in
+                            {isLoading ? 'Loading...' : 'Submit'}
                         </button>
                     </div>
-                </form>
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
 
+                </form>
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Don't have an account?{' '}
@@ -105,4 +121,4 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;
+export default page;

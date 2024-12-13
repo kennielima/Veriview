@@ -1,5 +1,5 @@
 import React from 'react'
-import Homepage from './components/Homepage'
+import Homepage from '@/components/Homepage'
 
 const page = async () => {
   const response = await fetch(`${process.env.API_URL}`, {
@@ -9,7 +9,6 @@ const page = async () => {
     }
   })
   const Reviews = await response.json()
-  console.log('Reviews:', Reviews)
   return (
     <Homepage Reviews={Reviews} />
   )

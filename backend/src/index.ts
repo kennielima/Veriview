@@ -9,7 +9,14 @@ const app = express();
 dotenv.config();
 
 app.use(express.json())
-app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+    origin: process.env.BASE_URL,
+    credentials: true,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+}))
 app.use(cookieParser())
 
 app.use('/', authRoute)

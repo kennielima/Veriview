@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Review from "../models/Review";
 import authenticate from "../middleware/protectRoute";
+import User from "../models/User";
 
 const router = express.Router()
 
@@ -33,11 +34,17 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
 
 router.get("/", async (req: Request, res: Response) => {
     try {
-        const allReviews = await Review.findAll();
+        const allReviews = await Review.findAll({
+            include: {
+                model: User,
+                as: 'user'
+            }
+        });
         if (!allReviews || allReviews.length === 0) {
             console.log("can't find reviews")
             return res.status(404).json({ message: 'no reviews found' })
         }
+
         return res.status(200).json(allReviews)
     }
     catch (error) {
@@ -50,13 +57,14 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
     const reviewId = req.params.id;
     try {
         const review = await Review.findOne({ where: { id: reviewId } });
-        console.log(review);
+        const user = await User.findOne({ where: { id: reviewId } });
+
         if (!review) {
             console.log("can't find review")
             return res.status(400).json({ message: 'no review found' })
         }
 
-        return res.status(200).json(review)
+        return res.status(200).json({review, user})
     }
     catch (error) {
         console.error("error getting reviews:", error)

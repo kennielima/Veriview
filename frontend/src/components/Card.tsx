@@ -1,7 +1,7 @@
 import React from 'react'
 import { Star } from 'lucide-react';
 import Link from 'next/link';
-
+import { formatDateTime } from '@/lib/utils';
 
 const ReviewCard = ({ review }: any) => {
     const renderStars = (rating: number) => {
@@ -13,6 +13,7 @@ const ReviewCard = ({ review }: any) => {
             />
         ));
     }
+    
     return (
         <Link href='/review'>
         <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8 mx-auto max-w-3xl">
@@ -26,8 +27,8 @@ const ReviewCard = ({ review }: any) => {
                 {review.content}
             </p>
             <div className="flex justify-between items-center text-sm text-gray-500">
-                <span className="font-medium">@{review.username}</span>
-                <span>{review.timeAgo}</span>
+                <span className="font-medium">@{review.user?.username}</span>
+                <span>{formatDateTime(review.createdAt)}</span>
             </div>
         </div>
         </Link>
