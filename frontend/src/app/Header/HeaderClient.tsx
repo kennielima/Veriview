@@ -24,7 +24,7 @@ const HeaderClient = ({ user }: any) => {
                             <button className='bg-background bg-opacity-50 rounded-md text-white px-4 py-2'> Login </button>
                         </Link>
                         :
-                        <button onClick={logout}>
+                        <button onClick={logout} className='flex gap-1'>
                             <User className="cursor-pointer" />
                             <p>{user.username} Logout</p>
                         </button>
