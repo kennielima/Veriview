@@ -1,16 +1,24 @@
 "use client"
-import { Menu, User, X } from 'lucide-react';
+import { Menu, User as UserIcon, X } from 'lucide-react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { logout } from '../hooks/useLogin';
+import { User } from '@/lib/types';
 
-const HeaderClient = ({ user }: any) => {
+export type UserType = {
+    loggedIn: boolean;
+    user: User
+}
+const HeaderClient: React.FC<UserType> = (user) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    console.log(user)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const currentUser = user.user;
+    const currentUserState = user.loggedIn;
     return (
         <header className="bg-white shadow-md py-4">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -25,8 +33,8 @@ const HeaderClient = ({ user }: any) => {
                         </Link>
                         :
                         <button onClick={logout} className='flex gap-1'>
-                            <User className="cursor-pointer" />
-                            <p>{user.username} Logout</p>
+                            <UserIcon className="cursor-pointer" />
+                            <p>{currentUser.username} Logout</p>
                         </button>
                     }
                     <button

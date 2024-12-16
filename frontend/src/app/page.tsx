@@ -1,5 +1,6 @@
 import React from 'react'
-import Homepage from '@/components/Homepage'
+import ReviewCard from '@/components/Card'
+import { Review } from '@/lib/types'
 
 const page = async () => {
   const response = await fetch(`${process.env.API_URL}`, {
@@ -9,9 +10,16 @@ const page = async () => {
     }
   })
   const Reviews = await response.json()
+
   return (
-    <Homepage Reviews={Reviews} />
-  )
+    <div className="container px-16 py-8 mx-auto">
+
+      <div className="space-y-4">
+        {Reviews.map((review: Review) => (
+          <ReviewCard key={review.id} review={review} />
+        ))}
+      </div>
+    </div>)
 }
 
 export default page

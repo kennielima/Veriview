@@ -21,7 +21,6 @@ const SignupPage: React.FC = () => {
             await signupUser(formData)
             router.push('/')
 
-            // TODO: ERROR HADNLING IF USER DOESNT EXIST
         } catch (error) {
             setError((error as Error).message)
             console.error(error)

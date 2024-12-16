@@ -7,7 +7,7 @@ const Header = async () => {
     console.log("user", user);
 
     return (
-        <HeaderClient user={user} />
+        <HeaderClient user={user} loggedIn={false} />
     );
 };
 
