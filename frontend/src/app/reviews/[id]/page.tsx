@@ -68,7 +68,7 @@ const IndividualReviewPage = async () => {
                   <strong>Product:</strong> {review.productName}
                 </div>
                 <div>
-                  <strong>Reviewer:</strong> @{review.username}
+                  <strong>Reviewer:</strong> @{reviewUser.username}
                 </div>
                 <div>
                   <strong>Date:</strong> {formatDateTime(review.createdAt)}

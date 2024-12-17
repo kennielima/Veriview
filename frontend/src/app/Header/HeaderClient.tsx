@@ -16,7 +16,7 @@ const HeaderClient: React.FC<UserType> = (user) => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
+    // TODO FIX RENDER STARS
     const currentUser = user.user;
     const currentUserState = user.loggedIn;
     return (
@@ -25,7 +25,12 @@ const HeaderClient: React.FC<UserType> = (user) => {
                 <div className="flex mx-auto text-2xl font-bold text-gray-800">
                     ReviewMe
                 </div>
-
+                {/* <nav className="hidden md:flex space-x-6">
+                    <a href="#" className="text-gray-700 hover:text-gray-900 transition">Home</a>
+                    <a href="#" className="text-gray-700 hover:text-gray-900 transition">Products</a>
+                    <a href="#" className="text-gray-700 hover:text-gray-900 transition">About</a>
+                    <a href="#" className="text-gray-700 hover:text-gray-900 transition">Contact</a>
+                </nav> */}
                 <div className="flex items-center space-x-4">
                     {!user || !user.loggedIn ?
                         <Link href='/login'>
@@ -54,10 +59,10 @@ const HeaderClient: React.FC<UserType> = (user) => {
             {isMenuOpen && (
                 <div className="md:hidden fixed inset-0 bg-white z-50">
                     <div className="flex flex-col items-center justify-center h-full space-y-6">
-                        <a href="#" className="text-xl text-gray-700 hover:text-gray-900">Home</a>
+                        {/* <a href="#" className="text-xl text-gray-700 hover:text-gray-900">Home</a>
                         <a href="#" className="text-xl text-gray-700 hover:text-gray-900">Products</a>
                         <a href="#" className="text-xl text-gray-700 hover:text-gray-900">About</a>
-                        <a href="#" className="text-xl text-gray-700 hover:text-gray-900">Contact</a>
+                        <a href="#" className="text-xl text-gray-700 hover:text-gray-900">Contact</a> */}
                         <button
                             onClick={toggleMenu}
                             className="mt-8 px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
