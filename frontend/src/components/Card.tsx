@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { formatDateTime } from '@/lib/utils';
+import { timeAgo } from '@/lib/utils';
 import { Review } from '@/lib/types';
 import RenderStars from './renderStars';
 
@@ -21,7 +21,7 @@ const ReviewCard = ({ review }: {review: Review}) => {
             </p>
             <div className="flex justify-between items-center text-sm text-gray-500">
                 <span className="font-medium">@{review.user?.username}</span>
-                <span>{formatDateTime(review.createdAt)}</span>
+                <span>{timeAgo(review.createdAt)}</span>
             </div>
         </div>
         </Link>

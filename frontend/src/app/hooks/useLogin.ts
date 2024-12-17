@@ -36,7 +36,7 @@ export const logout = async () => {
     if (!response.ok) {
         throw new Error(data.message);
     }
-    // redirect('/');
+    redirect('/');
     return data;
 }
 

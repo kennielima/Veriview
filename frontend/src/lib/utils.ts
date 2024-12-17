@@ -29,3 +29,36 @@ export function formatDateTime(timestamp: string): string {
 
   return `${month} ${day}, ${year} ${hours}:${minutes}${ampm}`;
 }
+
+export function timeAgo(timestamp: string): string {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const secondsPast = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (secondsPast < 60) {
+    return `${secondsPast} seconds ago`;
+  }
+  if (secondsPast < 3600) {
+    const minutes = Math.floor(secondsPast / 60);
+    return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  }
+  if (secondsPast < 86400) {
+    const hours = Math.floor(secondsPast / 3600);
+    return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  }
+  if (secondsPast < 604800) {
+    const days = Math.floor(secondsPast / 86400);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
+  if (secondsPast < 2419200) {
+    const weeks = Math.floor(secondsPast / 604800);
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  }
+  if (secondsPast < 29030400) {
+    const months = Math.floor(secondsPast / 2419200);
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  }
+
+  const years = Math.floor(secondsPast / 29030400);
+  return `${years} year${years > 1 ? "s" : ""} ago`;
+}

@@ -1,7 +1,6 @@
 import { Star } from 'lucide-react';
 
 const RenderStars = ({rating}: {rating: number}) => {
-    console.log(rating)
     return Array.from({ length: 5 }, (_, index) => (
         <Star
             key={index}

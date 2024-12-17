@@ -3,11 +3,10 @@ import getCurrentUser from '@/lib/getCurrentUser';
 import HeaderClient from './HeaderClient';
 
 const Header = async () => {
-    const {user} = await getCurrentUser();
-    console.log("user", user);
+    const user = await getCurrentUser();
 
     return (
-        <HeaderClient user={user} loggedIn={false} />
+        <HeaderClient user={user} />
     );
 };
 

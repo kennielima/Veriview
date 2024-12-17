@@ -19,8 +19,7 @@ const page = () => {
 
         try {
             await loginUser(formData)
-            router.push('/')
-            // TODO: ERROR HADNLING IF USER DOESNT EXIST
+            // router.push('/')
         } catch (error) {
             setError((error as Error).message)
             console.error(error)

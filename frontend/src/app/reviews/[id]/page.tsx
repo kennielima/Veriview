@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { formatDateTime } from '@/lib/utils';
 import RenderStars from '@/components/renderStars';
 
-const IndividualReviewPage = async () => {
-  // const { id } = await params;
-  const response = await fetch(`${process.env.API_URL}/reviews/1`, {
+const reviewPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+  const response = await fetch(`${process.env.API_URL}/reviews/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -16,7 +16,7 @@ const IndividualReviewPage = async () => {
   const review = reviewData.review;
   const reviewUser = reviewData.user;
 
-  console.log(review)
+  console.log(review, id)
   
   if (!review) {
     return (
@@ -36,7 +36,6 @@ const IndividualReviewPage = async () => {
       </div>
     );
   }
-
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -68,7 +67,7 @@ const IndividualReviewPage = async () => {
                   <strong>Product:</strong> {review.productName}
                 </div>
                 <div>
-                  <strong>Reviewer:</strong> @{reviewUser.username}
+                  <strong>Reviewer:</strong> @{reviewUser?.username}
                 </div>
                 <div>
                   <strong>Date:</strong> {formatDateTime(review.createdAt)}
@@ -88,4 +87,4 @@ const IndividualReviewPage = async () => {
   );
 };
 
-export default IndividualReviewPage;
+export default reviewPage;
