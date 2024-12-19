@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
-import { Review } from '@/lib/types';
-import { fetchReviews } from '../hooks/useGetReviews';
 import { useRouter } from 'next/navigation';
 
 const SearchBar = () => {

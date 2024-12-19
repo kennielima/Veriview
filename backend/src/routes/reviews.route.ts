@@ -64,13 +64,33 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'no review found' })
         }
 
-        return res.status(200).json({review, user})
+        return res.status(200).json({ review, user })
     }
     catch (error) {
-        console.error("error getting reviews:", error)
+        console.error("error getting review:", error)
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
 
+router.delete("/reviews/:id", async (req: Request, res: Response) => {
+    const reviewId = parseInt(req.params.id);
+    try {
+        const review = await Review.findOne({ where: { id: reviewId } });
+
+        if (!review) {
+            console.log("can't find review")
+            return res.status(400).json({ message: 'no review found' })
+        }
+
+        console.log("review delete", review, review.destroy())
+        await review.destroy();
+        console.log("review delete", review)
+        return res.status(500).json({ message: 'successfully deleted' })
+    }
+    catch (error) {
+        console.error("error deleting review:", error)
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+})
 export default router;
 
