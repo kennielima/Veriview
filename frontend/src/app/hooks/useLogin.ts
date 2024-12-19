@@ -1,6 +1,3 @@
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
 const loginUser = async (formData: FormData) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: "POST",
@@ -16,8 +13,7 @@ const loginUser = async (formData: FormData) => {
         console.log('client data', data.message, data.token, data.tokenkey);
         throw new Error(data.message);
     }
-
-    console.log("formData", formData);
+    window.location.href = '/';
     return data;
 }
 
@@ -36,8 +32,6 @@ export const logout = async () => {
     if (!response.ok) {
         throw new Error(data.message);
     }
-    redirect('/');
+    window.location.href = '/';
     return data;
 }
-
-;

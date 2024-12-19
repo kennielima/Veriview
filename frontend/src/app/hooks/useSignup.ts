@@ -14,7 +14,7 @@ const signupUser = async (formData: FormData) => {
         throw new Error(data.message);
     }
 
-        // TODO: ERROR HADNLING IF USER DOESNT EXIST
+    window.location.href = '/';
     console.log("formData", formData);
     return data;
 }

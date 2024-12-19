@@ -16,11 +16,9 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
   const review = reviewData.review;
   const reviewUser = reviewData.user;
 
-  console.log(review, id)
-  
   if (!review) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
+      <div className="container h-screen mx-auto px-4 py-8 text-center">
         <h1 className="text-2xl font-bold">Review Not Found</h1>
         <Link href='/'>
           <button className="mt-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors">

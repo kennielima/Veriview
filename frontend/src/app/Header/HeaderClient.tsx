@@ -1,18 +1,17 @@
 "use client"
 import { Menu, User as UserIcon, X } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { logout } from '../hooks/useLogin';
 import { User } from '@/lib/types';
 import SearchBar from './Searchbar';
 
-export type UserType = {
+export type UserTypeProps = {
     loggedIn: boolean;
     user: User
 }
-const HeaderClient = ({ user }: { user: UserType }) => {
+const HeaderClient = ({ user }: { user: UserTypeProps }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    console.log(user)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -20,12 +19,12 @@ const HeaderClient = ({ user }: { user: UserType }) => {
     const currentUser = user.user;
 
     return (
-        <header className="bg-white shadow-md py-4 sticky z-10">
+        <header className="bg-white shadow-md py-4 sticky z-10 top-0">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
                 <Link href='/'>
                     <div className="flex text-2xl font-bold text-gray-800">ReviewMe</div>
                 </Link>
-                {user.loggedIn &&
+                {user?.loggedIn &&
                     <nav className="hidden md:flex items-center space-x-6 gap-4">
                         <SearchBar />
                         <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
@@ -40,7 +39,7 @@ const HeaderClient = ({ user }: { user: UserType }) => {
                         :
                         <p className='flex gap-1 cursor-pointer'>
                             <UserIcon />
-                            <span className='hidden sm:flex'>{currentUser.username} </span>
+                            <span className='hidden sm:flex'>{currentUser?.username} </span>
                         </p>
                     }
                     <button

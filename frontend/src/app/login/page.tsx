@@ -4,29 +4,29 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import loginUser from '../hooks/useLogin';
 import { useRouter } from 'next/navigation';
 
-
 const page = () => {
     const [error, setError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter();
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        setIsLoading(true)
-        setError(null)
-        const formData = new FormData(event.currentTarget)
+const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setIsLoading(true)
+    setError(null)
+    const formData = new FormData(event.currentTarget)
 
-        try {
-            await loginUser(formData)
-            // router.push('/')
-        } catch (error) {
-            setError((error as Error).message)
-            console.error(error)
-        } finally {
-            setIsLoading(false)
-        }
-    };
+    try {
+        await loginUser(formData)
+        router.push('/')
+    } catch (error) {
+        setError((error as Error).message)
+        console.error(error)
+    } finally {
+        setIsLoading(false)
+    }
+};
+
     return (
         <div className="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">

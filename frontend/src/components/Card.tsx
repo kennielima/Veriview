@@ -5,7 +5,6 @@ import { Review } from '@/lib/types';
 import RenderStars from './renderStars';
 
 const ReviewCard = ({ review }: {review: Review}) => {
-    console.log(review);
     
     return (
         <Link href={`/reviews/${review.id}`}>

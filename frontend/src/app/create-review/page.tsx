@@ -38,15 +38,8 @@ const CreateReviewForm = () => {
       setError('Please select a rating');
       return;
     }
-    // const newReview = {
-    //    title,
-    //   content,
-    //   rating,
-    //   username: 'Anonymous', 
-    // };
     createReview(title, content, rating);
     router.push('/')
-
 
     setTitle('');
     setContent('');
