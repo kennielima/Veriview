@@ -144,6 +144,12 @@ const SignupPage: React.FC = () => {
                             {isLoading ? 'Loading...' : 'Submit'}
                         </button>
                     </div>
+                    {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}
+                    {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                            {error}
+                        </div>
+                    )}
                 </form>
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">

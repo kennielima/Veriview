@@ -9,6 +9,13 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - db
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          target: /backend
+          ignore:
+            - node_modules/
   db:
     image: postgres:13
     environment:

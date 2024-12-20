@@ -24,13 +24,13 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 <Link href='/'>
                     <div className="flex text-2xl font-bold text-gray-800">ReviewMe</div>
                 </Link>
-                {user?.loggedIn &&
-                    <nav className="hidden md:flex items-center space-x-6 gap-4">
-                        <SearchBar />
-                        <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
+                <nav className="hidden md:flex items-center space-x-6 gap-4">
+                    <SearchBar />
+                    <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
+                    {user?.loggedIn &&
                         <button onClick={logout} className='text-gray-700 hover:text-gray-900 transition'>Logout</button>
-                    </nav>
-                }
+                    }
+                </nav>
                 <div className="flex items-center space-x-4">
                     {!user || !user.loggedIn ?
                         <Link href='/login'>
