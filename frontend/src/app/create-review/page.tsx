@@ -2,14 +2,12 @@
 import { Star } from 'lucide-react';
 import React, { useState } from 'react';
 import createReview from '../hooks/useCreateReview';
-import { useRouter } from 'next/navigation';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
-  const router = useRouter();
 
   const renderStars = () => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -23,7 +21,7 @@ const CreateReviewForm = () => {
     ));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!title.trim()) {
@@ -38,13 +36,16 @@ const CreateReviewForm = () => {
       setError('Please select a rating');
       return;
     }
-    createReview(title, content, rating);
-    router.push('/')
-
-    setTitle('');
-    setContent('');
-    setRating(0);
-    setError('');
+    try {
+      await createReview(title, content, rating);
+      setTitle('');
+      setContent('');
+      setRating(0);
+      setError('');
+    } catch (error) {
+      setError('Please log in to post a review')
+      console.error(error);
+    }
   };
 
   return (

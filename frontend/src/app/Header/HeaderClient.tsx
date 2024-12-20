@@ -16,7 +16,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-    const currentUser = user.user;
+    const currentUser = user?.user;
 
     return (
         <header className="bg-white shadow-md py-4 sticky z-10 top-0">
@@ -34,7 +34,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 <div className="flex items-center space-x-4">
                     {!user || !user.loggedIn ?
                         <Link href='/login'>
-                            <button className='bg-background bg-opacity-50 rounded-md text-white px-4 py-2'> Login </button>
+                            <button className='bg-slate-800 rounded-md text-white px-4 py-2'> Login </button>
                         </Link>
                         :
                         <p className='flex gap-1 cursor-pointer'>

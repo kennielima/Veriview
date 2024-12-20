@@ -9,11 +9,10 @@ const generateTokenSetCookies = (userId: number, response: Response) => {
     )
     response.cookie("tokenkey", token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'strict',
         maxAge: 3 * 24 * 60 * 60 * 1000,
         secure: process.env.NODE_ENV === 'production',
     })
-    console.log("cookies: ", response.cookie)
     return token;
 }
 

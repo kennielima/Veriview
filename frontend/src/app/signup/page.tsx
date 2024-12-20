@@ -49,7 +49,7 @@ const SignupPage: React.FC = () => {
                                 name="fullName"
                                 type="text"
                                 required
-                                className="appearance-none rounded-t-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-t-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Full Name"
                             />
                         </div>
@@ -65,7 +65,7 @@ const SignupPage: React.FC = () => {
                                 name="username"
                                 type="text"
                                 required
-                                className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Username"
                             />
                         </div>
@@ -82,7 +82,7 @@ const SignupPage: React.FC = () => {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Email address"
                             />
                         </div>
@@ -99,7 +99,7 @@ const SignupPage: React.FC = () => {
                                 type={showPassword ? "text" : "password"}
                                 autoComplete="new-password"
                                 required
-                                className="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
                             <button
@@ -123,7 +123,7 @@ const SignupPage: React.FC = () => {
                                 type={showConfirmPassword ? "text" : "password"}
                                 autoComplete="new-password"
                                 required
-                                className="appearance-none rounded-b-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-b-md relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Confirm Password"
                             />
                             <button
@@ -139,7 +139,7 @@ const SignupPage: React.FC = () => {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
                         >
                             {isLoading ? 'Loading...' : 'Submit'}
                         </button>
@@ -154,7 +154,7 @@ const SignupPage: React.FC = () => {
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Already have an account?{' '}
-                        <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <a href="/login" className="font-medium text-slate-6x00 hover:text-slate-500">
                             Sign in
                         </a>
                     </p>

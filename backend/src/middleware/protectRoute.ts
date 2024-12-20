@@ -16,10 +16,10 @@ declare global {
 
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const token = req.cookies.tokenkey;
-        console.log("usertoken frm middleware: ", token)
-        // const authHeader = req.headers['authorization'];
-        // const token = authHeader && authHeader.split(' ')[1]; 
+        // const token = req.cookies.tokenkey;
+        const authHeader = req.headers['authorization']; // FETCHING FROM authHeader INSTEAD OF COOKIE
+        const token = authHeader && authHeader.split(' ')[1]; 
+        console.log("tokens", token, req.headers)
 
         if (!token) {
             return res.status(401).json({ message: 'User unauthorized to make request' })
@@ -38,12 +38,12 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         if (!user) {
             return res.status(404).json({ message: 'User not found' })
         }
-        console.log("user from mw: ", user)
         req.user = user;
         next()
     }
     catch (error) {
         console.error("Authorization failed:", error)
+        return res.status(401).json({ message: 'Authentication failed: User unauthorized to make requesA' });
     }
 }
 

@@ -6,11 +6,14 @@ const createReview = async (title: string, content: string, rating: number) => {
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
-    
+    // if (!token){
+    //     throw new Error('Please log in to post a review');
+    // }
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-review`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${tokenValue}`,
             "Cookie": `tokenkey=${tokenValue}`,
         },
         credentials: 'include',
@@ -20,10 +23,10 @@ const createReview = async (title: string, content: string, rating: number) => {
             rating
         })
     })
-    const newReview = await response.json();
-    console.log(newReview, process.env.NEXT_PUBLIC_API_URL);
-    redirect('/')
-    //   return review
+    if (!response.ok) {
+        throw new Error('Failed to post review');
+    }
+    redirect('/');
 }
 
 export default createReview

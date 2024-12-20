@@ -10,22 +10,22 @@ const page = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter();
 
-const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setIsLoading(true)
-    setError(null)
-    const formData = new FormData(event.currentTarget)
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setIsLoading(true)
+        setError(null)
+        const formData = new FormData(event.currentTarget)
 
-    try {
-        await loginUser(formData)
-        router.push('/')
-    } catch (error) {
-        setError((error as Error).message)
-        console.error(error)
-    } finally {
-        setIsLoading(false)
-    }
-};
+        try {
+            await loginUser(formData)
+            router.push('/')
+        } catch (error) {
+            setError((error as Error).message)
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
+    };
 
     return (
         <div className="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -48,7 +48,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Email address"
                             />
                         </div>
@@ -63,7 +63,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                                 type={showPassword ? "text" : "password"}
                                 autoComplete="current-password"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
                             <button
@@ -82,7 +82,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                                 id="remember-me"
                                 name="remember-me"
                                 type="checkbox"
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-slate-600 focus:ring-slate-500 border-gray-300 rounded"
                             />
                             <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                                 Remember me
@@ -90,7 +90,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                            <a href="#" className="font-medium text-slate-600 hover:text-slate-500">
                                 Forgot your password?
                             </a>
                         </div>
@@ -99,7 +99,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
                         >
                             {isLoading ? 'Loading...' : 'Submit'}
                         </button>
@@ -114,7 +114,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Don't have an account?{' '}
-                        <a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <a href="/signup" className="font-medium text-slate-600 hover:text-slate-500">
                             Sign up
                         </a>
                     </p>

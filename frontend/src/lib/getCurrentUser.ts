@@ -4,7 +4,6 @@ const getCurrentUser = async () => {
         const cookieStore = await cookies()
         const token = cookieStore.get('tokenkey')
         const tokenValue = token?.value;
-        console.log('token:', token, tokenValue, 'All cookies:', cookieStore.getAll())
         if (!token) {
             return { loggedIn: false, message: 'No token found' };
         }
@@ -14,12 +13,14 @@ const getCurrentUser = async () => {
             headers: {
                 "Content-Type": "application/json",
                 "Cookie": `tokenkey=${tokenValue}`,
+                "Authorization": `Bearer ${tokenValue}`,
             },
             credentials: 'include'
         })
 
-        if (response.ok) {
             const data = await response.json();
+            console.log(data)
+        if (response.ok) {
             return data;
         }
         return null;

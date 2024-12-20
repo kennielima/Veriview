@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import User from "../models/User";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
 import authenticate from "../middleware/protectRoute";
 import generateTokenSetCookies from "../utils/generateTokenSetCookies";
 
@@ -27,6 +26,7 @@ router.post('/signup', async (request: Request, response: Response) => {
 
         generateTokenSetCookies(newUser.id, response)
         return response.status(200).json({
+            loggedIn: true,
             message: 'User created successfully',
             user: {
                 id: newUser.id,
@@ -57,11 +57,10 @@ router.post('/login', async (request: Request, response: Response) => {
             return response.status(400).json({ message: "Invalid email or password" })
         }
 
-        generateTokenSetCookies(user.id, response)
-        console.log('user is', response)
-        console.log('usertoken fom login route', request.cookies.tokenkey)
-        // console.log("req.user on login route:", request.user)
+        generateTokenSetCookies(user.id, response);
+        console.log('usertoken fom login route', request.cookies.tokenkey, request.headers)
         response.status(200).json({
+            loggedIn: true,
             message: 'User logged in successfully',
             user: {
                 id: user.id,
@@ -69,7 +68,6 @@ router.post('/login', async (request: Request, response: Response) => {
                 username: user.username,
                 fullName: user.fullName,
             },
-            usertoken: request.cookies.tokenkey
         })
     }
     catch (error) {
@@ -80,7 +78,8 @@ router.post('/login', async (request: Request, response: Response) => {
 
 router.get('/me', authenticate, async (req: Request, res: Response) => {
     try {
-        console.log('usertoken from /me', req.cookies.tokenkey)
+        console.log('cookie token from /me', req.cookies.tokenkey)
+        console.log("bearer tokens from /me", req.headers)
         return res.status(200).json({ loggedIn: true, user: req.user });
     }
     catch (error) {
@@ -93,7 +92,7 @@ router.post('/logout', async (request: Request, response: Response) => {
         response.cookie("tokenkey", '', { 
             maxAge: 0,
             httpOnly: true,
-            sameSite: 'lax'
+            sameSite: 'strict'
         })
         response.status(200).json({ message: "Logged out successfully" });
 }

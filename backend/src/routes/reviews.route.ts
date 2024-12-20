@@ -72,7 +72,7 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
     }
 })
 
-router.delete("/reviews/:id", async (req: Request, res: Response) => {
+router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) => {
     const reviewId = parseInt(req.params.id);
     try {
         const review = await Review.findOne({ where: { id: reviewId } });
