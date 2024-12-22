@@ -1,7 +1,7 @@
 "use client"
-import { Star } from 'lucide-react';
 import React, { useState } from 'react';
 import createReview from '../hooks/useCreateReview';
+import { RenderStars } from '@/components/renderStars';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
@@ -9,17 +9,6 @@ const CreateReviewForm = () => {
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
 
-  const renderStars = () => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star 
-        key={index} 
-        onClick={() => setRating(index + 1)}
-        className={`w-8 h-8 cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-        fill={index < rating ? 'currentColor' : 'none'}
-        stroke="currentColor"
-      />
-    ));
-  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -44,7 +33,6 @@ const CreateReviewForm = () => {
       setError('');
     } catch (error) {
       setError('Please log in to post a review')
-      console.error(error);
     }
   };
 
@@ -94,7 +82,8 @@ const CreateReviewForm = () => {
             Rating
           </label>
           <div className="flex space-x-1">
-            {renderStars()}
+            {/* {renderStars()} */}
+            <RenderStars rating={rating} setRating={setRating} />
           </div>
         </div>
 

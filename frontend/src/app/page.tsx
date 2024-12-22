@@ -2,15 +2,10 @@ import React from 'react'
 import ReviewCard from '@/components/Card'
 import { Review } from '@/lib/types'
 import Sidebar from '@/components/Sidebar'
+import { fetchReviews } from './hooks/useGetReviews'
 
 const page = async () => {
-  const response = await fetch(`${process.env.API_URL}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  const Reviews = await response.json()
+  const Reviews = await fetchReviews()
 
   return (
     <div className="container px-16 py-8 mx-auto">

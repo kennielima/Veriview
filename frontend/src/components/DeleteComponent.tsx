@@ -1,16 +1,19 @@
 "use client"
 import { deleteReview } from '@/app/hooks/useDeleteReview';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const DeleteComponent = ({ id }: { id: string }) => {
     const [error, setError] = useState('');
+    const router = useRouter()
 
     const deleteHandler = async () => {
         try {
             await deleteReview(id);
+            router.push('/');
+
         } catch (error) {
             setError((error as Error).message)
-            console.error(error);
         }
     }
     return (

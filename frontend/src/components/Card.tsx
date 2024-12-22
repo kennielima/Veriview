@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link';
 import { timeAgo } from '@/lib/utils';
 import { Review } from '@/lib/types';
-import RenderStars from './renderStars';
+import RenderedStars from './renderStars';
 
 const ReviewCard = ({ review }: {review: Review}) => {
     
@@ -12,7 +12,7 @@ const ReviewCard = ({ review }: {review: Review}) => {
             <div className="flex justify-between items-start mb-3">
                 <h2 className="text-xl font-semibold text-gray-800">{review.title}</h2>
                 <div className="flex">
-                    <RenderStars rating={review.rating} />
+                    <RenderedStars rating={review.rating} />
                 </div>
             </div>
             <p className="text-gray-600 mb-4 line-clamp-3">

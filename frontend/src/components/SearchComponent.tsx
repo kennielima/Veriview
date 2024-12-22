@@ -3,19 +3,19 @@ import { Review } from '@/lib/types';
 import React, { Fragment, useEffect, useState } from 'react'
 import Card from './Card';
 
-const SearchComponent = ({ searchResults }: { searchResults: any }) => {
+const SearchComponent = ({ searchResults }: { searchResults: Review[] }) => {
     const [Reviews, setReviews] = useState<Review[] | []>([]);
     
     useEffect(() => {
         searchResults && setReviews(searchResults);
     }, [searchResults])
-
+console.log(searchResults)
     return (
-        <Fragment>
+        <div className='my-8'>
             {Reviews.map((review: Review) => (
                 <Card review={review} key={review.id} />
             ))}
-        </Fragment>
+        </div>
     )
 }
 

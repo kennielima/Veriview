@@ -38,7 +38,10 @@ router.get("/", async (req: Request, res: Response) => {
             include: {
                 model: User,
                 as: 'user'
-            }
+            },
+            order: [
+                ['createdAt', 'DESC'],
+            ]
         });
         if (!allReviews || allReviews.length === 0) {
             console.log("can't find reviews")
@@ -81,10 +84,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
             console.log("can't find review")
             return res.status(400).json({ message: 'no review found' })
         }
-
-        console.log("review delete", review, review.destroy())
         await review.destroy();
-        console.log("review delete", review)
         return res.status(500).json({ message: 'successfully deleted' })
     }
     catch (error) {

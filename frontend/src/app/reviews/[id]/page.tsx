@@ -2,11 +2,14 @@ import React, { Fragment } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { formatDateTime } from '@/lib/utils';
-import RenderStars from '@/components/renderStars';
+import RenderedStars from '@/components/renderStars';
 import DeleteComponent from '@/components/DeleteComponent';
+import getCurrentUser from '@/lib/getCurrentUser';
 
 const reviewPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
+  const currentUser = await getCurrentUser();
+
   const response = await fetch(`${process.env.API_URL}/reviews/${id}`, {
     method: "GET",
     headers: {
@@ -16,7 +19,10 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
   const reviewData = await response.json();
   const review = reviewData.review;
   const reviewUser = reviewData.user;
-
+  // console.log("reviewData.review", reviewData.review, "reviewData.user", reviewData.user, "getcurrent.user", currentUser.user);
+  // reviewData.review id = 13 userid = 22
+  // reviewData.user id = 13
+  // currentUserId.user id = 22
   return (
     <Fragment>
       {!review ? (
@@ -43,7 +49,7 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
                 <div>
                   <h1 className="text-2xl font-bold mb-2">{review.title}</h1>
                   <div className="flex items-center mb-2">
-                    <RenderStars rating={review.rating} />
+                    <RenderedStars rating={review.rating} />
                     <span className="ml-2 text-gray-600">({review.rating}/5)</span>
                   </div>
                 </div>
@@ -73,7 +79,7 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
                 </div>
               </div>
             </div>
-            <DeleteComponent id={id} />
+            {review.userId === currentUser.user.id && <DeleteComponent id={id} />}
           </div>
         </>
       )

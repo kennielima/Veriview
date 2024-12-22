@@ -14,7 +14,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className='flex items-end'>
-            © 2024 ReviewMe.
+            © 2024 ReviewMe
             </div>
         </div>
     )

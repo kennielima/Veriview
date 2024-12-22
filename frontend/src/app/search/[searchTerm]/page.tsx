@@ -3,7 +3,7 @@ import SearchComponent from '@/components/SearchComponent';
 import { Review } from '@/lib/types';
 import React from 'react'
 
-const page = async ({ params }: { params: any}) => {
+const page = async ({ params }: { params: { searchTerm: string }}) => {
     const searchData = await params;
     const search = (searchData as { searchTerm: string }).searchTerm
 
