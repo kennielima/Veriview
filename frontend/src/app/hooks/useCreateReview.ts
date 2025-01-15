@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const createReview = async (title: string, content: string, rating: number) => {
+const createReview = async (title: string, brand: string, content: string, rating: number) => {
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
@@ -20,7 +20,8 @@ const createReview = async (title: string, content: string, rating: number) => {
         body: JSON.stringify({
             title,
             content,
-            rating
+            rating,
+            brand
         })
     })
     if (!response.ok) {

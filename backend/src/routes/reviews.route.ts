@@ -9,18 +9,19 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
     const user = req.user;
     console.log("request user:", req.user);
     try {
-        const { title, content, rating } = req.body;
+        const { title, brand, content, rating } = req.body;
         if (!user) {
             return res.status(404).json({ message: 'You must be logged in to post a review' })
         }
 
-        if (!title) {
-            console.log("can't find title")
-            return res.status(400).json({ message: 'Please input title' })
+        if (!title || !brand) {
+            console.log("can't find title or brand")
+            return res.status(400).json({ message: 'Please fill form' })
         }
-        const newReview = await Review.create({ title, content, rating, userId: user.id });
+        const newReview = await Review.create({ title, brand, content, rating, userId: user.id });
         return res.status(200).json({
             title: newReview.title,
+            brand: newReview.brand,
             content: newReview.content,
             rating: newReview.rating,
             userId: user.id

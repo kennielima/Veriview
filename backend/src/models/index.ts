@@ -14,16 +14,17 @@ User.hasMany(Review, { foreignKey: 'userId' });
 Review.belongsTo(User, { foreignKey: 'userId' });
 Review.belongsTo(Product, { foreignKey: 'productId' });
 Product.hasMany(Review, { foreignKey: 'productId' });
-{}
-(async () => {
+
+const initializeDatabase = async () => {
     try {
         console.log('Starting database sync...');
-        await sequelize.sync({ alter: true });
+        await sequelize.authenticate();
         console.log('Database synced successfully!');
     } catch (error) {
         console.error('Failed to sync database:', error);
     }
-})();
+};
+initializeDatabase();
 
 export default { User, Review, Product, sequelize };
 

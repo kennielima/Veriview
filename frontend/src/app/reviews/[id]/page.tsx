@@ -60,11 +60,13 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
 
                 <div className="border-t pt-4 mt-4">
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                    {review.brand && (
+                      <div>
+                        <strong>Product:</strong> {review.brand}
+                      </div>
+                    )}
                     <div>
-                      <strong>Product:</strong> {review.productName}
-                    </div>
-                    <div>
-                      <strong>Reviewer:</strong> @{reviewUser?.username}
+                      <strong>Reviewer:</strong> @{currentUser.user.username}
                     </div>
                     <div>
                       <strong>Date:</strong> {formatDateTime(review.createdAt)}

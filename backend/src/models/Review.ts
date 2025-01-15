@@ -9,6 +9,7 @@ declare module 'sequelize' {
     interface Model {
         id: number;
         title: string;
+        brand: string;
         content: string;
         rating: string;
     }
@@ -26,6 +27,10 @@ Review.init({
         autoIncrement: true
     },
     title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    brand: {
         type: DataTypes.STRING,
         allowNull: false
     },

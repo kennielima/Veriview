@@ -5,6 +5,7 @@ import { RenderStars } from '@/components/renderStars';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
+  const [brand, setBrand] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
@@ -17,6 +18,11 @@ const CreateReviewForm = () => {
       setError('Please enter a title');
       return;
     }
+
+    if (!brand.trim()) {
+      setError('Please enter a brand name');
+      return;
+    }
     if (!content.trim()) {
       setError('Please write your review');
       return;
@@ -26,8 +32,9 @@ const CreateReviewForm = () => {
       return;
     }
     try {
-      await createReview(title, content, rating);
+      await createReview(title, brand, content, rating);
       setTitle('');
+      setBrand('');
       setContent('');
       setRating(0);
       setError('');
@@ -59,6 +66,20 @@ const CreateReviewForm = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Summarize your review"
             maxLength={100}
+          />
+        </div>
+        <div>
+          <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
+            Product/Brand Name
+          </label>
+          <input
+            type="text"
+            id="brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Name of brand/product/company"
+            maxLength={200}
           />
         </div>
 

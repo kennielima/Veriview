@@ -1,5 +1,6 @@
 export interface Review {
     title: string
+    brand: string
     content: string
     id: number
     createdAt: string
