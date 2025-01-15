@@ -107,7 +107,10 @@ const CreateReviewForm = () => {
             <RenderStars rating={rating} setRating={setRating} />
           </div>
         </div>
-
+        <label className='flex items-center gap-2'>
+          <input type="checkbox" id="terms" name="terms" />
+          Post as anonymous
+        </label>
         <button
           type="submit"
           className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"

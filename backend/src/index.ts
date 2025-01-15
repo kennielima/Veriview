@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoute from './routes/auth.route';
 import reviewsRoute from './routes/reviews.route';
+import productsRoute from './routes/products.route'
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 app.use('/', authRoute)
 app.use('/', reviewsRoute)
+app.use('/', productsRoute)
 
 app.listen(process.env.PORT, () => {
     console.log(`server running on port ${process.env.PORT}`)
