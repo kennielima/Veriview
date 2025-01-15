@@ -6,13 +6,19 @@ import { fetchReviews } from './hooks/useGetReviews'
 
 const page = async () => {
   const Reviews = await fetchReviews()
+  console.log(Reviews)
 
   return (
     <div className="container px-16 py-8 mx-auto">
       <div className="space-y-4">
-        {Reviews.map((review: Review) => (
+        {Reviews ? (
+          Reviews.map((review: Review) => (
           <ReviewCard key={review.id} review={review} />
-        ))}
+        ))
+      ) : (
+        <p>No reviews found</p>
+      )
+    }
       </div>
       {/* <Sidebar /> */}
     </div>

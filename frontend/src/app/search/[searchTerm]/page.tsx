@@ -9,7 +9,7 @@ const page = async ({ params }: { params: { searchTerm: string }}) => {
 
     const fetchedReviews = await fetchReviews();
 
-    const searchResults = fetchedReviews.filter((review: Review) => review.content.includes(search) || review.content.includes(search))
+    const searchResults = fetchedReviews.filter((review: Review) => review.title.includes(search) || review.content.includes(search))
     
   return (
     <SearchComponent searchResults={searchResults} />

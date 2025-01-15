@@ -3,6 +3,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
 import User from "./User";
+import Product from "./Product";
 
 declare module 'sequelize' {
     interface Model {
@@ -63,6 +64,10 @@ User.hasMany(Review, {
   Review.belongsTo(User, { 
     foreignKey: 'userId',
     as: 'user' 
+  });
+  Review.belongsTo(Product, { 
+    foreignKey: 'productId',
+    as: 'product' 
   });
 
 export default Review;

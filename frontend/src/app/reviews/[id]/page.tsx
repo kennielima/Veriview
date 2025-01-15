@@ -19,7 +19,7 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
   const reviewData = await response.json();
   const review = reviewData.review;
   const reviewUser = reviewData.user;
-  // console.log("reviewData.review", reviewData.review, "reviewData.user", reviewData.user, "getcurrent.user", currentUser.user);
+  console.log("reviewData.review", reviewData.review, "reviewData.user", reviewData.user, "getcurrent.user", currentUser.user);
   // reviewData.review id = 13 userid = 22
   // reviewData.user id = 13
   // currentUserId.user id = 22
@@ -69,17 +69,17 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
                     <div>
                       <strong>Date:</strong> {formatDateTime(review.createdAt)}
                     </div>
-                    <div>
+                    {/* <div>
                       <strong>Verified Purchase:</strong>
                       <span className={review.verifiedPurchase ? 'text-green-600' : 'text-gray-500'}>
                         {review.verifiedPurchase ? 'Yes' : 'No'}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-            {review.userId === currentUser.user.id && <DeleteComponent id={id} />}
+            {review.userId === currentUser?.user?.id && <DeleteComponent id={id} />}
           </div>
         </>
       )

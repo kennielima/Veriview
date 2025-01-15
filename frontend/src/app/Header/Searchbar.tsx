@@ -10,6 +10,11 @@ const SearchBar = () => {
         e.preventDefault();
         searchTerm !== '' ? router.push(`/search/${searchTerm}`) : router.push('/')
     };
+    const changeHandler = async (e: any) => {
+        e.preventDefault();
+        setSearchTerm(e.target.value)
+        e.target.value !== '' ? router.push(`/search/${e.target.value}`) : router.push('/')
+    };
 
     const clearSearchBar = () => {
         setSearchTerm('')
@@ -23,7 +28,7 @@ const SearchBar = () => {
             <input
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={changeHandler}
                 placeholder="Search..."
                 className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />

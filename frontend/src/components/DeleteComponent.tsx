@@ -37,8 +37,9 @@ export default DeleteComponent
 
 
 
-// TODO ONLY LOGGED IN USERS SHD BE ABLE TO CREATE AND DELETE REVIEWS
-// TODO SAVE TOKENS IN HEADERS NOT COOKIES
 // TODO COMMENTING SYSTEM
-// TODO VOTING SYSTEM
+// TODO VOTING/rate as helpful SYSTEM
 // TODO USER PAGE
+// users shd be able to rate a reviewed product
+// optimize search functionality
+// all reviewed products page
