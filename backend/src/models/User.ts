@@ -1,9 +1,10 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../db/sequelize';
+import Review from './Review';
 
 declare module 'sequelize' {
   interface Model {
-    id: number;
+    id: string;
     fullName: string;
     email: string;
     username: string;
@@ -11,14 +12,14 @@ declare module 'sequelize' {
   }
 }
 class User extends Model {
-  declare id: number
+  declare id: string
 }
 
 User.init({
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true
     },
     fullName: {
       type: DataTypes.STRING,
@@ -37,7 +38,6 @@ User.init({
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     }
   },
   {
@@ -47,41 +47,3 @@ User.init({
   }
 )
 export default User;
-
-
-
-
-
-// const User = sequelize.define('Users', { //DEFINE METHOD
-//   id: {
-//     type: DataTypes.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//   },
-//   fullName: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   email: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//     unique: true,
-//   },
-//   username: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//     unique: true,
-//   },
-//   password: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-// },
-//   {
-//     modelName: 'User',
-//     tableName: 'Users',
-//      timestamps: true,
-//   }
-// );
-
-// export default User;

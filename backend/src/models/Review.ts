@@ -7,24 +7,23 @@ import Product from "./Product";
 
 declare module 'sequelize' {
     interface Model {
-        id: number;
+        id: string;
         title: string;
         brand: string;
         content: string;
-        rating: string;
+        rating: number;
     }
 }
 
-
 class Review extends Model {
-    declare id: number
+    declare id: string
 }
 
 Review.init({
-        id: {
-        type: DataTypes.INTEGER,
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true
     },
     title: {
         type: DataTypes.STRING,
@@ -35,7 +34,7 @@ Review.init({
         allowNull: false
     },
     content: {
-        type: DataTypes.TEXT || DataTypes.BLOB,
+        type: DataTypes.STRING,
         allowNull: false
     },
     rating: {
@@ -47,10 +46,18 @@ Review.init({
         }
     },
     userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'User',
+            model: 'Users',
+            key: 'id'
+        }
+    },
+    productId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: 'Products',
             key: 'id'
         }
     }
@@ -62,69 +69,24 @@ Review.init({
         timestamps: true,
     }
 );
-User.hasMany(Review, { 
+User.hasMany(Review, {
     foreignKey: 'userId',
-    as: 'reviews' 
-  });
-  Review.belongsTo(User, { 
-    foreignKey: 'userId',
-    as: 'user' 
-  });
-  Review.belongsTo(Product, { 
+    as: 'reviews',
+    sourceKey: 'id'
+});
+Product.hasMany(Review, {
     foreignKey: 'productId',
-    as: 'product' 
-  });
-
+    as: 'reviews',
+    sourceKey: 'id'
+});
+Review.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user',
+    targetKey: 'id'
+});
+Review.belongsTo(Product, {
+    foreignKey: 'productId',
+    as: 'product',
+    targetKey: 'id'
+});
 export default Review;
-
-
-
-
-// const Review = sequelize.define('Reviews', { //DEFINE METHOD
-//     id: {
-//         type: DataTypes.INTEGER,
-//         primaryKey: true,
-//         autoIncrement: true
-//     },
-//     title: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     content: {
-//         type: DataTypes.TEXT || DataTypes.BLOB,
-//         allowNull: false
-//     },
-//     rating: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false,
-//         validate: {
-//             min: 1,
-//             max: 5
-//         }
-//     },
-//     // userId: {
-//     //     type: DataTypes.INTEGER,
-//     //     allowNull: false,
-//     //     references: {
-//     //         model: 'User',
-//     //         key: 'id'
-//     //     }
-//     // }
-// },
-//     {
-//         modelName: 'Review',
-//         tableName: 'Reviews',
-//         timestamps: true,
-//     }
-// );
-// User.hasMany(Review, { 
-//     foreignKey: 'userId',
-//     as: 'reviews' 
-//   });
-//   Review.belongsTo(User, { 
-//     foreignKey: 'userId',
-//     as: 'user' 
-//   });
-
-// export default Review;
-

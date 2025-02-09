@@ -11,9 +11,9 @@ const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
 });
 
 User.hasMany(Review, { foreignKey: 'userId' });
+Product.hasMany(Review, { foreignKey: 'productId' });
 Review.belongsTo(User, { foreignKey: 'userId' });
 Review.belongsTo(Product, { foreignKey: 'productId' });
-Product.hasMany(Review, { foreignKey: 'productId' });
 
 const initializeDatabase = async () => {
     try {

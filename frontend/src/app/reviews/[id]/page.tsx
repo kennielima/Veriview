@@ -5,24 +5,17 @@ import { formatDateTime } from '@/lib/utils';
 import RenderedStars from '@/components/renderStars';
 import DeleteComponent from '@/components/DeleteComponent';
 import getCurrentUser from '@/lib/getCurrentUser';
+import { fetchProduct } from '@/app/hooks/useGetProducts';
+import { fetchReview } from '@/app/hooks/useGetReviews';
 
 const reviewPage = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   const currentUser = await getCurrentUser();
 
-  const response = await fetch(`${process.env.API_URL}/reviews/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  const reviewData = await response.json();
+  const reviewData = await fetchReview(id);
   const review = reviewData.review;
-  const reviewUser = reviewData.user;
-  console.log("reviewData.review", reviewData.review, "reviewData.user", reviewData.user, "getcurrent.user", currentUser.user);
-  // reviewData.review id = 13 userid = 22
-  // reviewData.user id = 13
-  // currentUserId.user id = 22
+  console.log(reviewData, "getcurrent.user", currentUser.user);
+
   return (
     <Fragment>
       {!review ? (
@@ -62,7 +55,9 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
                     {review.brand && (
                       <div>
-                        <strong>Product:</strong> {review.brand}
+                        <Link href={`products/${reviewData?.review?.productId}`} className='hover:text-gray-500'>
+                          <strong>Product:</strong> {review.brand}
+                        </Link>
                       </div>
                     )}
                     <div>

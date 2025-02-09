@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import Review from "../models/Review";
 import authenticate from "../middleware/protectRoute";
 import User from "../models/User";
+import Product from "../models/Product";
 
 const router = express.Router()
 
@@ -18,7 +19,28 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             console.log("can't find title or brand")
             return res.status(400).json({ message: 'Please fill form' })
         }
-        const newReview = await Review.create({ title, brand, content, rating, userId: user.id });
+        let product = await Product.findOne({
+            where: {
+                name: brand
+            }
+        })
+        console.log("product is", product);
+        if (!product) {
+            const newProduct = await Product.create({ name: brand, rating: rating });
+            console.log(newProduct)
+        }
+        const ProductReviews = await Review.findAll({
+            where: {
+                brand
+            }
+        })
+        console.log(ProductReviews.length)
+        // const productRating = ; 
+        // await Product.update({ rating: rating }, {
+        //     where: { name: brand }
+        // });
+
+        const newReview = await Review.create({ title, brand, content, rating, userId: user.id, productId: product?.id });
         return res.status(200).json({
             title: newReview.title,
             brand: newReview.brand,
@@ -48,7 +70,6 @@ router.get("/", async (req: Request, res: Response) => {
             console.log("can't find reviews")
             return res.status(404).json({ message: 'no reviews found' })
         }
-
         return res.status(200).json(allReviews)
     }
     catch (error) {
@@ -61,14 +82,13 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
     const reviewId = req.params.id;
     try {
         const review = await Review.findOne({ where: { id: reviewId } });
-        const user = await User.findOne({ where: { id: reviewId } });
 
         if (!review) {
             console.log("can't find review")
             return res.status(400).json({ message: 'no review found' })
         }
 
-        return res.status(200).json({ review, user })
+        return res.status(200).json({ review })
     }
     catch (error) {
         console.error("error getting review:", error)

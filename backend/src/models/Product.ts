@@ -2,25 +2,24 @@
 
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
-import Review from "./Review";
 
 declare module 'sequelize' {
     interface Model {
-        id: number;
+        id: string;
         name: string;
-        rating: string;
+        rating: number;
     }
 }
 
 class Product extends Model {
-    declare id: number
+    declare id: string
 }
 
 Product.init({
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true
     },
     name: {
         type: DataTypes.STRING,
@@ -42,9 +41,5 @@ Product.init({
         timestamps: true,
     }
 );
-// Product.hasMany(Review, {
-//     foreignKey: 'productId',
-//     as: 'reviews'
-// });
 
 export default Product;

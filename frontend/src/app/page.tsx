@@ -11,7 +11,7 @@ const page = async () => {
   return (
     <div className="container px-16 py-8 mx-auto flex">
       <div className="space-y-4 w-4/5">
-        {Reviews ? (
+        {Reviews && Reviews.length > 0 ? (
           Reviews.map((review: Review) => (
             <ReviewCard key={review.id} review={review} />
           ))
