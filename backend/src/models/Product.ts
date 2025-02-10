@@ -2,6 +2,7 @@
 
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
+import Review from "./Review";
 
 declare module 'sequelize' {
     interface Model {
@@ -12,7 +13,8 @@ declare module 'sequelize' {
 }
 
 class Product extends Model {
-    declare id: string
+    declare id: string;
+    reviews?: Review[];
 }
 
 Product.init({
@@ -26,7 +28,7 @@ Product.init({
         allowNull: false
     },
     rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(2, 1),
         allowNull: false,
         validate: {
             min: 1,

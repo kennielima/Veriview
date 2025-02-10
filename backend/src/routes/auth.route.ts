@@ -58,7 +58,6 @@ router.post('/login', async (request: Request, response: Response) => {
         }
 
         generateTokenSetCookies(user.id, response);
-        console.log('usertoken fom login route', request.cookies.tokenkey, request.headers)
         response.status(200).json({
             loggedIn: true,
             message: 'User logged in successfully',
@@ -78,8 +77,6 @@ router.post('/login', async (request: Request, response: Response) => {
 
 router.get('/me', authenticate, async (req: Request, res: Response) => {
     try {
-        console.log('cookie token from /me', req.cookies.tokenkey)
-        console.log("bearer tokens from /me", req.headers)
         return res.status(200).json({ loggedIn: true, user: req.user });
     }
     catch (error) {

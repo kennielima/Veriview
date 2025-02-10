@@ -4,8 +4,7 @@ import { timeAgo } from '@/lib/utils';
 import { Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 
-const ReviewCard = ({ review }: {review: Review}) => {
-    
+const ReviewCard = ({ review }: {review: Review}) => {    
     return (
         <Link href={`/reviews/${review.id}`}>
         <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8 mx-auto max-w-3xl">

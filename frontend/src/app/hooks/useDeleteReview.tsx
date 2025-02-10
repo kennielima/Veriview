@@ -9,7 +9,6 @@ export const deleteReview = async (id: string) => {
     // if (!token){
     //     console.log('Please log in to delete review');
     // }
-        console.log("token", token);
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}`, {
             method: "DELETE",
@@ -20,8 +19,6 @@ export const deleteReview = async (id: string) => {
             },
             credentials: 'include',
         })
-        console.log("response", response, response.ok);
-
         // if (!response.ok) {
         //     throw new Error('Failed to delete review');
         // }

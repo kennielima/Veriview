@@ -9,7 +9,7 @@ const SearchComponent = ({ searchResults }: { searchResults: Review[] }) => {
     useEffect(() => {
         searchResults && setReviews(searchResults);
     }, [searchResults])
-console.log(searchResults)
+
     return (
         <div className='my-8'>
             {Reviews.map((review: Review) => (

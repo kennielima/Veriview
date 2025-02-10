@@ -6,7 +6,6 @@ import { fetchReviews } from './hooks/useGetReviews'
 
 const page = async () => {
   const Reviews = await fetchReviews()
-  console.log("Reviews: ", Reviews)
 
   return (
     <div className="container px-16 py-8 mx-auto flex">

@@ -14,7 +14,6 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
 
   const reviewData = await fetchReview(id);
   const review = reviewData.review;
-  console.log(reviewData, "getcurrent.user", currentUser.user);
 
   return (
     <Fragment>
@@ -55,7 +54,7 @@ const reviewPage = async ({ params }: { params: { id: string } }) => {
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
                     {review.brand && (
                       <div>
-                        <Link href={`products/${reviewData?.review?.productId}`} className='hover:text-gray-500'>
+                        <Link href={`/products/${reviewData?.review?.productId}`} className='hover:text-gray-500'>
                           <strong>Product:</strong> {review.brand}
                         </Link>
                       </div>

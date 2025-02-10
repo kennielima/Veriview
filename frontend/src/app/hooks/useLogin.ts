@@ -10,7 +10,6 @@ const loginUser = async (formData: FormData) => {
     const data = await response.json();
 
     if (!response.ok) {
-        console.log('client data', data.message, data.token, data.tokenkey);
         throw new Error(data.message);
     }
     window.location.href = '/';

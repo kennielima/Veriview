@@ -4,7 +4,7 @@ import React from 'react'
 
 const Sidebar = async () => {
     const Products = await fetchProducts()
-    console.log("Products", Products)
+
     return (
         <div className='flex flex-col gap-4 my-8'>
             <h1 className='text-xl font-bold'>Products</h1>

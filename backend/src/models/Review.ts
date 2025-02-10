@@ -12,6 +12,8 @@ declare module 'sequelize' {
         brand: string;
         content: string;
         rating: number;
+        productId: string;
+        userId: string
     }
 }
 
@@ -38,7 +40,7 @@ Review.init({
         allowNull: false
     },
     rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(2),
         allowNull: false,
         validate: {
             min: 1,

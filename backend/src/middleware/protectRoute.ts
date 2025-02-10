@@ -19,7 +19,6 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         const tokenkey = req.cookies.tokenkey;
         const authHeader = req.headers['authorization']; // FETCHING FROM authHeader INSTEAD OF COOKIE
         const token = authHeader && authHeader.split(' ')[1]; 
-        console.log("tokens", token, req.headers, tokenkey)
 
         if (!tokenkey) {
             return res.status(401).json({ message: 'User unauthorized to make request' })
@@ -29,7 +28,6 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         if (!decoded) {
             return res.status(404).json({ message: 'Invalid token' })
         }
-        console.log("decoded.id", decoded.userId)
         const user = await User.findOne({
             where: {
                 id: decoded.userId
