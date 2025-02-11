@@ -62,3 +62,7 @@ export function timeAgo(timestamp: string): string {
   const years = Math.floor(secondsPast / 29030400);
   return `${years} year${years > 1 ? "s" : ""} ago`;
 }
+
+export const capitalizeFirstLetter = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+};

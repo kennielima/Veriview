@@ -9,7 +9,7 @@ const CreateReviewForm = () => {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
-
+  const [anonymous, setAnonymous] = useState<boolean>(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -32,14 +32,15 @@ const CreateReviewForm = () => {
       return;
     }
     try {
-      await createReview(title, brand, content, rating);
+      await createReview(title, brand, content, rating, anonymous);
       setTitle('');
       setBrand('');
       setContent('');
       setRating(0);
       setError('');
+      setAnonymous(false)
     } catch (error) {
-      setError('Please log in to post a review')
+      setError('Error posting review')
     }
   };
 
@@ -108,7 +109,13 @@ const CreateReviewForm = () => {
           </div>
         </div>
         <label className='flex items-center gap-2'>
-          <input type="checkbox" id="terms" name="terms" />
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            checked={anonymous}
+            onChange={() => setAnonymous(!anonymous)}
+          />
           Post as anonymous
         </label>
         <button

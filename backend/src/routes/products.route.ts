@@ -60,4 +60,3 @@ router.get("/products/:id", async (req: Request, res: Response) => {
 
 
 export default router;
-// TODO: ON CREATE POST, USERS SHD BE ABLE TO POST ANONYMOUSLY

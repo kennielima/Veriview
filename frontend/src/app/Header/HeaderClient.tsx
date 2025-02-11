@@ -24,21 +24,22 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 <Link href='/'>
                     <div className="flex text-2xl font-bold text-gray-800">ReviewMe</div>
                 </Link>
-                <nav className="hidden md:flex items-center space-x-6 gap-4">
+                <nav className="hidden md:flex items-center space-x-6 gap-4 text-sm">
                     <SearchBar />
+                    <Link href='/products' className='text-gray-700 hover:text-gray-900 transition'>All Products</Link>
                     <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
                     {user?.loggedIn &&
                         <button onClick={logout} className='text-gray-700 hover:text-gray-900 transition'>Logout</button>
                     }
                 </nav>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
                         <Link href='/login'>
                             <button className='bg-slate-800 rounded-md text-white px-4 py-2'> Login </button>
                         </Link>
                         :
-                        <p className='flex gap-1 cursor-pointer'>
-                            <UserIcon />
+                        <p className='flex gap-1 cursor-pointer items-center'>
+                            <UserIcon className='sm:w-4 sm:h-4' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
                         </p>
                     }
@@ -51,11 +52,11 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
             {isMenuOpen && (
                 <div className="md:hidden fixed inset-0 bg-white z-50">
                     <div className="flex flex-col items-center justify-center h-full space-y-6">
                         <SearchBar />
+                        <Link href='/products' className='text-gray-700 hover:text-gray-900 transition'>All Products</Link>
                         <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
                         <button onClick={logout} className='text-gray-700 hover:text-gray-900 transition'>Logout</button>
                         <button

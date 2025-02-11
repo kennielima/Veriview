@@ -10,7 +10,7 @@ const router = express.Router()
 router.post("/create-review", authenticate, async (req: Request, res: Response) => {
     const user = req.user;
     try {
-        const { title, brand, content, rating } = req.body;
+        const { title, brand, content, rating, anonymous } = req.body;
         if (!user) {
             return res.status(404).json({ message: 'You must be logged in to post a review' })
         }
@@ -32,7 +32,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             product = await Product.create({ name: brand, rating: rating });
         }
 
-        const newReview = await Review.create({ title, brand, content, rating, userId: user.id, productId: product?.id });
+        const newReview = await Review.create({ title, brand, content, rating, userId: user.id, productId: product?.id, anonymous });
         const updatedProduct = await Product.findOne({
             where: { id: product.id },
             include: {
@@ -49,7 +49,8 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             brand: newReview.brand,
             content: newReview.content,
             rating: newReview.rating,
-            userId: user.id
+            userId: user.id,
+            anonymous: newReview.anonymous
         })
     }
     catch (error) {
@@ -57,47 +58,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
-router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) => {
-    const reviewId = req.params.id;
-    try {
-        const review = await Review.findOne({
-            where: { id: reviewId },
-            include: {
-                model: Product,
-                as: "product"
-            }
-        });
-        if (!review) {
-            console.log("can't find review")
-            return res.status(400).json({ message: 'no review found' })
-        }
-        await review.destroy();
 
-        const product = await Product.findOne({
-            where: { id: review?.productId },
-            include: {
-                model: Review,
-                as: "reviews"
-            }
-        })
-        if (product) {
-            if (!product.reviews || product?.reviews?.length === 0) {
-                await product?.destroy()
-            } else {
-                const averageRating = product?.reviews && calcAverageRating(product?.reviews);
-                await product.update({ rating: averageRating }, {
-                    where: { id: review?.productId }
-                });
-            }
-        }
-
-        return res.status(500).json({ message: 'successfully deleted' })
-    }
-    catch (error) {
-        console.error("error deleting review:", error)
-        return res.status(500).json({ message: 'Internal server error' })
-    }
-})
 router.get("/", async (req: Request, res: Response) => {
     try {
         const allReviews = await Review.findAll({
@@ -124,7 +85,15 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/reviews/:id", async (req: Request, res: Response) => {
     const reviewId = req.params.id;
     try {
-        const review = await Review.findOne({ where: { id: reviewId } });
+        const review = await Review.findOne({
+            where: {
+                id: reviewId
+            },
+            include: {
+                model: User,
+                as: "user"
+            }
+        });
         if (!review) {
             console.log("can't find review")
             return res.status(400).json({ message: 'no review found' })
@@ -178,5 +147,6 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
+
 export default router;
 

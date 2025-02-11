@@ -13,7 +13,8 @@ declare module 'sequelize' {
         content: string;
         rating: number;
         productId: string;
-        userId: string
+        userId: string,
+        anonymous: boolean
     }
 }
 
@@ -62,6 +63,11 @@ Review.init({
             model: 'Products',
             key: 'id'
         }
+    },
+    anonymous: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 },
     {

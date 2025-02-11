@@ -7,7 +7,9 @@ export interface Review {
     rating: number
     updatedAt: string
     user: User
-    userId: string
+    userId: string,
+    productId: string,
+    anonymous: boolean
 }
 export interface User {
     username: string

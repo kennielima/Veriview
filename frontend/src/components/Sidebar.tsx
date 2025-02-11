@@ -2,6 +2,7 @@ import { fetchProducts } from '@/app/hooks/useGetProducts'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { capitalizeFirstLetter } from '@/lib/utils'
 
 const Sidebar = async () => {
     const Products = await fetchProducts()
@@ -12,11 +13,11 @@ const Sidebar = async () => {
             <div className="space-y-4 w-full">
                 {Products && Products.length > 0 ? (
                     Products.map((product: any) => (
-                        <div className='flex flex-col gap-1' key={product.id}>
-                            <div key={product.id} className='flex gap-1 items-center'>
-                                <Link href={`products/${product.id}`} className='hover:text-gray-600'>{product.name}</Link>
+                        <div className='flex flex-col' key={product.id}>
+                            <div className='flex gap-1 items-center'>
+                                <Link href={`products/${product.id}`} className='hover:text-gray-600'>{capitalizeFirstLetter(product.name)}</Link>
                                 <Star
-                                    className='text-yellow-500 w-4 h-4 ml-2'
+                                    className='text-yellow-500 w-4 h-4 ml-1'
                                     fill={"currentColor"}
                                     stroke="currentColor"
                                 />

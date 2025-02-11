@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { timeAgo } from '@/lib/utils';
+import { capitalizeFirstLetter, timeAgo } from '@/lib/utils';
 import { Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 
@@ -18,7 +18,7 @@ const ReviewCard = ({ review }: {review: Review}) => {
                 {review.content}
             </p>
             <div className="flex justify-between items-center text-sm text-gray-500">
-                <span className="font-medium">{review.brand}</span>
+                <span className="font-medium">{capitalizeFirstLetter(review.brand)}</span>
                 <span>{timeAgo(review.createdAt)}</span>
             </div>
         </div>

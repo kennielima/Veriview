@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="flex text-2xl font-bold">ReviewMe</div>
                 </Link>
                 <div className='grid gap-3'>
-                    <p>About</p>
+                    <Link href='/products'>Products</Link>
                     <p>Contact</p>
                 </div>
             </div>

@@ -23,7 +23,7 @@ const SearchBar = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="relative flex items-center w-auto max-w-md"
+            className="relative flex text-sm items-center w-auto max-w-md"
         >
             <input
                 type="text"

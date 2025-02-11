@@ -40,6 +40,9 @@ export default DeleteComponent
 // TODO COMMENTING SYSTEM
 // TODO VOTING/rate as helpful SYSTEM
 // TODO USER PAGE
-// users shd be able to rate a reviewed product
 // optimize search functionality
-// all reviewed products page
+// TODO: RATE WITHOUT WRITING REVIEW
+// TODO SORTING
+// DROPDOWN TO SELECT BRAND WHEN CREATING REVIEW
+// Cleanup products page ui
+// update types

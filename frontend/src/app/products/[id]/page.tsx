@@ -2,6 +2,7 @@ import { fetchProduct, fetchProducts } from '@/app/hooks/useGetProducts';
 import ReviewCard from '@/components/Card';
 import RenderedStars from '@/components/renderStars';
 import { Review } from '@/lib/types';
+import { capitalizeFirstLetter } from '@/lib/utils';
 import React from 'react'
 
 const productPage = async ({ params }: { params: { id: string } }) => {
@@ -10,11 +11,10 @@ const productPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl space-y-10">
-        {/* Product Header Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <h1 className="text-3xl font-bold text-gray-900 mb-4 md:mb-0">
-                    {product.name}
+                    {capitalizeFirstLetter(product.name)}
                 </h1>
                 <div className="flex items-center space-x-1">
                   <p className='text-gray-800 pr-1'>
@@ -29,7 +29,6 @@ const productPage = async ({ params }: { params: { id: string } }) => {
             </div>
         </div>
 
-        {/* Reviews Section */}
         <div className="space-y-10">
             <div className="flex items-center justify-between px-8">
                 <h2 className="text-xl font-semibold text-gray-800">
@@ -85,6 +84,3 @@ const productPage = async ({ params }: { params: { id: string } }) => {
 }
 
 export default productPage
-
-// TODO: RATE WITHOUT WRITING REVIEW
-// TODO SORTING
