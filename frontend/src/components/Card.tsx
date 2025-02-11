@@ -18,7 +18,7 @@ const ReviewCard = ({ review }: {review: Review}) => {
                 {review.content}
             </p>
             <div className="flex justify-between items-center text-sm text-gray-500">
-                <span className="font-medium">@{review.user?.username}</span>
+                <span className="font-medium">{review.brand}</span>
                 <span>{timeAgo(review.createdAt)}</span>
             </div>
         </div>
