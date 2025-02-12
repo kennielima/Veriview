@@ -11,6 +11,12 @@ export interface Review {
     productId: string,
     anonymous: boolean
 }
+export interface Product {
+    id: string
+    name: string
+    rating: number
+    reviews: Review[]
+}
 export interface User {
     username: string
     email: string

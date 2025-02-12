@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import createReview from '../hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 
@@ -11,7 +11,7 @@ const CreateReviewForm = () => {
   const [error, setError] = useState('');
   const [anonymous, setAnonymous] = useState<boolean>(false);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!title.trim()) {

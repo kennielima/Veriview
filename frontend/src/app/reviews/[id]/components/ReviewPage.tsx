@@ -1,7 +1,7 @@
 "use client"
 import DeleteComponent from '@/components/DeleteComponent'
 import RenderedStars from '@/components/renderStars'
-import { User } from '@/lib/types'
+import { Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
@@ -9,7 +9,9 @@ import React, { Fragment } from 'react'
 import { useRouter } from 'next/navigation';
 
 export type reviewTypeProps = {
-    reviewData: any;
+    reviewData: {
+        review: Review
+    };
     currentUser: {
         loggedIn: boolean;
         user: User
@@ -19,6 +21,7 @@ export type reviewTypeProps = {
 const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) => {
     const router = useRouter();
     const review = reviewData?.review;
+    console.log(reviewData)
 
     return (
         <Fragment>
@@ -56,7 +59,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                 <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
                                     {review.brand && (
                                         <div>
-                                            <Link href={`/products/${reviewData?.review?.productId}`} className='hover:text-gray-500'>
+                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-500'>
                                                 <strong>Product:</strong> {review.brand}
                                             </Link>
                                         </div>

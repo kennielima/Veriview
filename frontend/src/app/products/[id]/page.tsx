@@ -61,7 +61,7 @@ const productPage = async ({ params }: { params: { id: string } }) => {
             <h3 className="text-lg font-semibold mb-4">Rating Breakdown</h3>
             <div className="space-y-3">
                 {[5, 4, 3, 2, 1].map((star) => {
-                    const count = product.reviews.filter((r: any) => Math.floor(r.rating) === star).length;
+                    const count = product.reviews.filter((r: Review) => Math.floor(r.rating) === star).length;
                     const percentage = (count / product.reviews.length) * 100 || 0;
 
                     return (

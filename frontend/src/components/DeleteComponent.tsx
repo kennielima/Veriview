@@ -44,5 +44,4 @@ export default DeleteComponent
 // TODO: RATE WITHOUT WRITING REVIEW
 // TODO SORTING
 // DROPDOWN TO SELECT BRAND WHEN CREATING REVIEW
-// Cleanup products page ui
-// update types
+// truncate content on review body
