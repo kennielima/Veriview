@@ -1,8 +1,8 @@
 import React from 'react'
 import ReviewCard from '@/components/Card'
 import { Review } from '@/lib/types'
-import Sidebar from '@/components/Sidebar'
 import { fetchReviews } from './hooks/useGetReviews'
+import ProductPage from './products/components/ProductPage'
 
 const page = async () => {
   const Reviews = await fetchReviews()
@@ -19,7 +19,10 @@ const page = async () => {
         )
         }
       </div>
-      <Sidebar />
+      <div className='flex flex-col gap-4 my-8'>
+        <h1 className='text-xl font-bold underline'>Products</h1>
+        <ProductPage />
+      </div>
     </div>
   )
 }

@@ -89,11 +89,11 @@ const page = () => {
                             </label>
                         </div>
 
-                        <div className="text-sm">
+                        {/* <div className="text-sm">
                             <a href="#" className="font-medium text-slate-600 hover:text-slate-500">
                                 Forgot your password?
                             </a>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div>

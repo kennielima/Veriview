@@ -2,6 +2,7 @@
 import React, { FormEvent, useState } from 'react';
 import createReview from '../hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
+import { capitalizeFirstLetter } from '@/lib/utils';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
@@ -32,7 +33,13 @@ const CreateReviewForm = () => {
       return;
     }
     try {
-      await createReview(title, brand, content, rating, anonymous);
+      await createReview(
+        capitalizeFirstLetter(title),
+        capitalizeFirstLetter(brand),
+        content,
+        rating,
+        anonymous
+      );
       setTitle('');
       setBrand('');
       setContent('');
@@ -104,8 +111,9 @@ const CreateReviewForm = () => {
             Rating
           </label>
           <div className="flex space-x-1">
-            {/* {renderStars()} */}
-            <RenderStars rating={rating} setRating={setRating} />
+            <RenderStars rating={rating} setRating={setRating}
+            // size='w-8 h-8'
+            />
           </div>
         </div>
         <label className='flex items-center gap-2'>

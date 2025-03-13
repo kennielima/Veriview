@@ -37,11 +37,10 @@ export default DeleteComponent
 
 
 
+// TODO: RATE WITHOUT WRITING REVIEW
 // TODO COMMENTING SYSTEM
 // TODO VOTING/rate as helpful SYSTEM
-// TODO USER PAGE
-// optimize search functionality
-// TODO: RATE WITHOUT WRITING REVIEW
-// TODO SORTING
 // DROPDOWN TO SELECT BRAND WHEN CREATING REVIEW
 // truncate content on review body
+// TODO USER PAGE
+// optimize search functionality
