@@ -111,9 +111,7 @@ const CreateReviewForm = () => {
             Rating
           </label>
           <div className="flex space-x-1">
-            <RenderStars rating={rating} setRating={setRating}
-            // size='w-8 h-8'
-            />
+            <RenderStars rating={rating} setRating={setRating} size='w-8 h-8' />
           </div>
         </div>
         <label className='flex items-center gap-2'>

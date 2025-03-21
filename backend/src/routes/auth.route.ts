@@ -75,24 +75,15 @@ router.post('/login', async (request: Request, response: Response) => {
     }
 })
 
-router.get('/me', authenticate, async (req: Request, res: Response) => {
-    try {
-        return res.status(200).json({ loggedIn: true, user: req.user });
-    }
-    catch (error) {
-        console.error('failed to get user:', error);
-    }
-});
-
 router.post('/logout', async (request: Request, response: Response) => {
     try {
-        response.cookie("tokenkey", '', { 
+        response.cookie("tokenkey", '', {
             maxAge: 0,
             httpOnly: true,
             sameSite: 'strict'
         })
         response.status(200).json({ message: "Logged out successfully" });
-}
+    }
     catch (error) {
         console.error('Logout error:', error);
     }

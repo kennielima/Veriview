@@ -14,7 +14,8 @@ export interface Review {
 export interface Product {
     id: string
     name: string
-    rating: number
+    averageRating: number
+    ratingsCount: number
     reviews: Review[]
 }
 export interface User {

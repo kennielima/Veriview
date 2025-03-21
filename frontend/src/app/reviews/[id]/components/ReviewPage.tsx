@@ -3,15 +3,13 @@ import DeleteComponent from '@/components/DeleteComponent'
 import RenderedStars from '@/components/renderStars'
 import { Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/navigation';
 
 export type reviewTypeProps = {
-    reviewData: {
-        review: Review
-    };
+    reviewData: { review: Review };
     currentUser: {
         loggedIn: boolean;
         user: User
@@ -21,7 +19,6 @@ export type reviewTypeProps = {
 const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) => {
     const router = useRouter();
     const review = reviewData?.review;
-    console.log(reviewData)
 
     return (
         <Fragment>

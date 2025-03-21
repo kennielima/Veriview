@@ -2,8 +2,9 @@
 
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
-import User from "./User";
 import Product from "./Product";
+import User from "./User";
+import UserRating from "./UserRating";
 
 declare module 'sequelize' {
     interface Model {
@@ -14,7 +15,7 @@ declare module 'sequelize' {
         rating: number;
         productId: string;
         userId: string,
-        anonymous: boolean
+        anonymous: boolean,
     }
 }
 
@@ -68,7 +69,7 @@ Review.init({
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
-    }
+    },
 },
     {
         sequelize,
@@ -82,19 +83,48 @@ User.hasMany(Review, {
     as: 'reviews',
     sourceKey: 'id'
 });
-Product.hasMany(Review, {
-    foreignKey: 'productId',
-    as: 'reviews',
-    sourceKey: 'id'
-});
+
 Review.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user',
     targetKey: 'id'
 });
+
+User.hasMany(UserRating, {
+    foreignKey: 'userId',
+    as: 'userratings',
+    sourceKey: 'id',
+    onDelete: 'CASCADE'
+});
+
+UserRating.belongsTo(User, {
+    foreignKey: 'userId',
+    targetKey: 'id',
+    as: 'user'
+});
+
+Product.hasMany(Review, {
+    foreignKey: 'productId',
+    as: 'reviews',
+    sourceKey: 'id'
+});
+
 Review.belongsTo(Product, {
     foreignKey: 'productId',
     as: 'product',
     targetKey: 'id'
 });
+
+Product.hasMany(UserRating, {
+    foreignKey: 'productId',
+    as: 'rating',
+    sourceKey: 'id'
+});
+
+UserRating.belongsTo(Product, {
+    foreignKey: 'productId',
+    targetKey: 'id',
+    as: 'product'
+});
+
 export default Review;

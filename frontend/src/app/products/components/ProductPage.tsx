@@ -6,7 +6,7 @@ import { Product } from '@/lib/types'
 
 const ProductPage = async () => {
     const Products = await fetchProducts()
-    console.log(Products)
+
     return (
         <div className="space-y-4 w-full">
             {Products && Products.length > 0 ? (
@@ -19,16 +19,16 @@ const ProductPage = async () => {
                                 fill={"currentColor"}
                                 stroke="currentColor"
                             />
-                            <p className='text-gray-600 text-sm'>{product.rating}</p>
-                        </div>
+                            <p className='text-gray-600 text-sm'>{product.averageRating}</p>
+                        </div >
                         <p className='text-gray-600 text-sm'>{product.reviews.length} reviews</p>
-                    </div>
+                    </div >
                 ))
             ) : (
                 <p>No Products found</p>
             )
             }
-        </div>
+        </div >
     )
 }
 export default ProductPage

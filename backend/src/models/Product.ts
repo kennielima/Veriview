@@ -8,7 +8,8 @@ declare module 'sequelize' {
     interface Model {
         id: string;
         name: string;
-        rating: number;
+        averageRating: number;
+        ratingsCount: number;
     }
 }
 
@@ -27,14 +28,16 @@ Product.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    rating: {
+    averageRating: {
         type: DataTypes.DECIMAL(2, 1),
         allowNull: false,
-        validate: {
-            min: 1,
-            max: 5
-        }
+        validate: { min: 1, max: 5 }
     },
+    ratingsCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    }
 },
     {
         sequelize,

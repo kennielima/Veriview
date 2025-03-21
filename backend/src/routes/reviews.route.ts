@@ -29,7 +29,11 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             }
         })
         if (!product) {
-            product = await Product.create({ name: brand, rating: rating });
+            product = await Product.create({
+                name: brand,
+                averageRating: rating,
+                ratingsCount: 1
+            });
         }
 
         const newReview = await Review.create({ title, brand, content, rating, userId: user.id, productId: product?.id, anonymous });
@@ -41,8 +45,14 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             }
         });
 
-        const averageRating = updatedProduct?.reviews && calcAverageRating(updatedProduct?.reviews)
-        await product.update({ rating: averageRating });
+        if (updatedProduct?.reviews && product.ratingsCount !== 1) {
+            const averageRating = calcAverageRating(updatedProduct?.reviews, updatedProduct?.ratingsCount)
+
+            await product.update({
+                averageRating,
+                ratingsCount: product?.ratingsCount + 1
+            });
+        }
 
         return res.status(200).json({
             title: newReview.title,
@@ -53,6 +63,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             anonymous: newReview.anonymous
         })
     }
+
     catch (error) {
         console.error("error posting review:", error)
         return res.status(500).json({ message: 'Internal server error' })
@@ -131,10 +142,13 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
         })
         if (product) {
             if (!product.reviews || product?.reviews?.length === 0) {
-                await product?.destroy()
+                await product?.destroy();
             } else {
-                const averageRating = product?.reviews && calcAverageRating(product?.reviews);
-                await product.update({ rating: averageRating }, {
+                const averageRating = product?.reviews && calcAverageRating(product?.reviews, product?.ratingsCount);
+                await product.update({
+                    averageRating: averageRating,
+                    ratingsCount: product?.ratingsCount - 1
+                }, {
                     where: { id: review?.productId }
                 });
             }
@@ -147,6 +161,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
+
 
 export default router;
 

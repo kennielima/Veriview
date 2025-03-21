@@ -1,13 +1,13 @@
 import { cookies } from "next/headers"
 
 const getCurrentUser = async () => {
-        const cookieStore = await cookies()
-        const token = cookieStore.get('tokenkey')
-        const tokenValue = token?.value;
-        if (!token) {
-            return { loggedIn: false, message: 'No token found' };
-        }
-        try {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('tokenkey')
+    const tokenValue = token?.value;
+    if (!token) {
+        return { loggedIn: false, message: 'No token found' };
+    }
+    try {
         const response = await fetch(`${process.env.API_URL}/me`, {
             method: "GET",
             headers: {
@@ -18,8 +18,8 @@ const getCurrentUser = async () => {
             credentials: 'include'
         })
 
-            const data = await response.json();
-            console.log(data)
+        const data = await response.json();
+        // console.log(data)
         if (response.ok) {
             return data;
         }
