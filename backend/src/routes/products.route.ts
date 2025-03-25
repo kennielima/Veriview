@@ -18,6 +18,10 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         }
         const product = await Product.findOne({
             where: { id: productId },
+            include: {
+                model: Review,
+                as: "reviews"
+            }
         });
 
         if (!rating) return res.status(400).json({ error: "Rating is missing" });
@@ -25,14 +29,15 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
 
         const existingRating = await UserRating.findOne({
             where: {
-                id: productId,
+                productId: productId,
                 userId: user.id
             }
         });
 
         if (existingRating) {
             const oldRating = existingRating?.productRating;
-            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating), Number(oldRating));
+
+            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating));
 
             await product.update({ averageRating });
 
@@ -43,14 +48,7 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
             await product.update({
                 averageRating,
                 ratingsCount: product.ratingsCount + 1
-            },
-                {
-                    where: {
-                        id: productId,
-                        userId: user.id
-                    }
-                }
-            );
+            });
 
             await UserRating.create({
                 productRating: Number(rating),
@@ -82,6 +80,7 @@ router.get("/products", async (req: Request, res: Response) => {
     }
     catch (error) {
         console.error('failed to get products:', error);
+        return res.status(500).json({ message: 'failed to rate product' })
     }
 })
 
@@ -107,6 +106,7 @@ router.get("/products/:id", async (req: Request, res: Response) => {
     }
     catch (error) {
         console.error('failed to get product:', error);
+        return res.status(500).json({ message: 'failed to get product' })
     }
 })
 

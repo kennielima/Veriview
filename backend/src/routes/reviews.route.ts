@@ -50,7 +50,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             anonymous
         });
 
-        const updatedProduct = await Product.findOne({
+        const updatedProduct = await Product.findOne({ //both newly created product and already existig product
             where: { id: product.id },
             include: {
                 model: Review,
