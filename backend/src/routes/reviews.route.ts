@@ -28,15 +28,28 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
                 as: "reviews"
             }
         })
+        let isNewProduct = false;
+
         if (!product) {
+            isNewProduct = true;
+
             product = await Product.create({
                 name: brand,
-                averageRating: rating,
+                averageRating: Number(rating),
                 ratingsCount: 1
             });
         }
 
-        const newReview = await Review.create({ title, brand, content, rating, userId: user.id, productId: product?.id, anonymous });
+        const newReview = await Review.create({
+            title,
+            brand,
+            content,
+            rating: Number(rating),
+            userId: user.id,
+            productId: product?.id,
+            anonymous
+        });
+
         const updatedProduct = await Product.findOne({
             where: { id: product.id },
             include: {
@@ -45,14 +58,16 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             }
         });
 
-        if (updatedProduct?.reviews && product.ratingsCount !== 1) {
-            const averageRating = calcAverageRating(updatedProduct?.reviews, updatedProduct?.ratingsCount)
+        if (updatedProduct && updatedProduct?.reviews) {
+            const newRatingsCount = isNewProduct ? 1 : product?.ratingsCount + 1
+            const averageRating = calcAverageRating(updatedProduct?.reviews, newRatingsCount)
 
             await product.update({
-                averageRating,
-                ratingsCount: product?.ratingsCount + 1
+                averageRating: Number(averageRating),
+                ratingsCount: newRatingsCount
             });
         }
+        console.log(product);
 
         return res.status(200).json({
             title: newReview.title,

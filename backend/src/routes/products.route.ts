@@ -17,22 +17,12 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
             return res.status(404).json({ message: 'You must be logged in to post a review' })
         }
         const product = await Product.findOne({
-            where: {
-                id: productId
-            },
+            where: { id: productId },
         });
 
-        if (!rating) {
-            return res.status(400).json({ error: "Rating is missing" });
-        }
+        if (!rating) return res.status(400).json({ error: "Rating is missing" });
+        if (!product) return res.status(404).json({ message: "no product found" });
 
-        if (!product) {
-            console.log("can't find product")
-            return res.status(404).json({ message: "no product found" })
-        }
-
-        //if user has updated the rating before, we need to update the average rating
-        //product model shd have list of everyone who rated
         const existingRating = await UserRating.findOne({
             where: {
                 id: productId,
@@ -41,10 +31,18 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         });
 
         if (existingRating) {
-            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating));
+            const oldRating = existingRating?.productRating;
+            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating), Number(oldRating));
+
+            await product.update({ averageRating });
+
+            await existingRating.update({ productRating: Number(rating) })
+        } else {
+            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount + 1, Number(rating));
 
             await product.update({
-                averageRating: averageRating,
+                averageRating,
+                ratingsCount: product.ratingsCount + 1
             },
                 {
                     where: {
@@ -54,31 +52,12 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
                 }
             );
 
-            await existingRating.update({
+            await UserRating.create({
                 productRating: Number(rating),
                 productId: productId,
                 userId: user.id
             })
         }
-        const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating));
-
-        await product.update({
-            averageRating: averageRating,
-            ratingsCount: product.ratingsCount + 1
-        },
-            {
-                where: {
-                    id: productId,
-                    userId: user.id
-                }
-            }
-        );
-
-        await UserRating.create({
-            productRating: Number(rating),
-            productId: productId,
-            userId: user.id
-        })
         return res.status(200).json(product);
     }
     catch (error) {
