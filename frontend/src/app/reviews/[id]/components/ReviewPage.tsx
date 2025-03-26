@@ -1,15 +1,19 @@
 "use client"
 import DeleteComponent from '@/components/DeleteComponent'
 import RenderedStars from '@/components/renderStars'
-import { Review, User } from '@/lib/types'
+import { RatedHelpful, Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
 import { ArrowLeft, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { rateHelpful } from '@/app/hooks/useRating'
 
 export type reviewTypeProps = {
-    reviewData: { review: Review };
+    reviewData: {
+        review: Review,
+        ratedhelpful: RatedHelpful
+    };
     currentUser: {
         loggedIn: boolean;
         user: User
@@ -19,6 +23,19 @@ export type reviewTypeProps = {
 const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) => {
     const router = useRouter();
     const review = reviewData?.review;
+
+    const ratedHelpfulArray = Array.isArray(review?.ratedhelpful) ? review?.ratedhelpful : [];
+    const ratedhelpfulCount = ratedHelpfulArray.length;
+    const userRatedHelpful = ratedHelpfulArray.find((ratedhelpful: RatedHelpful) => currentUser.user.id === ratedhelpful.userId)
+    const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
+
+    console.log("urh", userRatedHelpful, "aa", ratedHelpfulArray, isRatedHelpful)
+
+    const thumbsUpHandler = () => {
+        setIsRatedHelpful(!isRatedHelpful);
+        rateHelpful(isRatedHelpful, id)
+        router.push(`/reviews/${id}`)
+    }
 
     return (
         <Fragment>
@@ -48,6 +65,15 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     <RenderedStars rating={review.rating} />
                                     <span className="ml-2 text-gray-600">({review.rating}/5)</span>
                                 </div>
+                            </div>
+                            <div className='flex items-center gap-1 text-gray-700'>
+                                <ThumbsUp
+                                    className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
+                                    onClick={thumbsUpHandler}
+                                    fill={isRatedHelpful ? 'currentColor' : 'none'}
+                                    stroke="currentColor"
+                                />
+                                <p className='text-xs'>rate as helpful ({ratedhelpfulCount})</p>
                             </div>
                         </div>
 

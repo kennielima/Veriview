@@ -8,27 +8,23 @@ declare module 'sequelize' {
         id: string;
         productRating: number;
         userId: string;
-        productId: string;
+        reviewId: string;
     }
 }
 
-class UserRating extends Model {
+class RatedHelpful extends Model {
     declare id: string;
 }
 
-UserRating.init({
+RatedHelpful.init({
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    productRating: {
-        type: DataTypes.DECIMAL(2, 1),
+    helpful: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-            min: 1,
-            max: 5
-        }
     },
     userId: {
         type: DataTypes.UUID,
@@ -38,21 +34,21 @@ UserRating.init({
             key: 'id'
         }
     },
-    productId: {
+    reviewId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'Products',
+            model: 'Reviews',
             key: 'id'
         }
     }
 },
     {
         sequelize,
-        modelName: 'UserRating',
-        tableName: 'UserRatings',
+        modelName: 'RatedHelpful',
+        freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default UserRating;
+export default RatedHelpful;

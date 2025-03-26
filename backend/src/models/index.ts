@@ -3,6 +3,7 @@ import User from './User';
 import Review from './Review';
 import Product from './Product';
 import UserRating from './UserRating';
+import RatedHelpful from './RatedHelpful';
 
 const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
     dialect: 'postgres',
@@ -19,6 +20,10 @@ User.hasMany(UserRating, { foreignKey: 'userId' });
 UserRating.belongsTo(User, { foreignKey: 'userId' });
 Product.hasMany(UserRating, { foreignKey: 'userId' });
 UserRating.belongsTo(User, { foreignKey: 'userId' });
+Review.hasMany(RatedHelpful, { foreignKey: 'reviewId' });
+RatedHelpful.belongsTo(Review, { foreignKey: 'reviewId' });
+User.hasMany(RatedHelpful, { foreignKey: 'userId' });
+RatedHelpful.belongsTo(User, { foreignKey: 'userId' });
 
 const initializeDatabase = async () => {
     try {

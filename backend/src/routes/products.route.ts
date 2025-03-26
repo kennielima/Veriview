@@ -16,8 +16,7 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         if (!user) {
             return res.status(404).json({ message: 'You must be logged in to post a review' })
         }
-        const product = await Product.findOne({
-            where: { id: productId },
+        const product = await Product.findByPk(productId, {
             include: [
                 {
                     model: Review,

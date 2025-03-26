@@ -5,6 +5,7 @@ import User from "../models/User";
 import Product from "../models/Product";
 import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
+import RatedHelpful from "../models/RatedHelpful";
 
 const router = express.Router()
 
@@ -91,6 +92,59 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
     }
 })
 
+router.get("/", async (req: Request, res: Response) => {
+    try {
+        const allReviews = await Review.findAll({
+            include: {
+                model: User,
+                as: 'user'
+            },
+            order: [
+                ['createdAt', 'DESC'],
+            ]
+        });
+        if (!allReviews || allReviews.length === 0) {
+            console.log("can't find reviews")
+            return res.status(404).json({ message: 'no reviews found' })
+        }
+        return res.status(200).json(allReviews)
+    }
+    catch (error) {
+        console.error("error getting reviews:", error)
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+router.get("/reviews/:id", async (req: Request, res: Response) => {
+    const reviewId = req.params.id;
+    try {
+        const review = await Review.findOne({
+            where: {
+                id: reviewId
+            },
+            include: [
+                {
+                    model: User,
+                    as: "user"
+                },
+                {
+                    model: RatedHelpful,
+                    as: "ratedhelpful"
+                }
+            ]
+        });
+        if (!review) {
+            console.log("can't find review")
+            return res.status(400).json({ message: 'no review found' })
+        }
+        return res.status(200).json({ review })
+    }
+    catch (error) {
+        console.error("error getting review:", error)
+        return res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
 router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) => {
     const reviewId = req.params.id;
     try {
@@ -143,53 +197,47 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
     }
 })
 
-router.get("/", async (req: Request, res: Response) => {
-    try {
-        const allReviews = await Review.findAll({
-            include: {
-                model: User,
-                as: 'user'
-            },
-            order: [
-                ['createdAt', 'DESC'],
-            ]
-        });
-        if (!allReviews || allReviews.length === 0) {
-            console.log("can't find reviews")
-            return res.status(404).json({ message: 'no reviews found' })
-        }
-        return res.status(200).json(allReviews)
-    }
-    catch (error) {
-        console.error("error getting reviews:", error)
-        return res.status(500).json({ message: 'Internal server error' })
-    }
-})
-
-router.get("/reviews/:id", async (req: Request, res: Response) => {
+router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: Response) => {
+    const { ratedHelpful } = req.body;
     const reviewId = req.params.id;
+    const user = req.user;
+
     try {
-        const review = await Review.findOne({
-            where: {
-                id: reviewId
-            },
-            include: {
-                model: User,
-                as: "user"
-            }
-        });
-        if (!review) {
-            console.log("can't find review")
-            return res.status(400).json({ message: 'no review found' })
+        if (!user) {
+            return res.status(404).json({ message: 'You must be logged in to rate a review' })
         }
-        return res.status(200).json({ review })
+
+        const existingRatedHelpful = await RatedHelpful.findOne({
+            where: {
+                reviewId: reviewId,
+                userId: user?.id
+            }
+        })
+        let rateValue = ratedHelpful === true ? 1 : 0;
+        console.log("rateValue", rateValue, ratedHelpful);
+
+        if (!existingRatedHelpful) {
+            const newv = await RatedHelpful.create({
+                helpful: rateValue,
+                reviewId: reviewId,
+                userId: user?.id
+            })
+            console.log("helpfulv", newv)
+        } else {
+            if (rateValue === 1) {
+                await existingRatedHelpful.update({ helpful: rateValue })
+            } else {
+                await existingRatedHelpful.destroy();
+            }
+        }
+
+        return res.status(500).json({ message: 'review successfully rated' })
     }
     catch (error) {
-        console.error("error getting review:", error)
+        console.error("error rating review:", error)
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
-
 
 
 export default router;

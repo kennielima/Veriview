@@ -5,6 +5,7 @@ import sequelize from "../db/sequelize";
 import Product from "./Product";
 import User from "./User";
 import UserRating from "./UserRating";
+import RatedHelpful from "./RatedHelpful";
 
 declare module 'sequelize' {
     interface Model {
@@ -70,6 +71,11 @@ Review.init({
         allowNull: false,
         defaultValue: false
     },
+    // ratedHelpfulCount: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     defaultValue: 0
+    // }
 },
     {
         sequelize,
@@ -125,6 +131,30 @@ UserRating.belongsTo(Product, {
     foreignKey: 'productId',
     targetKey: 'id',
     as: 'product'
+});
+
+Review.hasMany(RatedHelpful, {
+    foreignKey: 'reviewId',
+    as: 'ratedhelpful',
+    sourceKey: 'id'
+});
+
+RatedHelpful.belongsTo(Review, {
+    foreignKey: 'reviewId',
+    targetKey: 'id',
+    as: 'review'
+});
+
+User.hasMany(RatedHelpful, {
+    foreignKey: 'userId',
+    as: 'ratedhelpful',
+    sourceKey: 'id'
+});
+
+RatedHelpful.belongsTo(User, {
+    foreignKey: 'userId',
+    targetKey: 'id',
+    as: 'user'
 });
 
 export default Review;

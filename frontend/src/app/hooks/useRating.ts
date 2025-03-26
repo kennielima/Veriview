@@ -29,3 +29,31 @@ export const rateProduct = async (rating: number, id: string) => {
         console.error('failed to send product rating:', error);
     }
 }
+
+
+export const rateHelpful = async (rateHelpful: boolean, id: string) => {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('tokenkey')
+    const tokenValue = token?.value;
+    console.log(rateHelpful)
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}/ratehelpful`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${tokenValue}`,
+                "Cookie": `tokenkey=${tokenValue}`,
+            },
+            body: JSON.stringify({
+                rateHelpful
+            })
+        })
+        console.log(response)
+        if (!response.ok || response) {
+            throw new Error('Failed to rate as helpful');
+        }
+        redirect('/');
+    } catch (error) {
+        console.error('failed to rate as helpful:', error);
+    }
+}

@@ -9,8 +9,10 @@ export interface Review {
     user: User
     userId: string,
     productId: string,
-    anonymous: boolean
+    anonymous: boolean,
+    ratedhelpful: RatedHelpful
 }
+
 export interface Product {
     id: string
     name: string
@@ -19,10 +21,18 @@ export interface Product {
     reviews: Review[]
     rating: UserRating[]
 }
+
 export interface UserRating {
     id: string
     productRating: number
     productId: string
+    userId: string
+}
+
+export interface RatedHelpful {
+    id: string
+    helpful: number
+    reviewId: string
     userId: string
 }
 
