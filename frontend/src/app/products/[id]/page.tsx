@@ -4,6 +4,7 @@ import { Review } from '@/lib/types';
 import React, { Fragment } from 'react'
 import RateProduct from '@/app/products/components/RateProduct';
 import RenderedStars from '@/components/renderStars';
+import RatingStats from '../components/RatingStats';
 
 const productPage = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
@@ -56,35 +57,7 @@ const productPage = async ({ params }: { params: { id: string } }) => {
                             </div>
                         )}
                     </div>
-
-                    {/* Review Stats */}
-                    <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-                        <div className='flex flex-col sm:flex-row justify-between sm:items-center mb-6 sm:mb-4'>
-                            <h3 className="text-lg font-semibold">Rating Breakdown</h3>
-                            <p className='mr-4 sm:mr-8'>
-                                Based on <span className='text-lg font-bold text-black'>{product.ratingsCount}</span> total rating(s)
-                            </p>
-                        </div>
-                        <div className="space-y-3">
-                            {[5, 4, 3, 2, 1].map((star) => {
-                                const count = product.reviews.filter((r: Review) => Math.floor(r.rating) === star).length;
-                                const percentage = (count / product.reviews.length) * 100 || 0;
-
-                                return (
-                                    <div key={star} className="flex items-center">
-                                        <span className="w-12 text-sm text-gray-600">{star} stars</span>
-                                        <div className="flex-1 mx-4 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-yellow-400 rounded-full"
-                                                style={{ width: `${percentage}%` }}
-                                            />
-                                        </div>
-                                        <span className="w-12 text-sm text-gray-600">{count}</span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <RatingStats product={product} />
                 </div>
             )}
         </Fragment>

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import Product from "../models/Product";
 import Review from "../models/Review";
-import { calcAverageRating } from "../utils/helpers";
+import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
 import authenticate from "../middleware/protectRoute";
 
@@ -18,10 +18,16 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         }
         const product = await Product.findOne({
             where: { id: productId },
-            include: {
-                model: Review,
-                as: "reviews"
-            }
+            include: [
+                {
+                    model: Review,
+                    as: "reviews"
+                },
+                {
+                    model: UserRating,
+                    as: "rating"
+                }
+            ]
         });
 
         if (!rating) return res.status(400).json({ error: "Rating is missing" });
@@ -37,13 +43,13 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         if (existingRating) {
             const oldRating = existingRating?.productRating;
 
-            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount, Number(rating));
+            const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount, Number(rating));
 
             await product.update({ averageRating });
 
             await existingRating.update({ productRating: Number(rating) })
         } else {
-            const averageRating = product?.reviews && calcAverageRating(product?.reviews, product.ratingsCount + 1, Number(rating));
+            const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount + 1, Number(rating));
 
             await product.update({
                 averageRating,
@@ -92,10 +98,16 @@ router.get("/products/:id", async (req: Request, res: Response) => {
             where: {
                 id: productId
             },
-            include: {
-                model: Review,
-                as: "reviews"
-            }
+            include: [
+                {
+                    model: Review,
+                    as: "reviews"
+                },
+                {
+                    model: UserRating,
+                    as: "rating"
+                },
+            ]
         })
         if (!product) {
             console.log("can't find product")

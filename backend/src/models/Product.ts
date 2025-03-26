@@ -3,6 +3,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
 import Review from "./Review";
+import UserRating from "./UserRating";
 
 declare module 'sequelize' {
     interface Model {

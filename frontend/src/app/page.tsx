@@ -8,7 +8,7 @@ const page = async () => {
   const Reviews = await fetchReviews()
 
   return (
-    <div className="container px-16 py-8 mx-auto grid sm:flex">
+    <div className="container px-16 py-8 gap-8 mx-auto grid sm:flex">
       <div className="space-y-4 w-4/5">
         {Reviews && Reviews.length > 0 ? (
           Reviews.map((review: Review) => (

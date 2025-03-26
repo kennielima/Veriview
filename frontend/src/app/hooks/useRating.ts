@@ -20,8 +20,6 @@ export const rateProduct = async (rating: number, id: string) => {
                 rating
             })
         })
-        const responseBody = await response.json();
-        console.log(responseBody);
 
         if (!response.ok || !response) {
             throw new Error('Failed to review product');

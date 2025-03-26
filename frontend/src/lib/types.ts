@@ -17,7 +17,15 @@ export interface Product {
     averageRating: number
     ratingsCount: number
     reviews: Review[]
+    rating: UserRating[]
 }
+export interface UserRating {
+    id: string
+    productRating: number
+    productId: string
+    userId: string
+}
+
 export interface User {
     username: string
     email: string
