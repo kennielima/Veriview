@@ -43,7 +43,7 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         if (existingRating) {
             const oldRating = existingRating?.productRating;
 
-            const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount, Number(rating));
+            const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount, Number(rating), oldRating);
 
             await product.update({ averageRating });
 

@@ -2,7 +2,7 @@ import { Product, Review, UserRating } from '@/lib/types';
 import React from 'react'
 
 const RatingStats = ({ product }: { product: Product }) => {
-    console.log(product)
+
     return (
         <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
             <div className='flex flex-col sm:flex-row justify-between sm:items-center mb-6 sm:mb-4'>
