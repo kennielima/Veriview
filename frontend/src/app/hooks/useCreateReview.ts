@@ -28,7 +28,7 @@ const createReview = async (title: string, brand: string, content: string, ratin
     if (!response.ok) {
         throw new Error('Failed to post review');
     }
-    redirect('/');
+    // redirect('/');
 }
 
 export default createReview

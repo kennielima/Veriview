@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from 'react';
 import createReview from '../hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 import { capitalizeFirstLetter } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
@@ -11,6 +12,7 @@ const CreateReviewForm = () => {
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
   const [anonymous, setAnonymous] = useState<boolean>(false);
+  const router = useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ const CreateReviewForm = () => {
       setRating(0);
       setError('');
       setAnonymous(false)
+      router.push('/')
     } catch (error) {
       setError('Error posting review')
     }

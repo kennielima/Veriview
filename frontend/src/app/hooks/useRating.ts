@@ -24,18 +24,18 @@ export const rateProduct = async (rating: number, id: string) => {
         if (!response.ok || !response) {
             throw new Error('Failed to review product');
         }
-        redirect('/');
+        // redirect('/');
     } catch (error) {
         console.error('failed to send product rating:', error);
     }
 }
 
 
-export const rateHelpful = async (rateHelpful: boolean, id: string) => {
+export const rateHelpful = async (ratedHelpful: boolean, id: string) => {
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
-    console.log(rateHelpful)
+    console.log(ratedHelpful)
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}/ratehelpful`, {
             method: "POST",
@@ -45,14 +45,14 @@ export const rateHelpful = async (rateHelpful: boolean, id: string) => {
                 "Cookie": `tokenkey=${tokenValue}`,
             },
             body: JSON.stringify({
-                rateHelpful
+                ratedHelpful
             })
         })
-        console.log(response)
-        if (!response.ok || response) {
+        console.log("rateHelpful being sent:", ratedHelpful);
+        if (!response.ok) {
             throw new Error('Failed to rate as helpful');
         }
-        redirect('/');
+        // redirect('/');
     } catch (error) {
         console.error('failed to rate as helpful:', error);
     }

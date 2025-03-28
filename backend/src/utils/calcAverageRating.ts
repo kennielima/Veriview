@@ -17,7 +17,7 @@ export const calcAverageRating = (
     }
 
     let totalRating = totalReviewRating + totalRatingCount
-    console.log("avdata", totalRating, ratingsCount, rating, oldRating, Product.rating)
+    // console.log("avdata", totalRating, ratingsCount, rating, oldRating, Product.rating)
 
     const averageRating = totalRating / ratingsCount;
     const roundedRating = Math.round(averageRating * 10) / 10;

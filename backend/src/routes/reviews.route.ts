@@ -189,7 +189,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
             }
         }
 
-        return res.status(500).json({ message: 'successfully deleted' })
+        return res.status(200).json({ message: 'successfully deleted' })
     }
     catch (error) {
         console.error("error deleting review:", error)
@@ -231,7 +231,7 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
             }
         }
 
-        return res.status(500).json({ message: 'review successfully rated' })
+        return res.status(200).json({ message: 'review successfully rated' })
     }
     catch (error) {
         console.error("error rating review:", error)

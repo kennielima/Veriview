@@ -12,7 +12,6 @@ import { rateHelpful } from '@/app/hooks/useRating'
 export type reviewTypeProps = {
     reviewData: {
         review: Review,
-        ratedhelpful: RatedHelpful
     };
     currentUser: {
         loggedIn: boolean;
@@ -26,16 +25,18 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
 
     const ratedHelpfulArray = Array.isArray(review?.ratedhelpful) ? review?.ratedhelpful : [];
     const ratedhelpfulCount = ratedHelpfulArray.length;
-    const userRatedHelpful = ratedHelpfulArray.find((ratedhelpful: RatedHelpful) => currentUser.user.id === ratedhelpful.userId)
+    const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
 
     console.log("urh", userRatedHelpful, "aa", ratedHelpfulArray, isRatedHelpful)
 
-    const thumbsUpHandler = () => {
-        setIsRatedHelpful(!isRatedHelpful);
-        rateHelpful(isRatedHelpful, id)
+    const thumbsUpHandler = async () => {
+        const newRateHelpful = !isRatedHelpful;
+        setIsRatedHelpful(newRateHelpful);
+        await rateHelpful(newRateHelpful, id)
         router.push(`/reviews/${id}`)
     }
+    console.log(isRatedHelpful)
 
     return (
         <Fragment>
