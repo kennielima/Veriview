@@ -37,9 +37,7 @@ export default DeleteComponent
 
 
 
-// TODO COMMENTING SYSTEM
-// TODO VOTING/rate as helpful SYSTEM
-// DROPDOWN TO SELECT BRAND WHEN CREATING REVIEW
-// truncate content on review body
 // TODO USER PAGE
-// optimize search functionality
+// TODO COMMENTING SYSTEM
+// REFACTOR: 1.optimize search functionality, 2.classes/methods, 3.use service classes 4. UI 5. product->brand 6. header/sidebar
+// Scalability: 1. pagination/load more, 2. caching

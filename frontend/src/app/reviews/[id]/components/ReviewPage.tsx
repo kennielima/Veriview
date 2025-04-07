@@ -28,7 +28,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
 
-    console.log("urh", userRatedHelpful, "aa", ratedHelpfulArray, isRatedHelpful)
+    // console.log("urh", userRatedHelpful, "aa", ratedHelpfulArray, isRatedHelpful)
 
     const thumbsUpHandler = async () => {
         const newRateHelpful = !isRatedHelpful;
@@ -36,7 +36,6 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
         await rateHelpful(newRateHelpful, id)
         router.push(`/reviews/${id}`)
     }
-    console.log(isRatedHelpful)
 
     return (
         <Fragment>

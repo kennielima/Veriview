@@ -5,7 +5,7 @@ import React from 'react'
 import { Product } from '@/lib/types'
 
 const ProductPage = async () => {
-    const Products = await fetchProducts()
+    const Products = await fetchProducts();
 
     return (
         <div className="space-y-4 w-full">
@@ -21,11 +21,11 @@ const ProductPage = async () => {
                             />
                             <p className='text-gray-600 text-sm'>{product.averageRating}</p>
                         </div >
-                        <p className='text-gray-600 text-sm'>{product.reviews.length} reviews</p>
+                        <p className='text-gray-600 text-sm'>{product.reviews.length} review(s)</p>
                     </div >
                 ))
             ) : (
-                <p>No Products found</p>
+                <p>No Brands found</p>
             )
             }
         </div >

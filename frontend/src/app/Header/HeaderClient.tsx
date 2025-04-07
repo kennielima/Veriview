@@ -22,11 +22,11 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
         <header className="bg-white shadow-md py-4 sticky z-10 top-0">
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
                 <Link href='/'>
-                    <div className="flex text-2xl font-bold text-gray-800">ReviewMe</div>
+                    <div className="flex text-2xl font-bold text-slate-800">ReviewMe</div>
                 </Link>
                 <nav className="hidden md:flex items-center space-x-6 gap-4 text-sm">
                     <SearchBar />
-                    <Link href='/products' className='text-gray-700 hover:text-gray-900 transition'>All Products</Link>
+                    <Link href='/products' className='text-gray-700 hover:text-gray-900 transition'>All Brands</Link>
                     <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
                     {user?.loggedIn &&
                         <button onClick={logout} className='text-gray-700 hover:text-gray-900 transition'>Logout</button>

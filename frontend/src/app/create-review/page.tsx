@@ -1,9 +1,11 @@
 "use client"
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import createReview from '../hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { fetchProducts } from '../hooks/useGetProducts';
+import { Product } from '@/lib/types';
 
 const CreateReviewForm = () => {
   const [title, setTitle] = useState('');
@@ -12,7 +14,33 @@ const CreateReviewForm = () => {
   const [rating, setRating] = useState(0);
   const [error, setError] = useState('');
   const [anonymous, setAnonymous] = useState<boolean>(false);
-  const router = useRouter()
+  const [brands, setBrands] = useState<Product[]>([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState<Product[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false); const router = useRouter()
+
+  useEffect(() => {
+    const getBrands = async () => {
+      const Brands = await fetchProducts();
+      setBrands(Brands);
+    }
+    getBrands();
+  }, [])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBrand(e.target.value);
+
+    const filtered = brands.filter(brand =>
+      brand.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setFilteredSuggestions(filtered);
+    setShowSuggestions(true);
+  };
+
+  const handleSelect = (suggestion: Product) => {
+    setBrand(suggestion.name);
+    setShowSuggestions(false);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,15 +111,34 @@ const CreateReviewForm = () => {
           <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
             Product/Brand Name
           </label>
-          <input
-            type="text"
-            id="brand"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Name of brand, product or company"
-            maxLength={200}
-          />
+          <div className="relative w-full">
+            <input
+              type="text"
+              id="brand"
+              value={brand}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Name of brand, product or company"
+              maxLength={200}
+            />
+            {showSuggestions && (
+              <ul className="absolute z-10 w-full bg-white border rounded mt-1 max-h-40 overflow-auto shadow">
+                {filteredSuggestions.length > 0 ? (
+                  filteredSuggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleSelect(suggestion)}
+                    >
+                      {suggestion.name}
+                    </li>
+                  ))
+                ) : (
+                  <li className="p-2 text-gray-500">No matches</li>
+                )}
+              </ul>
+            )}
+          </div>
         </div>
 
         <div>
