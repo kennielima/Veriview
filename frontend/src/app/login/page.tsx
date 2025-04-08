@@ -76,7 +76,7 @@ const page = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    {/* <div className="flex items-center justify-between">
                         <div className="flex items-center">
                             <input
                                 id="remember-me"
@@ -89,17 +89,17 @@ const page = () => {
                             </label>
                         </div>
 
-                        {/* <div className="text-sm">
+                        <div className="text-sm">
                             <a href="#" className="font-medium text-slate-600 hover:text-slate-500">
                                 Forgot your password?
                             </a>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
 
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             {isLoading ? 'Loading...' : 'Submit'}
                         </button>
@@ -114,7 +114,7 @@ const page = () => {
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Don't have an account?{' '}
-                        <a href="/signup" className="font-medium text-slate-600 hover:text-slate-500">
+                        <a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Sign up
                         </a>
                     </p>

@@ -23,14 +23,14 @@ const SearchBar = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="relative flex text-sm items-center w-auto max-w-md"
+            className="relative flex text-sm items-center w-auto max-w-xl"
         >
             <input
                 type="text"
                 value={searchTerm}
                 onChange={changeHandler}
                 placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="font-normal w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <Search className="w-5 h-5" />

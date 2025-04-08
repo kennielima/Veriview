@@ -19,7 +19,7 @@ const DeleteComponent = ({ id }: { id: string }) => {
     return (
         <div className='grid gap-4'>
             <button
-                className='bg-red-600  mx-auto hover:bg-opacity-80 w-fit rounded-md mt-4 text-white px-4 py-2'
+                className='bg-indigo-600  mx-auto hover:bg-opacity-80 w-fit rounded-md mt-4 text-white px-4 py-2'
                 onClick={deleteHandler}
             >
                 Delete

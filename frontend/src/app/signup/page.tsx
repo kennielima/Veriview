@@ -139,7 +139,7 @@ const SignupPage: React.FC = () => {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-800 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             {isLoading ? 'Loading...' : 'Submit'}
                         </button>
@@ -154,7 +154,7 @@ const SignupPage: React.FC = () => {
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Already have an account?{' '}
-                        <a href="/login" className="font-medium text-slate-6x00 hover:text-slate-500">
+                        <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Sign in
                         </a>
                     </p>

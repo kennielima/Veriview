@@ -8,7 +8,7 @@ const RatingStats = ({ product }: { product: Product }) => {
             <div className='flex flex-col sm:flex-row justify-between sm:items-center mb-6 sm:mb-4'>
                 <h3 className="text-lg font-semibold">Rating Breakdown</h3>
                 <p className='mr-4 sm:mr-8'>
-                    Based on <span className='text-lg font-bold text-black'>{product.ratingsCount}</span> total rating(s)
+                    Based on <span className='text-lg font-bold text-indigo-600'>{product.ratingsCount}</span> total rating(s)
                 </p>
             </div>
             <div className="space-y-3">
