@@ -1,6 +1,6 @@
 "use client"
 import React, { FormEvent, useState } from 'react';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Loader } from 'lucide-react';
 import loginUser from '../hooks/useLogin';
 import { useRouter } from 'next/navigation';
 
@@ -21,7 +21,7 @@ const page = () => {
             router.push('/')
         } catch (error) {
             setError((error as Error).message)
-            console.error(error)
+            // console.error(error)
         } finally {
             setIsLoading(false)
         }
@@ -101,7 +101,7 @@ const page = () => {
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            {isLoading ? 'Loading...' : 'Submit'}
+                            {isLoading ? <Loader /> : <span>Submit</span>}
                         </button>
                     </div>
                     {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}

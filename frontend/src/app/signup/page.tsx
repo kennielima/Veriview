@@ -1,6 +1,6 @@
 "use client"
 import React, { FormEvent, useState } from 'react';
-import { User, Mail, Lock, AtSign, Eye, EyeOff } from 'lucide-react';
+import { User, Mail, Lock, AtSign, Eye, EyeOff, Loader } from 'lucide-react';
 import signupUser from '../hooks/useSignup';
 import { useRouter } from 'next/navigation';
 
@@ -23,7 +23,7 @@ const SignupPage: React.FC = () => {
 
         } catch (error) {
             setError((error as Error).message)
-            console.error(error)
+            // console.error(error)
         } finally {
             setIsLoading(false)
         }
@@ -141,7 +141,7 @@ const SignupPage: React.FC = () => {
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-800 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            {isLoading ? 'Loading...' : 'Submit'}
+                            {isLoading ? <Loader /> : <span>Submit</span>}
                         </button>
                     </div>
                     {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}

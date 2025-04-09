@@ -1,14 +1,14 @@
 import { fetchProducts } from '@/app/hooks/useGetProducts'
 import { ArrowRight, Star } from 'lucide-react'
 import Link from 'next/link'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Product } from '@/lib/types'
 
 const ProductPage = async () => {
     const Products = await fetchProducts();
 
     return (
-        <div className="mx-auto max-w-xl space-y-4 w-full">
+        <div className="mx-auto max-w-xl px-8 md:px-4 space-y-4 w-full">
             {Products && Products.length > 0 ? (
                 Products.map((product: Product) => (
                     <div>

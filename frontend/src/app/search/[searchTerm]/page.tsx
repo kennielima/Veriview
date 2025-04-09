@@ -1,5 +1,5 @@
 import { fetchReviews } from '@/app/hooks/useGetReviews';
-import SearchComponent from '@/components/SearchComponent';
+import SearchComponent from '../components/SearchComponent';
 import { Review } from '@/lib/types';
 import React from 'react'
 

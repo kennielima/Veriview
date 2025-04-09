@@ -1,7 +1,7 @@
 "use client"
 import { Review } from '@/lib/types';
 import React, { Fragment, useEffect, useState } from 'react'
-import Card from './Card';
+import Card from '@/components/Card';
 import Link from 'next/link';
 
 const SearchComponent = ({ searchResults }: { searchResults: Review[] }) => {

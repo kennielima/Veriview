@@ -1,5 +1,5 @@
 "use client"
-import DeleteComponent from '@/components/DeleteComponent'
+import DeleteComponent from '@/app/reviews/[id]/components/DeleteComponent'
 import RenderedStars from '@/components/renderStars'
 import { RatedHelpful, Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
@@ -43,7 +43,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                 <div className="container h-screen mx-auto px-4 py-8 text-center">
                     <h1 className="text-2xl font-bold">Review Not Found</h1>
                     <Link href='#' onClick={(e) => { e.preventDefault(); router.back() }}>
-                        <button className="mt-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors">
+                        <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
                             Back to Reviews
                         </button>
                     </Link>
@@ -51,7 +51,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
             ) : (
                 <div className="container mx-auto px-4 py-8 max-w-4xl">
                     <Link href='#' onClick={(e) => { e.preventDefault(); router.back() }}>
-                        <button className="mb-6 flex items-center px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors">
+                        <button className="mb-6 flex items-center px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Back to Reviews
                         </button>
@@ -61,7 +61,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <h1 className="text-3xl font-bold mb-4">{review.title}</h1>
-                                <div className="flex items-center mb-2 space-x-4">
+                                <div className="flex items-center mb-2 space-x-1 md:space-x-4">
                                     <RenderedStars rating={review.rating} />
                                     <span className="ml-2 text-gray-600">({review.rating}/5)</span>
                                 </div>

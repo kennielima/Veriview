@@ -6,11 +6,11 @@ const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         searchTerm !== '' ? router.push(`/search/${searchTerm}`) : router.push('/')
     };
-    const changeHandler = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
         setSearchTerm(e.target.value)
         e.target.value !== '' ? router.push(`/search/${e.target.value}`) : router.push('/')
