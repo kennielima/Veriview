@@ -88,7 +88,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
 
     catch (error) {
         console.error("error posting review:", error)
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'error posting reviews' })
     }
 })
 
@@ -111,7 +111,7 @@ router.get("/", async (req: Request, res: Response) => {
     }
     catch (error) {
         console.error("error getting reviews:", error)
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'error getting reviews' })
     }
 })
 
@@ -141,7 +141,7 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
     }
     catch (error) {
         console.error("error getting review:", error)
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'error getting review' })
     }
 })
 
@@ -193,7 +193,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
     }
     catch (error) {
         console.error("error deleting review:", error)
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'error deleting review' })
     }
 })
 
@@ -235,7 +235,7 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
     }
     catch (error) {
         console.error("error rating review:", error)
-        return res.status(500).json({ message: 'Internal server error' })
+        return res.status(500).json({ message: 'error rating review' })
     }
 })
 

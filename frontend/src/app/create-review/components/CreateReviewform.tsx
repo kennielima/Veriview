@@ -44,8 +44,10 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         e.preventDefault();
 
         if (!title.trim()) { setError('Please enter a title'); return; };
+        if (title.length < 10) { setError('Title must be at least 10 characters long'); return; }
         if (!brand.trim()) { setError('Please enter a brand name'); return; }
         if (!content.trim()) { setError('Please write your review'); return; }
+        if (content.length < 60) { setError('Review must be at least 60 characters long'); return; }
         if (rating === 0) { setError('Please select a rating'); return; }
 
         try {
@@ -83,12 +85,15 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         type="text"
                         id="title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => { setTitle(e.target.value); setError('') }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Summarize your review"
                         maxLength={100}
                     />
                     {(error === 'Please enter a title' && title === '') && (
+                        <div className="text-red-700 text-xs mt-1">{error}</div>
+                    )}
+                    {(error === 'Title must be at least 10 characters long') && (
                         <div className="text-red-700 text-xs mt-1">{error}</div>
                     )}
                 </div>
@@ -134,13 +139,16 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                     <textarea
                         id="content"
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        onChange={(e) => { setContent(e.target.value), setError('') }}
                         rows={5}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Tell us about your experience"
                         maxLength={500}
                     />
                     {(error === 'Please write your review' && content === '') && (
+                        <div className="text-red-700 text-xs mt-1">{error}</div>
+                    )}
+                    {(error === 'Review must be at least 60 characters long') && (
                         <div className="text-red-700 text-xs mt-1">{error}</div>
                     )}
                 </div>
