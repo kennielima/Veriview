@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateReviewForm from './components/CreateReview'
+import CreateReviewForm from './components/CreateReviewform'
 import { fetchProducts } from '../hooks/useGetProducts';
 import getCurrentUser from '@/lib/getCurrentUser';
 

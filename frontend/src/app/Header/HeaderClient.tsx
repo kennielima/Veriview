@@ -22,18 +22,18 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
         <header className="bg-white shadow-md py-4 sticky z-10 top-0 font-bold">
             {/* DESKTOPS */}
             <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                <Link href='/'>
+                <Link href='/' onClick={toggleMenu}>
                     <div className="flex text-2xl font-bold text-indigo-600">ReviewMe</div>
                 </Link>
                 <nav className="hidden md:flex items-center space-x-6 gap-4 text-sm">
-                    <SearchBar />
+                    <SearchBar setIsMenuOpen={setIsMenuOpen} />
                     <Link href='/products' className='text-gray-700 hover:text-gray-900 text-base transition'>All Brands</Link>
                     <Link href='/create-review' className='text-gray-700 hover:text-gray-900 text-base transition'>Post a Review</Link>
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
-                        <Link href='/login'>
-                            <button className='bg-indigo-600 rounded-md text-white px-4 py-2 font-bold'> Login </button>
+                        <Link href='/login' onClick={toggleMenu}>
+                            <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Login </button>
                         </Link>
                         :
                         <p className='text-base flex gap-1 cursor-pointer items-center text-slate-800'>
@@ -52,18 +52,39 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
 
             {/* MOBILE/TABS */}
             {isMenuOpen && (
-                <div className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-20 p-8 bg-white z-50">
+                <div
+                    className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-20 p-8 bg-white z-50"
+                    onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
+                >
                     <div className="flex flex-col items-center justify-center h-full space-y-6">
-                        <SearchBar />
-                        <Link href='/products' className='text-gray-700 hover:text-gray-900 transition'>All Brands</Link>
-                        <Link href='/create-review' className='text-gray-700 hover:text-gray-900 transition'>Post a Review</Link>
+                        <SearchBar setIsMenuOpen={setIsMenuOpen} />
+                        <Link
+                            href='/products'
+                            onClick={toggleMenu}
+                            className='text-gray-700 hover:text-gray-900 transition'
+                        >
+                            All Brands
+                        </Link>
+                        <Link
+                            href='/create-review'
+                            className='text-gray-700 hover:text-gray-900 transition'
+                            onClick={toggleMenu}
+                        >
+                            Post a Review
+                        </Link>
                         {(user && (user as UserTypeProps).loggedIn) && (
-                            <button onClick={logout} className='text-white transition w-full bg-indigo-700 hover:bg-indigo-600 px-3 py-2 rounded-md'>Logout</button>
+                            <button
+                                onClick={() => { logout; toggleMenu }}
+                                className='text-white transition w-full bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md'
+                            >
+                                Logout
+                            </button>
                         )}
                     </div>
                 </div>
             )}
-        </header>)
+        </header>
+    )
 }
 
 export default HeaderClient

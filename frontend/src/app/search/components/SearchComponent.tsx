@@ -12,7 +12,7 @@ const SearchComponent = ({ searchResults }: { searchResults: Review[] }) => {
     }, [searchResults])
 
     return (
-        <div className='my-8'>
+        <div className='m-8'>
             {searchResults.length > 0 ? (
                 Reviews.map((review: Review) => (
                     <Card review={review} key={review.id} />

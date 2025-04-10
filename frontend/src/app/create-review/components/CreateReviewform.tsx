@@ -71,8 +71,8 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 my-12 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mt-12 md:mt-0 mb-6 text-center">Write a Review</h2>
+        <div className="max-w-md mx-auto p-10 md:p-6 md:my-12 bg-indigo-50 shadow-md rounded-lg ">
+            <h2 className="text-2xl font-bold mb-6 text-center">Write a Review</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -107,7 +107,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                             maxLength={200}
                         />
                         {showSuggestions && (
-                            <ul className="absolute z-10 w-full bg-white border rounded mt-1 max-h-40 overflow-auto shadow">
+                            <ul className="absolute z-10 w-full bg-white border rounded mt-[1px] max-h-40 overflow-auto shadow">
                                 {filteredSuggestions.length > 0 && (
                                     filteredSuggestions.map((suggestion, index) => (
                                         <li
@@ -159,17 +159,18 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 <label className='flex items-center gap-2'>
                     <input
                         type="checkbox"
-                        id="terms"
-                        name="terms"
+                        id="anon"
+                        name="anon"
                         checked={anonymous}
                         onChange={() => setAnonymous(!anonymous)}
+                        className='size-5'
                     />
                     Post as anonymous
                 </label>
 
                 <button
                     type="submit"
-                    className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                    className="w-full py-2 font-semibold bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                 >
                     <span>Submit Review</span>
                 </button>
