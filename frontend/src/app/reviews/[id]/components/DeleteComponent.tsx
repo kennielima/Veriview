@@ -60,5 +60,8 @@ export default DeleteComponent
 
 // TODO USER PAGE
 // TODO COMMENTING SYSTEM
+// if reviewed, shdnt be able to rate
 // REFACTOR: 1.optimize search functionality 5. product->brand
+// search for brands on brand page
 // Scalability: 1. pagination/load more, 2. caching
+// faq, what we do

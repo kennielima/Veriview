@@ -8,7 +8,7 @@ export const rateProduct = async (rating: number, id: string) => {
     const tokenValue = token?.value;
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}/rate`, {
+        const response = await fetch(`${process.env.API_URL}/products/${id}/rate`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const rateHelpful = async (ratedHelpful: boolean, id: string) => {
     const tokenValue = token?.value;
     console.log(ratedHelpful)
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}/ratehelpful`, {
+        const response = await fetch(`${process.env.API_URL}/reviews/${id}/ratehelpful`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

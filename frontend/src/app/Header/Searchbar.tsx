@@ -1,28 +1,28 @@
 import React, { SetStateAction, useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search as SearchIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Search from '../hooks/useSearch';
 
 const SearchBar = (
     { setIsMenuOpen }: { setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }
 ) => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [query, setQuery] = useState('');
     const router = useRouter();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (searchTerm !== '') {
-            router.push(`/search/${searchTerm}`)
+        if (query !== '') {
+            router.push('/search?q=' + query)
             setIsMenuOpen(false)
         }
     };
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         e.preventDefault();
-        setSearchTerm(e.target.value)
-        // e.target.value !== '' ? router.push(`/search/${e.target.value}`) : router.push('/')
+        setQuery(e.target.value)
     };
 
     const clearSearchBar = () => {
-        setSearchTerm('')
+        setQuery('')
         router.push('/')
     }
     return (
@@ -32,15 +32,15 @@ const SearchBar = (
         >
             <input
                 type="text"
-                value={searchTerm}
+                value={query}
                 onChange={changeHandler}
                 placeholder="Search..."
                 className="font-normal w-full pl-10 pr-4 py-2 rounded-l-md border border-gray-400 border-r-0 hover:border-indigo-600 focus:outline-none"
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                <Search className="w-5 h-5" />
+                <SearchIcon className="w-5 h-5" />
             </div>
-            {searchTerm && (
+            {query && (
                 <button
                     type="button"
                     onClick={clearSearchBar}

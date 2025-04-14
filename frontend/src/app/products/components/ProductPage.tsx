@@ -11,7 +11,7 @@ const ProductPage = async () => {
         <div className="mx-auto max-w-xl px-8 md:px-4 space-y-4 w-full">
             {Products && Products.length > 0 ? (
                 Products.map((product: Product) => (
-                    <div>
+                    <div key={product.id}>
                         <div className='flex flex-col border border-slate-300 shadow-md p-4 rounded-md' key={product.id}>
                             <div className='flex gap-1 items-center'>
                                 <Link href={`products/${product.id}`} className='hover:text-gray-600'>{product.name}</Link>

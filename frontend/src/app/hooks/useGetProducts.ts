@@ -1,6 +1,6 @@
 export const fetchProducts = async () => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+        const response = await fetch(`${process.env.API_URL}/products`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -15,7 +15,7 @@ export const fetchProducts = async () => {
 }
 export const fetchProduct = async (id: string) => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
+        const response = await fetch(`${process.env.API_URL}/products/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

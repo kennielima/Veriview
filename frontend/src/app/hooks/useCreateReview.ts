@@ -9,7 +9,7 @@ const createReview = async (title: string, brand: string, content: string, ratin
     // if (!token){
     //     throw new Error('Please log in to post a review');
     // }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-review`, {
+    const response = await fetch(`${process.env.API_URL}/create-review`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 export const fetchReviews = async () => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+        const response = await fetch(`${process.env.API_URL}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -11,7 +11,6 @@ export const fetchReviews = async () => {
     } catch (err) {
         console.log("Failed to fetch reviews:", err);
     }
-
 }
 
 export const fetchReview = async (id: string) => {
