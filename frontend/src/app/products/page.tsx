@@ -6,7 +6,7 @@ const page = () => {
     return (
         <div className='max-w-4xl flex flex-col gap-12 items-center mx-auto my-8'>
             <h1 className='text-xl font-bold'>All Reviewed Brands</h1>
-            <SearchBar searchCategory={"brands"} />
+            <SearchBar searchCategory={"brands"} setIsMenuOpen={undefined} />
             <div className='w-full mx-auto'>
                 <ProductPage />
             </div>

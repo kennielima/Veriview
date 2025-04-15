@@ -3,10 +3,10 @@ import React, { SetStateAction, useState } from 'react';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const SearchBar = (
-    { searchCategory }: { searchCategory: string }
-    // { setIsMenuOpen }: { setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }
-) => {
+const SearchBar = ({ searchCategory, setIsMenuOpen }: {
+    searchCategory: string;
+    setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> | undefined
+}) => {
     const [query, setQuery] = useState('');
     const router = useRouter();
 
@@ -14,7 +14,7 @@ const SearchBar = (
         e.preventDefault();
         if (query !== '') {
             router.push('search?q=' + query + `&category=${searchCategory}`);
-            // setIsMenuOpen(false)
+            setIsMenuOpen && setIsMenuOpen(false)
         }
     };
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

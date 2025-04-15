@@ -26,7 +26,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                     <div className="flex text-2xl font-bold text-indigo-600">ReviewMe</div>
                 </Link>
                 <nav className="hidden md:flex items-center space-x-0 lg:space-x-6 gap-4 text-sm">
-                    <SearchBar searchCategory={"all"} />
+                    <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
                     <Link href='/products' className='text-gray-700 hover:text-gray-900 text-base transition'>All Brands</Link>
                     <Link href='/create-review' className='text-gray-700 hover:text-gray-900 text-base transition'>Post a Review</Link>
                 </nav>
@@ -57,7 +57,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                     onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
                 >
                     <div className="flex flex-col items-center justify-center h-full space-y-6">
-                        <SearchBar searchCategory={"all"} />
+                        <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
                         <Link
                             href='/products'
                             onClick={toggleMenu}
