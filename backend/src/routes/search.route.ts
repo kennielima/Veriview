@@ -10,6 +10,7 @@ router.get("/search", async (req: Request, res: Response) => {
     try {
         const {
             q,
+            category,
             page = 1,
             limit = 10,
             // sortBy = 'createdAt',
@@ -17,7 +18,7 @@ router.get("/search", async (req: Request, res: Response) => {
         } = req.query;
 
         const offset = (Number(page) - 1) * Number(limit);
-        const where = {
+        const whereAll = {
             [Op.and]: [
                 q && {
                     [Op.or]:
@@ -29,22 +30,44 @@ router.get("/search", async (req: Request, res: Response) => {
                 }
             ].filter(Boolean)
         }
+        const whereBrand = {
+            [Op.and]: [
+                q && {
+                    [Op.or]: {
+                        name: { [Op.iLike]: `%${q}%` }
+                    },
+                }
+            ].filter(Boolean)
+        }
+        // let query = {};
+        let where;
+        let model;
+        let include;
 
-        const searchResults = await Review.findAndCountAll({
-            where: where,
-            offset: offset,
-            limit: limit as number,
-            // order: [order as string, sortBy as string],
-            include: [
+        if (category === "brands") {
+            where = whereBrand;
+            model = Product;
+            include = { model: Review, as: 'reviews' }
+        } else {
+            where = whereAll;
+            model = Review;
+            include = [
                 {
                     model: Product,
-                    as: 'product',
+                    as: 'product'
                 },
                 {
                     model: User,
                     as: 'user',
                 }
-            ]
+            ];
+        }
+        const searchResults = await model.findAndCountAll({
+            where: where,
+            offset: offset,
+            limit: limit as number,
+            // order: [order as string, sortBy as string],
+            include: include
         })
         if (!searchResults) {
             return res.status(404).json({ message: 'No results found' });

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { logout } from '../hooks/useLogin';
 import { User } from '@/lib/types';
-import SearchBar from './Searchbar';
+import SearchBar from '../../components/Searchbar';
 
 export type UserTypeProps = {
     loggedIn: boolean;
@@ -21,12 +21,12 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
     return (
         <header className="bg-white shadow-md py-4 sticky z-10 top-0 font-bold">
             {/* DESKTOPS */}
-            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div className="container mx-auto px-4 md:px-2 lg:px-4 py-3 flex justify-between items-center">
                 <Link href='/' onClick={toggleMenu}>
                     <div className="flex text-2xl font-bold text-indigo-600">ReviewMe</div>
                 </Link>
-                <nav className="hidden md:flex items-center space-x-6 gap-4 text-sm">
-                    <SearchBar setIsMenuOpen={setIsMenuOpen} />
+                <nav className="hidden md:flex items-center space-x-0 lg:space-x-6 gap-4 text-sm">
+                    <SearchBar searchCategory={"all"} />
                     <Link href='/products' className='text-gray-700 hover:text-gray-900 text-base transition'>All Brands</Link>
                     <Link href='/create-review' className='text-gray-700 hover:text-gray-900 text-base transition'>Post a Review</Link>
                 </nav>
@@ -57,7 +57,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                     onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
                 >
                     <div className="flex flex-col items-center justify-center h-full space-y-6">
-                        <SearchBar setIsMenuOpen={setIsMenuOpen} />
+                        <SearchBar searchCategory={"all"} />
                         <Link
                             href='/products'
                             onClick={toggleMenu}

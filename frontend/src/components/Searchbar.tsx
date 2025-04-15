@@ -1,10 +1,11 @@
+"use client"
 import React, { SetStateAction, useState } from 'react';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Search from '../hooks/useSearch';
 
 const SearchBar = (
-    { setIsMenuOpen }: { setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }
+    { searchCategory }: { searchCategory: string }
+    // { setIsMenuOpen }: { setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }
 ) => {
     const [query, setQuery] = useState('');
     const router = useRouter();
@@ -12,8 +13,8 @@ const SearchBar = (
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (query !== '') {
-            router.push('/search?q=' + query)
-            setIsMenuOpen(false)
+            router.push('search?q=' + query + `&category=${searchCategory}`);
+            // setIsMenuOpen(false)
         }
     };
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -8,6 +8,7 @@ import { LogoutClient } from '@/components/LogoutClient'
 import { fetchProducts } from './hooks/useGetProducts'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
+import SearchBar from '@/components/Searchbar'
 
 const page = async () => {
   const Reviews = await fetchReviews()
@@ -55,7 +56,7 @@ const page = async () => {
               <p>No Brands found</p>
             )
             }
-          </div >
+          </div>
         </div>
         {(user && user.loggedIn) &&
           <div className='flex flex-col gap-4 justify-end'>

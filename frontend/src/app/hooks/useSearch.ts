@@ -1,8 +1,8 @@
 "use server"
 
-const Search = async (q: string) => {
+const Search = async ({ q, category }: { q: string, category: string }) => {
     try {
-        const response = await fetch(`${process.env.API_URL}/search?q=${q}`, {
+        const response = await fetch(`${process.env.API_URL}/search?q=${q}&category=${category}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
