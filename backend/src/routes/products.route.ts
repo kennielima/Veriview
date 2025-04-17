@@ -7,6 +7,61 @@ import authenticate from "../middleware/protectRoute";
 
 const router = express.Router()
 
+router.get("/products", async (req: Request, res: Response) => {
+    try {
+        const allProducts = await Product.findAll({
+            include: {
+                model: Review,
+                as: "reviews"
+            },
+            order: [
+                ['createdAt', 'DESC'],
+            ]
+        })
+        if (!allProducts || allProducts.length === 0) {
+            console.log("can't find reviews")
+            return res.status(404).json({ message: "no products found" })
+        }
+        return res.status(200).json(allProducts);
+    }
+    catch (error) {
+        console.error('failed to get products:', error);
+        return res.status(500).json({ message: 'failed to rate product' })
+    }
+})
+
+router.get("/products/:id", async (req: Request, res: Response) => {
+    const productId = req.params.id;
+
+    try {
+        const product = await Product.findOne({
+            where: {
+                id: productId
+            },
+            include: [
+                {
+                    model: Review,
+                    as: "reviews"
+                },
+                {
+                    model: UserRating,
+                    as: "rating"
+                },
+            ]
+        })
+        if (!product) {
+            console.log("can't find product")
+            return res.status(404).json({ message: "no product found" })
+        }
+
+        return res.status(200).json(product);
+    }
+    catch (error) {
+        console.error('failed to get product:', error);
+        return res.status(500).json({ message: 'failed to get product' })
+    }
+})
+
 router.post("/products/:id/rate", authenticate, async (req: Request, res: Response) => {
     const productId = req.params.id;
     const { rating } = req.body;
@@ -65,59 +120,6 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
     }
     catch (error) {
         console.error('failed to rate product:', error);
-    }
-})
-
-
-router.get("/products", async (req: Request, res: Response) => {
-    try {
-        const allProducts = await Product.findAll({
-            include: {
-                model: Review,
-                as: "reviews"
-            }
-        })
-        if (!allProducts || allProducts.length === 0) {
-            console.log("can't find reviews")
-            return res.status(404).json({ message: "no products found" })
-        }
-        return res.status(200).json(allProducts);
-    }
-    catch (error) {
-        console.error('failed to get products:', error);
-        return res.status(500).json({ message: 'failed to rate product' })
-    }
-})
-
-router.get("/products/:id", async (req: Request, res: Response) => {
-    const productId = req.params.id;
-
-    try {
-        const product = await Product.findOne({
-            where: {
-                id: productId
-            },
-            include: [
-                {
-                    model: Review,
-                    as: "reviews"
-                },
-                {
-                    model: UserRating,
-                    as: "rating"
-                },
-            ]
-        })
-        if (!product) {
-            console.log("can't find product")
-            return res.status(404).json({ message: "no product found" })
-        }
-
-        return res.status(200).json(product);
-    }
-    catch (error) {
-        console.error('failed to get product:', error);
-        return res.status(500).json({ message: 'failed to get product' })
     }
 })
 

@@ -1,20 +1,7 @@
 export function formatDateTime(timestamp: string): string {
   const date = new Date(timestamp);
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const month = monthNames[date.getUTCMonth()];
   const day = date.getUTCDate();
@@ -66,4 +53,13 @@ export function timeAgo(timestamp: string): string {
 export const capitalizeFirstLetter = (text: string) => {
   if (!text) return text;
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+};
+
+
+export const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(part => part[0])
+    .join('')
+    .toUpperCase();
 };

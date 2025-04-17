@@ -13,7 +13,7 @@ const SearchBar = ({ searchCategory, setIsMenuOpen }: {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (query !== '') {
-            router.push('search?q=' + query + `&category=${searchCategory}`);
+            router.push('/search?q=' + query + `&category=${searchCategory}`);
             setIsMenuOpen && setIsMenuOpen(false)
         }
     };

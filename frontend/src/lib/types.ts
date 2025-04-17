@@ -33,6 +33,13 @@ export interface RatedHelpful {
     id: string
     helpful: number
     reviewId: string
+    userId: string,
+    review?: Review
+}
+export interface Userrating {
+    id: string
+    productRating: string
+    productId: string
     userId: string
 }
 
@@ -44,5 +51,7 @@ export interface User {
     id: string
     password: string
     updatedAt: string
-    review: Review | null
+    reviews: Review[] | null
+    ratedhelpful: RatedHelpful[] | null
+    userratings: Userrating[] | null
 }

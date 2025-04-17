@@ -23,12 +23,12 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
             {/* DESKTOPS */}
             <div className="container mx-auto px-4 md:px-2 lg:px-4 py-3 flex justify-between items-center">
                 <Link href='/' onClick={toggleMenu}>
-                    <div className="flex text-2xl font-bold text-indigo-600">ReviewMe</div>
+                    <div className="flex text-2xl font-bold text-indigo-600">ReviewHub</div>
                 </Link>
                 <nav className="hidden md:flex items-center space-x-0 lg:space-x-6 gap-4 text-sm">
                     <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
-                    <Link href='/products' className='text-gray-700 hover:text-gray-900 text-base transition'>All Brands</Link>
-                    <Link href='/create-review' className='text-gray-700 hover:text-gray-900 text-base transition'>Post a Review</Link>
+                    <Link href='/products' className='text-gray-800 hover:text-gray-900 text-base transition'>All Brands</Link>
+                    <Link href='/create-review' className='text-gray-800 hover:text-gray-900 text-base transition'>Post a Review</Link>
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
@@ -36,10 +36,10 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Login </button>
                         </Link>
                         :
-                        <p className='text-base flex gap-1 cursor-pointer items-center text-slate-800'>
+                        <Link href='/dashboard' className='text-base flex gap-1 cursor-pointer items-center text-gray-800'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
-                        </p>
+                        </Link>
                     }
                     <button
                         onClick={toggleMenu}
@@ -61,13 +61,13 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                         <Link
                             href='/products'
                             onClick={toggleMenu}
-                            className='text-gray-700 hover:text-gray-900 transition'
+                            className='text-gray-800 hover:text-gray-900 transition'
                         >
                             All Brands
                         </Link>
                         <Link
                             href='/create-review'
-                            className='text-gray-700 hover:text-gray-900 transition'
+                            className='text-gray-800 hover:text-gray-900 transition'
                             onClick={toggleMenu}
                         >
                             Post a Review

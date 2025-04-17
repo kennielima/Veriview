@@ -239,6 +239,5 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
     }
 })
 
-
 export default router;
 

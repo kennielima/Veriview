@@ -66,7 +66,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     <span className="ml-2 text-gray-600">({review.rating}/5)</span>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-1 text-gray-700'>
+                            <div className='flex items-center gap-1 text-gray-800'>
                                 <ThumbsUp
                                     className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
                                     onClick={thumbsUpHandler}
@@ -79,7 +79,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
 
                         <div className="space-y-4">
                             <div className="border-b pb-6 mb-6 border-t pt-6 mt-6">
-                                <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                <div className="grid grid-cols-2 gap-4 text-sm text-gray-800">
                                     {review.brand && (
                                         <div>
                                             <Link href={`/products/${review?.productId}`} className='hover:text-gray-500'>

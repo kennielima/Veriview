@@ -2,13 +2,11 @@ import React from 'react'
 import ReviewCard from '@/components/Card'
 import { Product, Review } from '@/lib/types'
 import { fetchReviews } from './hooks/useGetReviews'
-import ProductPage from './products/components/ProductPage'
 import getCurrentUser from '@/lib/getCurrentUser'
 import { LogoutClient } from '@/components/LogoutClient'
 import { fetchProducts } from './hooks/useGetProducts'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
-import SearchBar from '@/components/Searchbar'
 
 const page = async () => {
   const Reviews = await fetchReviews()
@@ -33,12 +31,12 @@ const page = async () => {
       {/* SIDEBAR */}
       <div className='flex flex-col md:pt-14 md:h-[85vh] w-full md:w-1/4 justify-between'>
         <div className='flex flex-col gap-4 pr-4 pl-12'>
-          <h1 className='text-xl font-bold underline'>Brands</h1>
+          <h1 className='text-lg font-bold underline'>Highest Rated Brands</h1>
           <div className="space-y-4 w-full">
 
             {/* Brands Sidebar */}
             {Products && Products.length > 0 ? (
-              Products.map((product: Product) => (
+              [...Products].sort((a: any, b: any) => b.averageRating - a.averageRating).slice(0, 3).map((product: Product) => (
                 <div className='flex flex-col' key={product.id}>
                   <div className='flex gap-1 items-center'>
                     <Link href={`products/${product.id}`} className='hover:text-gray-600'>{product.name}</Link>

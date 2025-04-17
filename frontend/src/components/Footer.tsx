@@ -7,9 +7,9 @@ const Footer = () => {
             <div className="flex justify-between space-x-20 w-full md:w-1/3">
                 <div className='flex flex-col gap-4'>
                     <Link href='/'>
-                        <div className="flex text-2xl font-bold">ReviewMe</div>
+                        <div className="flex text-2xl font-bold">ReviewHub</div>
                     </Link>
-                    <div className='sm:hidden items-end flex'>© 2024 ReviewMe</div>
+                    <div className='sm:hidden items-end flex'>© 2024 ReviewHub</div>
                 </div>
                 <div className='flex flex-col md:flex-row gap-3 md:space-x-20'>
                     <div className='flex flex-col gap-3 w-max'>
@@ -24,7 +24,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className='sm:flex items-end hidden'>© 2024 ReviewMe</div>
+            <div className='sm:flex items-end hidden'>© 2024 ReviewHub</div>
         </div>
     )
 }

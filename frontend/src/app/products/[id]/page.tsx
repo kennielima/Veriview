@@ -36,7 +36,7 @@ const productPage = async ({ params }: { params: { id: string } }) => {
                     <div className="space-y-10">
                         <div className="flex items-center justify-between px-8">
                             <h2 className="text-xl font-semibold text-gray-800">
-                                All Reviews ({product.reviews.length})
+                                All Reviews ({product?.reviews?.length})
                             </h2>
                             {/* <button className='text-white bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-2xl'>Post a Review</button> */}
                             {/* <div className="flex gap-4">

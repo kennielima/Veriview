@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ReviewMe",
+  title: "ReviewHub",
   description: "An app to review companies and services",
 };
 
@@ -28,11 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen flex flex-col`}>
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen flex flex-col`}>
+        <Header />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }

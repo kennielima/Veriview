@@ -57,11 +57,4 @@ const DeleteComponent = ({ id }: { id: string }) => {
 export default DeleteComponent
 
 
-
-// TODO USER PAGE
-// TODO COMMENTING SYSTEM
-// if reviewed, shdnt be able to rate
-// REFACTOR: 1.optimize search functionality 5. product->brand
-// search for brands on brand page
-// Scalability: 1. pagination/load more, 2. caching
-// faq, what we do
+//https://www.notion.so/1cea883fc17b80b89eddef5497fc89f4?v=1cea883fc17b81ae95f5000c0f94c10a

@@ -10,7 +10,7 @@ const ProductCard = (productt: { product: Product }) => {
         <div key={product.id}>
             <div className='flex flex-col border border-slate-300 shadow-md p-4 rounded-md' key={product.id}>
                 <div className='flex gap-1 items-center'>
-                    <Link href={`products/${product.id}`} className='hover:text-gray-600'>{product.name}</Link>
+                    <Link href={`products/${product.id}`} className='hover:text-gray-800 font-semibold'>{product.name}</Link>
                     <Star
                         className='text-yellow-500 w-4 h-4 ml-1'
                         fill={"currentColor"}
@@ -31,7 +31,7 @@ const ProductCard = (productt: { product: Product }) => {
                 <div className='flex justify-between items-center'>
                     <span className='text-sm flex items-center gap-1'>View more data here <ArrowRight className='text-indigo-600' /></span>
                     <Link href={`/products/${product.id}`}>
-                        <button className='px-3 py-2 rounded-lg text-white font-bod text-sm bg-indigo-600'>View Brand</button>
+                        <button className='px-3 py-2 rounded-lg text-white font-semibold text-sm bg-indigo-600'>View Brand</button>
                     </Link>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Card from '@/components/Card';
 import { ArrowLeft, Loader } from 'lucide-react';
 import ProductCard from '../../components/ProductCard';
+import { capitalizeFirstLetter } from '@/lib/utils';
 
 const page = () => {
     const router = useRouter();
@@ -48,13 +49,13 @@ const page = () => {
             {!isLoading &&
                 (searchCount > 0 ? (
                     <div className='flex flex-col gap-4 mx-8'>
-                        <div className='flex justify-between'>
+                        <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mx-10 md:mx-16'>
                             <Link
                                 href='#'
                                 onClick={(e) => { e.preventDefault(); router.back() }}>
-                                <button className="mb-6 flex items-center px-6 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
+                                <button className="flex items-center px-6 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
                                     <ArrowLeft className="mr-2 h-4 w-4" />
-                                    {category === "all" ? "Go Back" : `Back to ${category}`}
+                                    {category === "all" ? "Go Back" : `Back to ${category && capitalizeFirstLetter(category)}`}
                                 </button>
                             </Link>
                             <p>Showing {searchCount} of {searchCount} results</p>
@@ -73,8 +74,11 @@ const page = () => {
                 ) : (
                     <div className="flex flex-col items-center justify-center gap-4 mt-12">
                         <p>No Matches Found</p>
-                        <Link href='/'>
-                            <button className='py-1 px-3 bg-indigo-600 text-white rounded-md'> Back to Home </button>
+                        <Link
+                            href='#'
+                            onClick={(e) => { e.preventDefault(); router.back() }}
+                        >
+                            <button className='py-1 px-3 bg-indigo-600 text-white rounded-md'> Go Back </button>
                         </Link>
                     </div>
                 )
