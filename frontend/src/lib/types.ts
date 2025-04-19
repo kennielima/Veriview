@@ -41,6 +41,7 @@ export interface Userrating {
     productRating: string
     productId: string
     userId: string
+    product: Product
 }
 
 export interface User {

@@ -29,9 +29,9 @@ const page = async () => {
       <hr className='hidden md:flex w-[1px] h-full bg-slate-300 px-0' />
 
       {/* SIDEBAR */}
-      <div className='flex flex-col md:pt-14 md:h-[85vh] w-full md:w-1/4 justify-between'>
+      <div className='flex flex-col md:pt-14 md:h-[85vh] w-full md:w-1/3 justify-between'>
         <div className='flex flex-col gap-4 pr-4 pl-12'>
-          <h1 className='text-lg font-bold underline'>Highest Rated Brands</h1>
+          <h1 className='text-lg font-bold'>Highest Rated Brands</h1>
           <div className="space-y-4 w-full">
 
             {/* Brands Sidebar */}

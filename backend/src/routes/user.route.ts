@@ -4,6 +4,7 @@ import authenticate from "../middleware/protectRoute";
 import Review from "../models/Review";
 import UserRating from "../models/UserRating";
 import RatedHelpful from "../models/RatedHelpful";
+import Product from "../models/Product";
 
 const router = express.Router();
 
@@ -69,7 +70,31 @@ router.get("/users/:userId/ratedhelpful", async (req: Request, res: Response) =>
     }
     catch (error) {
         console.error("error rating review:", error)
-        return res.status(500).json({ message: 'error rating review' })
+        return res.status(500).json({ message: 'error fetching rated helpful' })
+    }
+})
+
+router.get("/users/:userId/productrating", async (req: Request, res: Response) => {
+    const userId = req.params.userId;
+    try {
+        const ProductRating = await UserRating.findAll({
+            include: {
+                model: Product,
+                as: 'product'
+            },
+            where: {
+                userId
+            }
+        });
+        if (!ProductRating || ProductRating.length === 0) {
+            console.log("can't find product rating")
+            return res.status(404).json({ message: 'no product rating found' })
+        }
+        return res.status(200).json(ProductRating)
+    }
+    catch (error) {
+        console.error("error rating review:", error)
+        return res.status(500).json({ message: 'error fetching product rating' })
     }
 })
 

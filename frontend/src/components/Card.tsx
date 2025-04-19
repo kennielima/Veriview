@@ -14,7 +14,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
                         <RenderedStars rating={review.rating} />
                     </div>
                 </div>
-                <p className="text-gray-700 mb-4 line-clamp-2 break-words max-w-[80ch]">
+                <p className="text-gray-700 mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch]">
                     {review.content}
                 </p>
                 <div className="flex justify-between items-center text-sm text-gray-500">

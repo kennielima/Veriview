@@ -1,17 +1,21 @@
 "use client"
 import { useState } from 'react';
-import { Star, Edit, Trash2, Settings, User as UserIcon, BookOpen, Heart, Clock, Grid, List, Plus, Filter, ChevronDown, Bell } from 'lucide-react';
+import { User as UserIcon, BookOpen, Clock, Plus } from 'lucide-react';
 import { formatDateTime, getInitials } from '@/lib/utils';
-import { RatedHelpful, User } from '@/lib/types';
+import { RatedHelpful, User, Userrating } from '@/lib/types';
 import ReviewCard from '@/components/Card';
+import ProductCard from '@/components/ProductCard';
 
-export default function Dashboard({ user, userRateHelpful }: { user: User, userRateHelpful: RatedHelpful[] }) {
+type UserTypeProps = {
+    user: User,
+    userRateHelpful: RatedHelpful[];
+    userProductRating: Userrating[]
+}
+export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, userProductRating }) => {
     const [activeTab, setActiveTab] = useState('my-reviews');
-    const [activityTab, setActivityTab] = useState('product-rating');
+    const [activityTab, setActivityTab] = useState('brand-rating');
 
-    const reviews = user.reviews || [];
-    // const ratedreviews = userRateHelpful?.review || [];
-    console.log(userRateHelpful, "userRateHelpful")
+    const reviews = user?.reviews || [];
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -23,7 +27,7 @@ export default function Dashboard({ user, userRateHelpful }: { user: User, userR
                             <div className="bg-indigo-600 h-24 relative">
                                 <div className="absolute -bottom-10 left-6">
                                     <div className="h-20 w-20 rounded-full bg-indigo-500 border-4 border-white flex items-center justify-center text-white text-xl font-bold">
-                                        {getInitials(user.fullName)}
+                                        {user && getInitials(user.fullName)}
                                     </div>
                                 </div>
                                 {/* <div className="absolute top-4 right-4">
@@ -34,11 +38,11 @@ export default function Dashboard({ user, userRateHelpful }: { user: User, userR
                             </div>
 
                             <div className="pt-12 px-6 pb-6">
-                                <h2 className="text-xl font-bold text-gray-900">{user.fullName}</h2>
-                                <p className="text-gray-500">@{user.username}</p>
+                                <h2 className="text-xl font-bold text-gray-900">{user?.fullName}</h2>
+                                <p className="text-gray-500">@{user?.username}</p>
 
                                 <div className="mt-4 text-sm text-gray-500">
-                                    <p>Member since {formatDateTime(user.createdAt)}</p>
+                                    <p>Member since {formatDateTime(user?.createdAt)}</p>
                                 </div>
 
                                 <div className="mt-6 flex space-x-6 text-sm">
@@ -115,10 +119,10 @@ export default function Dashboard({ user, userRateHelpful }: { user: User, userR
                             <div className="bg-white rounded-lg shadow overflow-hidden">
                                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between items-center text-base font-medium text-gray-900 my-3 w-full sm:w-3/4 mx-auto">
                                     <h1
-                                        className={`${activityTab === 'product-rating' && "font-bold text-lg border border-indigo-500 py-2 px-4 rounded-md shadow-md"} cursor-pointer`}
-                                        onClick={() => setActivityTab('product-rating')}
+                                        className={`${activityTab === 'brand-rating' && "font-bold text-lg border border-indigo-500 py-2 px-4 rounded-md shadow-md"} cursor-pointer`}
+                                        onClick={() => setActivityTab('brand-rating')}
                                     >
-                                        Product Ratings ({user?.userratings?.length})
+                                        Brand Ratings ({user?.userratings?.length})
                                     </h1>
                                     <h1
                                         className={`${activityTab === 'rated-helpful' && "font-bold text-lg border border-indigo-500 py-2 px-4 rounded-md shadow-md"} cursor-pointer`}
@@ -128,9 +132,18 @@ export default function Dashboard({ user, userRateHelpful }: { user: User, userR
                                     </h1>
                                 </div>
                                 <div className="p-6 text-center text-gray-500">
-                                    {activityTab === 'product-rating' && (
+                                    {activityTab === 'brand-rating' && (
                                         <div>
-
+                                            <div>
+                                                {userProductRating &&
+                                                    userProductRating.map((userProductRating: Userrating) => (
+                                                        userProductRating?.product && (
+                                                            <div key={userProductRating.id}>
+                                                                <ProductCard product={userProductRating.product} />
+                                                            </div>
+                                                        )
+                                                    ))}
+                                            </div>
                                         </div>
                                     )}
                                     {activityTab === 'rated-helpful' && (
@@ -154,3 +167,5 @@ export default function Dashboard({ user, userRateHelpful }: { user: User, userR
         </div >
     );
 }
+
+export default Dashboard;
