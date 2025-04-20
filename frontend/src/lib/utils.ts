@@ -1,7 +1,7 @@
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 export function formatDateTime(timestamp: string): string {
   const date = new Date(timestamp);
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const month = monthNames[date.getUTCMonth()];
   const day = date.getUTCDate();
@@ -15,6 +15,14 @@ export function formatDateTime(timestamp: string): string {
   hours = hours ? hours : 12;
 
   return `${month} ${day}, ${year} ${hours}:${minutes}${ampm}`;
+}
+
+export function formatDate(timestamp: string): string {
+  const date = new Date(timestamp);
+  const month = monthNames[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear();
+  return `${month} ${day}, ${year}`;
 }
 
 export function timeAgo(timestamp: string): string {
@@ -57,6 +65,7 @@ export const capitalizeFirstLetter = (text: string) => {
 
 
 export const getInitials = (name: string) => {
+  if (!name) return;
   return name
     .split(' ')
     .map(part => part[0])

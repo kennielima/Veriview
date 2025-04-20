@@ -95,10 +95,16 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
 router.get("/", async (req: Request, res: Response) => {
     try {
         const allReviews = await Review.findAll({
-            include: {
-                model: User,
-                as: 'user'
-            },
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                },
+                {
+                    model: RatedHelpful,
+                    as: "ratedhelpful"
+                }
+            ],
             order: [
                 ['createdAt', 'DESC'],
             ]

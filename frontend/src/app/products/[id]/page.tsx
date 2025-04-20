@@ -6,11 +6,13 @@ import RateProduct from '@/app/products/components/RateProduct';
 import RenderedStars from '@/components/renderStars';
 import RatingStats from '../components/RatingStats';
 import getCurrentUser from '@/lib/getCurrentUser';
+import getUserData from '@/app/hooks/useUser';
 
 const productPage = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
     const product = await fetchProduct(id);
-    const user = await getCurrentUser()
+    // const user = await getCurrentUser()
+    const { userData } = await getUserData();
 
     return (
         <Fragment>
@@ -29,7 +31,7 @@ const productPage = async ({ params }: { params: { id: string } }) => {
                                     </span>
                                 </div>
                             </div>
-                            <RateProduct id={id} user={user} />
+                            <RateProduct id={id} user={userData} />
                         </div>
                     </div>
 

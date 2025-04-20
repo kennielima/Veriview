@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import Product from "../models/Product";
 import Review from "../models/Review";
 import User from "../models/User";
+import RatedHelpful from "../models/RatedHelpful";
 const { Op } = require('sequelize');
 
 const router = express.Router();
@@ -59,6 +60,11 @@ router.get("/search", async (req: Request, res: Response) => {
                 {
                     model: User,
                     as: 'user',
+                },
+                {
+                    model: RatedHelpful,
+                    as: 'ratedhelpful',
+                    attributes: ['id']
                 }
             ];
         }

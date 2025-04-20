@@ -4,6 +4,7 @@ import Review from "../models/Review";
 import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
 import authenticate from "../middleware/protectRoute";
+import RatedHelpful from "../models/RatedHelpful";
 
 const router = express.Router()
 
@@ -41,7 +42,12 @@ router.get("/products/:id", async (req: Request, res: Response) => {
             include: [
                 {
                     model: Review,
-                    as: "reviews"
+                    as: "reviews",
+                    include: [{
+                        model: RatedHelpful,
+                        as: 'ratedhelpful',
+                        attributes: ['id']
+                    }]
                 },
                 {
                     model: UserRating,

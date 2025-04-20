@@ -10,7 +10,7 @@ export interface Review {
     userId: string,
     productId: string,
     anonymous: boolean,
-    ratedhelpful: RatedHelpful
+    ratedhelpful: RatedHelpful[]
 }
 
 export interface Product {

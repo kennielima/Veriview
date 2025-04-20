@@ -86,7 +86,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         id="title"
                         value={title}
                         onChange={(e) => { setTitle(e.target.value); setError('') }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Summarize your review"
                         maxLength={100}
                     />
@@ -107,7 +107,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                             id="brand"
                             value={brand}
                             onChange={handleChangeBrandName}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             placeholder="Name of brand, product or company"
                             maxLength={200}
                         />
@@ -141,7 +141,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         value={content}
                         onChange={(e) => { setContent(e.target.value), setError('') }}
                         rows={5}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Tell us about your experience"
                         maxLength={500}
                     />

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Search from '../hooks/useSearch';
 import Link from 'next/link';
-import Card from '@/components/Card';
+import ReviewCard from '@/components/Card';
 import { ArrowLeft, Loader } from 'lucide-react';
 import ProductCard from '../../components/ProductCard';
 import { capitalizeFirstLetter } from '@/lib/utils';
@@ -62,7 +62,7 @@ const page = () => {
                         </div>
                         {category === "all" &&
                             searchResults.map((review: Review) => (
-                                <Card review={review} key={review.id} />
+                                <ReviewCard review={review} key={review.id} />
                             ))}
                         {category === "brands" &&
                             searchResults.map((brand: Product) => (

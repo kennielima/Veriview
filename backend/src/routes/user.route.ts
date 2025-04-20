@@ -31,15 +31,44 @@ router.get('/getuser', authenticate, async (req: Request, res: Response) => {
             include: [
                 {
                     model: Review,
-                    as: "reviews"
+                    as: "reviews",
+
+                    include: [{
+                        model: RatedHelpful,
+                        as: 'ratedhelpful',
+                        attributes: ['id']
+                    }]
+
                 },
                 {
                     model: UserRating,
-                    as: "userratings"
+                    as: "userratings",
+
+                    include: [{
+                        model: Product,
+                        as: 'product',
+                        include: [{
+                            model: Review,
+                            as: 'reviews',
+                            attributes: ['id']
+                        }]
+                    }]
+
                 },
                 {
                     model: RatedHelpful,
-                    as: "ratedhelpful"
+                    as: "ratedhelpful",
+
+                    include: [{
+                        model: Review,
+                        as: 'review',
+                        include: [{
+                            model: RatedHelpful,
+                            as: 'ratedhelpful',
+                            attributes: ['id']
+                        }]
+                    }]
+
                 }
             ]
         })
@@ -56,7 +85,12 @@ router.get("/users/:userId/ratedhelpful", async (req: Request, res: Response) =>
         const UserRatedHelpful = await RatedHelpful.findAll({
             include: {
                 model: Review,
-                as: 'review'
+                as: 'review',
+                include: [{
+                    model: RatedHelpful,
+                    as: 'ratedhelpful',
+                    attributes: ['id']
+                }]
             },
             where: {
                 userId

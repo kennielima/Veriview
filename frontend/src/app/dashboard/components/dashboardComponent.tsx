@@ -1,21 +1,19 @@
 "use client"
 import { useState } from 'react';
 import { User as UserIcon, BookOpen, Clock, Plus } from 'lucide-react';
-import { formatDateTime, getInitials } from '@/lib/utils';
-import { RatedHelpful, User, Userrating } from '@/lib/types';
+import { formatDate, getInitials } from '@/lib/utils';
+import { RatedHelpful, Review, User, Userrating } from '@/lib/types';
 import ReviewCard from '@/components/Card';
 import ProductCard from '@/components/ProductCard';
+import Link from 'next/link';
 
-type UserTypeProps = {
-    user: User,
-    userRateHelpful: RatedHelpful[];
-    userProductRating: Userrating[]
-}
-export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, userProductRating }) => {
+export const Dashboard = ({ user }: { user: User }) => {
     const [activeTab, setActiveTab] = useState('my-reviews');
     const [activityTab, setActivityTab] = useState('brand-rating');
 
     const reviews = user?.reviews || [];
+    const userRateHelpful = user.ratedhelpful;
+    const userProductRating = user.userratings;
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -27,7 +25,7 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                             <div className="bg-indigo-600 h-24 relative">
                                 <div className="absolute -bottom-10 left-6">
                                     <div className="h-20 w-20 rounded-full bg-indigo-500 border-4 border-white flex items-center justify-center text-white text-xl font-bold">
-                                        {user && getInitials(user.fullName)}
+                                        {user && getInitials(user?.fullName)}
                                     </div>
                                 </div>
                                 {/* <div className="absolute top-4 right-4">
@@ -42,7 +40,7 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                                 <p className="text-gray-500">@{user?.username}</p>
 
                                 <div className="mt-4 text-sm text-gray-500">
-                                    <p>Member since {formatDateTime(user?.createdAt)}</p>
+                                    <p>Member since {formatDate(user?.createdAt)}</p>
                                 </div>
 
                                 <div className="mt-6 flex space-x-6 text-sm">
@@ -67,7 +65,7 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                             <nav className="px-2 py-4" >
                                 <button
                                     onClick={() => setActiveTab('my-reviews')}
-                                    className={`flex items-center px-4 py-2 w-full text-left rounded-md ${activeTab === 'my-reviews' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
+                                    className={`flex items-center px-4 py-2 w-full text-left rounded-md ${activeTab === 'my-reviews' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-50'
                                         }`}
                                 >
                                     <BookOpen size={18} className="mr-3" />
@@ -76,7 +74,7 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
 
                                 < button
                                     onClick={() => setActiveTab('activity')}
-                                    className={`flex items-center px-4 py-2 w-full text-left rounded-md ${activeTab === 'activity' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50'
+                                    className={`flex items-center px-4 py-2 w-full text-left rounded-md ${activeTab === 'activity' ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-50'
                                         }`}
                                 >
                                     <Clock size={18} className="mr-3" />
@@ -96,19 +94,19 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                                     {activeTab === 'activity' && 'Recent Activity'}
                                 </h1>
 
-                                <div className="mt-4 sm:mt-0 flex space-x-2">
+                                <Link href='/create-review' className="mt-4 sm:mt-0 flex space-x-2">
                                     <button className="flex items-center px-3 py-1.5 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700">
                                         <Plus size={14} className="mr-1.5" />
                                         <span>New Review</span>
                                     </button>
-                                </div>
+                                </Link>
                             </div>
                         </div>
 
                         {/* Reviews Content */}
                         {activeTab === 'my-reviews' && (
                             <div className={"space-y-4"}>
-                                {reviews.map(review => (
+                                {reviews.map((review: Review) => (
                                     <ReviewCard key={review.id} review={review} />
                                 ))}
                             </div>
@@ -117,18 +115,18 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                         {/* Activity Content */}
                         {activeTab === 'activity' && (
                             <div className="bg-white rounded-lg shadow overflow-hidden">
-                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between items-center text-base font-medium text-gray-900 my-3 w-full sm:w-3/4 mx-auto">
+                                <div className="flex flex-col sm:flex-row gap-4 sm:justify-between items-center text-lg font-bold text-gray-900 my-3 w-full sm:w-5/6 mx-auto">
                                     <h1
-                                        className={`${activityTab === 'brand-rating' && "font-bold text-lg border border-indigo-500 py-2 px-4 rounded-md shadow-md"} cursor-pointer`}
+                                        className={`${activityTab === 'brand-rating' ? "bg-indigo-50 text-indigo-700 shadow-md" : "hover:bg-gray-50"} rounded-md py-2 w-5/6 sm:w-1/2 cursor-pointer flex justify-center`}
                                         onClick={() => setActivityTab('brand-rating')}
                                     >
                                         Brand Ratings ({user?.userratings?.length})
                                     </h1>
                                     <h1
-                                        className={`${activityTab === 'rated-helpful' && "font-bold text-lg border border-indigo-500 py-2 px-4 rounded-md shadow-md"} cursor-pointer`}
+                                        className={`${activityTab === 'rated-helpful' ? "bg-indigo-50 text-indigo-700 shadow-md" : "hover:bg-gray-50"} rounded-md py-2 sm:px-0 w-5/6 sm:w-1/2 cursor-pointer flex justify-center`}
                                         onClick={() => setActivityTab('rated-helpful')}
                                     >
-                                        Reviews Rated Helpful <span className='text-base'>({user?.ratedhelpful?.length})</span>
+                                        Reviews Rated Helpful ({user?.ratedhelpful?.length})
                                     </h1>
                                 </div>
                                 <div className="p-6 text-center text-gray-500">
@@ -152,7 +150,7 @@ export const Dashboard: React.FC<UserTypeProps> = ({ user, userRateHelpful, user
                                                 userRateHelpful.map((userRateHelpful: RatedHelpful) => (
                                                     userRateHelpful.review && (
                                                         <div key={userRateHelpful.id}>
-                                                            <ReviewCard review={userRateHelpful.review} />
+                                                            <ReviewCard review={userRateHelpful?.review} />
                                                         </div>
                                                     )
                                                 ))}

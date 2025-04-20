@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { logout } from '../hooks/useLogin';
 import { User } from '@/lib/types';
 import SearchBar from '../../components/Searchbar';
+import { getInitials } from '@/lib/utils';
 
 export type UserTypeProps = {
     loggedIn: boolean;
@@ -36,6 +37,8 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Login </button>
                         </Link>
                         :
+                        // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>
+                        // {/* {getInitials(currentUser.fullName)} */ }
                         <Link href='/dashboard' className='text-base flex gap-1 cursor-pointer items-center text-gray-800'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
@@ -51,39 +54,41 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
             </div>
 
             {/* MOBILE/TABS */}
-            {isMenuOpen && (
-                <div
-                    className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-20 p-8 bg-white z-50"
-                    onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
-                >
-                    <div className="flex flex-col items-center justify-center h-full space-y-6">
-                        <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
-                        <Link
-                            href='/products'
-                            onClick={toggleMenu}
-                            className='text-gray-800 hover:text-gray-900 transition'
-                        >
-                            All Brands
-                        </Link>
-                        <Link
-                            href='/create-review'
-                            className='text-gray-800 hover:text-gray-900 transition'
-                            onClick={toggleMenu}
-                        >
-                            Post a Review
-                        </Link>
-                        {(user && (user as UserTypeProps).loggedIn) && (
-                            <button
-                                onClick={() => { logout; toggleMenu }}
-                                className='text-white transition w-full bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md'
+            {
+                isMenuOpen && (
+                    <div
+                        className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-20 p-8 bg-white z-50"
+                        onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
+                    >
+                        <div className="flex flex-col items-center justify-center h-full space-y-6">
+                            <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
+                            <Link
+                                href='/products'
+                                onClick={toggleMenu}
+                                className='text-gray-800 hover:text-gray-900 transition'
                             >
-                                Logout
-                            </button>
-                        )}
+                                All Brands
+                            </Link>
+                            <Link
+                                href='/create-review'
+                                className='text-gray-800 hover:text-gray-900 transition'
+                                onClick={toggleMenu}
+                            >
+                                Post a Review
+                            </Link>
+                            {(user && (user as UserTypeProps).loggedIn) && (
+                                <button
+                                    onClick={() => { logout; toggleMenu }}
+                                    className='text-white transition w-full bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md'
+                                >
+                                    Logout
+                                </button>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
-        </header>
+                )
+            }
+        </header >
     )
 }
 
