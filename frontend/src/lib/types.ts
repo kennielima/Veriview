@@ -52,7 +52,7 @@ export interface User {
     id: string
     password: string
     updatedAt: string
-    reviews: Review[] | null
-    ratedhelpful: RatedHelpful[] | null
-    userratings: Userrating[] | null
+    reviews?: Review[] | null
+    ratedhelpful?: RatedHelpful[] | null
+    userratings?: Userrating[] | null
 }

@@ -3,7 +3,7 @@ import { UserTypeProps } from '@/app/Header/HeaderClient';
 import { rateProduct } from '@/app/hooks/useRating';
 import Modal from '@/components/Modal';
 import { RenderStars } from '@/components/renderStars';
-import { User } from '@/lib/types';
+import { Review, User } from '@/lib/types';
 import { Check, Loader, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,24 +12,32 @@ import React, { useState } from 'react';
 
 export type ProductTypeProps = {
     id: string;
-    user: {
-        loggedIn: boolean;
-        user: User
-    };
+    user: User
 }
 
 const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [rating, setRating] = useState(0);
+    const [reviewerCantRate, setReviewerCantRate] = useState(false);
+
     const router = useRouter();
-    console.log(user)
+    const UserReviews = user.reviews || [];
+    const userHasRatedBrand = UserReviews.filter((review: Review) => review.productId === id).length > 0;
+
     const submitRating = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true)
+        setIsLoading(true);
+
         try {
-            (rating != 0 && user.loggedIn) && await rateProduct(rating, id);
+            if (userHasRatedBrand) {
+                setReviewerCantRate(true)
+                return;
+            }
+            (rating != 0 && user && !userHasRatedBrand) && await rateProduct(rating, id);
+            setIsOpen(true)
             router.push(`/products/${id}`);
+
         } catch (error) {
             console.error(error)
         } finally {
@@ -43,13 +51,19 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
                 <span className='text-gray-600 text-sm'> Rate this brand: </span>
                 <RenderStars rating={rating} setRating={setRating} size='size-5' />
             </div>
-            <button
-                type='submit'
-                onClick={() => rating != 0 && setIsOpen(true)}
-                className='bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 mb-4 md:mb-0 rounded-2xl w-3/6 md:w-full md:mx-auto'
-            >
-                Rate
-            </button>
+            <div className='flex flex-col gap-1 mb-4 md:mb-0'>
+                <button
+                    type='submit'
+                    className='bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-2xl w-3/6 md:w-full md:mx-auto'
+                >
+                    Rate
+                </button>
+                {reviewerCantRate &&
+                    <span className='text-xs'>A product reviewer can't also rate.
+                        <Link href='' className='text-indigo-600'>Find out more</Link>
+                    </span>
+                }
+            </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 {isLoading ? (
                     <div className='flex w-full justify-center text-indigo-600'><Loader className='h-10 w-10' /></div>
@@ -61,7 +75,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
                         >
                             <X />
                         </div>
-                        {(!user || !(user as UserTypeProps).loggedIn) ? (
+                        {!user ? (
                             <div className='flex flex-col w-full font-bold  items-center text-center gap-2'>
                                 <div>You must be logged in to rate a product</div>
                                 <Link href='/login'>

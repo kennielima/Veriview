@@ -80,7 +80,12 @@ router.get("/users/:userId/productrating", async (req: Request, res: Response) =
         const ProductRating = await UserRating.findAll({
             include: {
                 model: Product,
-                as: 'product'
+                as: 'product',
+                include: [{
+                    model: Review,
+                    as: 'reviews',
+                    attributes: ['id']
+                }],
             },
             where: {
                 userId
