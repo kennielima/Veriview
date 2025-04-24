@@ -12,8 +12,8 @@ export const Dashboard = ({ user }: { user: User }) => {
     const [activityTab, setActivityTab] = useState('brand-rating');
 
     const reviews = user?.reviews || [];
-    const userRateHelpful = user.ratedhelpful;
-    const userProductRating = user.userratings;
+    const userRateHelpful = user?.ratedhelpful;
+    const userProductRating = user?.userratings;
 
     return (
         <div className="min-h-screen bg-gray-50">

@@ -93,7 +93,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <span>{review.user.username}</span>
+                                            <span>{review?.user?.username}</span>
                                         )}
                                     </div>
                                     <div>

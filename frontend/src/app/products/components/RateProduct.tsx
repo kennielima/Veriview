@@ -22,7 +22,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
     const [reviewerCantRate, setReviewerCantRate] = useState(false);
 
     const router = useRouter();
-    const UserReviews = user.reviews || [];
+    const UserReviews = user?.reviews || [];
     const userHasRatedBrand = UserReviews.filter((review: Review) => review.productId === id).length > 0;
 
     const submitRating = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +58,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
                 >
                     Rate
                 </button>
-                {reviewerCantRate &&
+                {(reviewerCantRate && rating != 0) &&
                     <span className='text-xs'>A product reviewer can't also rate.
                         <Link href='' className='text-indigo-600'>Find out more</Link>
                     </span>

@@ -10,7 +10,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
 
     return (
         <Link href={`/reviews/${review.id}`}>
-            <div className="bg-white border-t border-t-slate-100 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-3xl">
+            <div className="bg-white border-t border-t-slate-100 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-4xl">
                 <div className="flex justify-between items-start">
                     <h2 className="text-xl font-semibold text-gray-800">{review.title}</h2>
                     <div className="flex">
@@ -18,14 +18,14 @@ const ReviewCard = ({ review }: { review: Review }) => {
                     </div>
                 </div>
                 <p className="text-indigo-600 mb-3 mt-1 text-start">{review.brand}</p>
-                <p className="text-gray-700 mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch]">
+                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] text-b">
                     {review.content}
                 </p>
                 <div className="flex justify-between items-center text-sm text-gray-500">
                     <div className='flex gap-1 items-center'>
-                        {review?.user?.fullName && <p className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>{getInitials(review.anonymous ? "A non" : review?.user?.fullName)}</p>}
+                        {review?.user?.fullName && <p className={`${review.anonymous ? "bg-gray-400" : "bg-indigo-600 "} p-3 rounded-full mr-2 text-white`}>{getInitials(review.anonymous ? "A non" : review?.user?.fullName)}</p>}
                         <div className='flex flex-col gap-1'>
-                            <p className="font-medium">{review.anonymous ? "Anonymous" : review?.user?.username}</p>
+                            <p className="font-medium text-gray-700">{review.anonymous ? "Anonymous" : review?.user?.username}</p>
                             <p className='text-xs sm:hidden flex items-center gap-1'>
                                 <Clock className='size-3' />
                                 {timeAgo(review.createdAt)}

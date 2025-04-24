@@ -20,7 +20,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
     const currentUser = user?.user;
 
     return (
-        <header className="bg-white shadow-md py-4 sticky z-10 top-0 font-bold">
+        <header className="bg-white shadow-md py-2 sticky z-10 top-0 font-semibold">
             {/* DESKTOPS */}
             <div className="flex justify-between w-full mx-auto px-6 py-3 items-center">
                 <Link href='/' onClick={toggleMenu}>
@@ -28,8 +28,9 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 </Link>
                 <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-10 text-sm">
                     <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} />
-                    <Link href='/products' className=' text-gray-800 hover:text-gray-900 text-base transition'>All Brands</Link>
-                    <Link href='/create-review' className='text-gray-800 hover:text-gray-900 text-base transition'>Post a Review</Link>
+                    <Link href='/products' className=' text-gray-800 hover:text-gray-800 text-base transition'>Brands</Link>
+                    <Link href='/reviews' className=' text-gray-800 hover:text-gray-800 text-base transition'>Reviews</Link>
+                    <Link href='/create-review' className='text-gray-800 hover:text-gray-800 text-base transition'>Post a Review</Link>
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
@@ -39,7 +40,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                         :
                         // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>
                         // {/* {getInitials(currentUser.fullName)} */ }
-                        <Link href='/dashboard' className='text-base flex gap-1 cursor-pointer items-center text-gray-800'>
+                        <Link href='/dashboard' className='text-base flex gap-1 cursor-pointer items-center text-gray-800 font-semibold'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
                         </Link>
@@ -67,7 +68,14 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                                 onClick={toggleMenu}
                                 className='text-gray-800 hover:text-gray-900 transition'
                             >
-                                All Brands
+                                Brands
+                            </Link>
+                            <Link
+                                href='/reviews'
+                                onClick={toggleMenu}
+                                className='text-gray-800 hover:text-gray-900 transition'
+                            >
+                                Reviews
                             </Link>
                             <Link
                                 href='/create-review'

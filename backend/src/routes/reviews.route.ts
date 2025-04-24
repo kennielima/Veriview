@@ -92,9 +92,15 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
     }
 })
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/reviews", async (req: Request, res: Response) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const sortBy = req.query.sort?.toString() || 'createdAt';
+    const sortOrder = req.query.sort?.toString() || 'DESC';
+
     try {
-        const allReviews = await Review.findAll({
+        const allReviews = await Review.findAndCountAll({
             include: [
                 {
                     model: User,
@@ -105,15 +111,25 @@ router.get("/", async (req: Request, res: Response) => {
                     as: "ratedhelpful"
                 }
             ],
+            limit,
+            offset,
             order: [
-                ['createdAt', 'DESC'],
+                [sortBy, sortOrder]
             ]
         });
-        if (!allReviews || allReviews.length === 0) {
+
+        const { rows, count } = allReviews;
+
+        if (!rows || count === 0) {
             console.log("can't find reviews")
             return res.status(404).json({ message: 'no reviews found' })
         }
-        return res.status(200).json(allReviews)
+        return res.status(200).json({
+            data: rows,
+            totalReviews: count,
+            currentPage: Number(page),
+            totalPages: Math.ceil(count / limit),
+        })
     }
     catch (error) {
         console.error("error getting reviews:", error)
