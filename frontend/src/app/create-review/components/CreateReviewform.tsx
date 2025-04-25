@@ -109,7 +109,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                             onChange={handleChangeBrandName}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             placeholder="Name of brand, product or company"
-                            maxLength={200}
+                            maxLength={50}
                         />
                         {showSuggestions && (
                             <ul className="absolute z-10 w-full bg-white border rounded mt-[1px] max-h-40 overflow-auto shadow">
@@ -143,7 +143,6 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         rows={5}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="Tell us about your experience"
-                        maxLength={500}
                     />
                     {(error === 'Please write your review' && content === '') && (
                         <div className="text-red-700 text-xs mt-1">{error}</div>

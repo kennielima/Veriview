@@ -1,14 +1,15 @@
 export const fetchReviews = async (page?: number, sort?: string, order?: string, limit?: number) => {
-    let query = [
+    let queryString = [
         page && `page=${page}`,
-        sort && `order=${sort}`,
+        sort && `sort=${sort}`,
         order && `order=${order}`,
         limit ? `limit=${limit}` : `limit=5`,
     ]
         .filter(Boolean)
         .join("&");
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews?${query}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews?${queryString}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
