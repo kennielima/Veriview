@@ -50,7 +50,7 @@ const page = async () => {
               <Link href='/reviews'>
                 <div className="mt-8 text-center">
                   <button className="px-6 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                    Load More Reviews
+                    View all Reviews
                   </button>
                 </div>
               </Link>
@@ -78,13 +78,13 @@ const page = async () => {
 
       {/* SIDEBAR */}
       <div className='pb-2 border shadow-md flex flex-col py-6 md:pt-12 md:h-[90vh] w-full md:w-1/3 lg:w-1/4 justify-between'>
-        <div className='flex flex-col gap-4 mx-auto px-6 justify-center border shadow-sm py-8 rounded-md'>
+        <div className='flex flex-col gap-4 mx-auto px-6 justify-center py-8'>
           <h1 className='text-lg font-bold'>Highest Rated Brands</h1>
           <div className="space-y-4 w-full">
             {/* Brands Sidebar */}
             {Products && Products.length > 0 ? (
               [...Products].sort((a: any, b: any) => b.averageRating - a.averageRating).slice(0, 3).map((product: Product) => (
-                <Link href={`products/${product.id}`} className='flex flex-col border shadow-m gap-1 p-3 rounded-md hover:bg-indigo-50' key={product.id}>
+                <Link href={`products/${product.id}`} className='flex flex-col gap-1' key={product.id}>
                   <div className='flex gap-1 items-center'>
                     <p className='hover:text-gray-600 text-sm'>{product.name}</p>
                     <Star

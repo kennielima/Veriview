@@ -40,7 +40,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                         :
                         // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>
                         // {/* {getInitials(currentUser.fullName)} */ }
-                        <Link href='/dashboard' className='text-base flex gap-1 cursor-pointer items-center text-gray-800 font-semibold'>
+                        <Link href='/dashboard/me' className='text-base flex gap-1 cursor-pointer items-center text-gray-800 font-semibold'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
                         </Link>
@@ -58,7 +58,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
             {
                 isMenuOpen && (
                     <div
-                        className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-20 p-8 bg-white z-50"
+                        className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-18 p-8 bg-white z-50"
                         onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
                     >
                         <div className="flex flex-col items-center justify-center h-full space-y-6">

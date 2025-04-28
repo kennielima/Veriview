@@ -37,17 +37,17 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-bold mb-4">Explore</h3>
                         <ul className="space-y-2 text-gray-300 text-sm">
-                            <li><a href="#" className="hover:text-white">Top Brands</a></li>
+                            <li><a href="/brands" className="hover:text-white">Top Brands</a></li>
                             {/* <li><a href="#" className="hover:text-white">Categories</a></li> */}
-                            <li><a href="#" className="hover:text-white">Latest Reviews</a></li>
+                            <li><a href="/reviews" className="hover:text-white">Latest Reviews</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-lg font-bold mb-4">Company</h3>
                         <ul className="space-y-2 text-gray-300 text-sm">
+                            <li><a href="/faq" className="hover:text-white">FAQ</a></li>
                             <li><a href="#" className="hover:text-white">What we do</a></li>
-                            <li><a href="#" className="hover:text-white">FAQ</a></li>
                             {/* <li><a href="#" className="hover:text-white">Blog</a></li>
                             <li><a href="#" className="hover:text-white">Careers</a></li> */}
                         </ul>

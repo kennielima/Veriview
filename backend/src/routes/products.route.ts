@@ -28,10 +28,11 @@ router.get("/products", async (req: Request, res: Response) => {
     } else if (sort === "lowest") {
         order.push(["averageRating", "ASC"])
     } else if (sort === "reviewcount-desc") {
+        // order.push([Sequelize.fn('COUNT', Sequelize.col('reviews.id')), 'DESC'])
         // order.push([Sequelize.literal("reviewCount"), "DESC"])
         order.push(["ratingsCount", "DESC"])
     } else if (sort === "reviewcount-asc") {
-        // order.push([Sequelize.literal("reviewCount"), "ASC"])
+        // order.push([Sequelize.fn('COUNT', Sequelize.col('reviews.id')), 'ASC'])
         order.push(["ratingsCount", "ASC"])
     } else if (!sort) {
         order.push(["updatedAt", "DESC"])
@@ -39,7 +40,6 @@ router.get("/products", async (req: Request, res: Response) => {
 
     try {
         const allProducts = await Product.findAndCountAll({
-            // subQuery: false,
             include: {
                 model: Review,
                 as: "reviews",
@@ -49,10 +49,10 @@ router.get("/products", async (req: Request, res: Response) => {
             // attributes: {
             //     include: [
             //         [Sequelize.fn('COUNT', Sequelize.col('reviews.id')), "reviewCount"],
-            //         "updatedAt"
             //     ]
             // },
-            // group: ["Product.id", "reviews.id"],
+            // group: ["Product.id"],
+            // subQuery: false,
             limit,
             offset,
             order: order,
@@ -64,7 +64,6 @@ router.get("/products", async (req: Request, res: Response) => {
             console.log("can't find products")
             return res.status(404).json({ message: 'no products found' })
         }
-        console.log("allProducts", allProducts)
 
         return res.status(200).json({
             data: rows,
@@ -77,7 +76,7 @@ router.get("/products", async (req: Request, res: Response) => {
     }
     catch (error) {
         console.error('failed to get products:', error);
-        return res.status(500).json({ message: 'failed to rate product' })
+        return res.status(500).json({ message: 'failed to get products' })
     }
 })
 

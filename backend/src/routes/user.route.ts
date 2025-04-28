@@ -19,15 +19,14 @@ router.get('/me', authenticate, async (req: Request, res: Response) => {
 });
 
 
-router.get('/getuser', authenticate, async (req: Request, res: Response) => {
+router.get('/getCurrentUserData', authenticate, async (req: Request, res: Response) => {
     const user = req.user;
     try {
         if (!user) {
             return res.status(401).json({ message: "User doesn't exist" })
         }
 
-        const userData = await User.findOne({
-            where: { id: user?.id },
+        const userData = await User.findByPk(user?.id, {
             include: [
                 {
                     model: Review,
@@ -69,6 +68,63 @@ router.get('/getuser', authenticate, async (req: Request, res: Response) => {
                         }]
                     }]
 
+                }
+            ]
+        })
+        return res.status(200).json({ userData })
+    }
+    catch (error) {
+        console.error('failed to fetch user data:', error);
+    }
+});
+
+router.get('/users/:userId', async (req: Request, res: Response) => {
+    const userId = req.params.userId;
+
+    try {
+        if (!userId) {
+            return res.status(401).json({ message: "User doesn't exist" })
+        }
+        const userData = await User.findByPk(userId, {
+            include: [
+                {
+                    model: Review,
+                    as: "reviews",
+
+                    include: [{
+                        model: RatedHelpful,
+                        as: 'ratedhelpful',
+                        attributes: ['id']
+                    }]
+
+                },
+                {
+                    model: UserRating,
+                    as: "userratings",
+
+                    include: [{
+                        model: Product,
+                        as: 'product',
+                        include: [{
+                            model: Review,
+                            as: 'reviews',
+                            attributes: ['id']
+                        }]
+                    }]
+                },
+                {
+                    model: RatedHelpful,
+                    as: "ratedhelpful",
+
+                    include: [{
+                        model: Review,
+                        as: 'review',
+                        include: [{
+                            model: RatedHelpful,
+                            as: 'ratedhelpful',
+                            attributes: ['id']
+                        }]
+                    }]
                 }
             ]
         })

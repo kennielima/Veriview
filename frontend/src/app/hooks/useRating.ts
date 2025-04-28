@@ -35,7 +35,7 @@ export const rateHelpful = async (ratedHelpful: boolean, id: string) => {
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
-    console.log(ratedHelpful)
+
     try {
         const response = await fetch(`${process.env.API_URL}/reviews/${id}/ratehelpful`, {
             method: "POST",
@@ -48,7 +48,7 @@ export const rateHelpful = async (ratedHelpful: boolean, id: string) => {
                 ratedHelpful
             })
         })
-        console.log("rateHelpful being sent:", ratedHelpful);
+
         if (!response.ok) {
             throw new Error('Failed to rate as helpful');
         }

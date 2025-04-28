@@ -94,7 +94,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <span>{review?.user?.username}</span>
+                                            <Link href={`/dashboard/${review.userId}`}><span>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>

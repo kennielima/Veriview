@@ -8,7 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
 import { logout } from '@/app/hooks/useLogin';
 
-export const Dashboard = ({ user }: { user: User }) => {
+export const Dashboard = ({ user, id }: { user: User, id: string }) => {
     const [activeTab, setActiveTab] = useState('my-reviews');
     const [activityTab, setActivityTab] = useState('brand-rating');
 
@@ -81,11 +81,11 @@ export const Dashboard = ({ user }: { user: User }) => {
                                     <Clock size={18} className="mr-3" />
                                     <span>Recent Activity </span>
                                 </button>
-                                <button
+                                {id === "me" && <button
                                     onClick={logout}
                                     className='flex items-center gap-1 text-white px-4 py-2 mt-2 w-full text-left rounded-md transition bg-indigo-600 hover:bg-indigo-700'>
                                     <LogOut size="15" /> Logout
-                                </button>
+                                </button>}
                             </nav>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ const page = () => {
     useEffect(() => {
         const FetchProducts = async () => {
             const data = await fetchProducts(currentPage, sort);
-            console.log(data)
+
             setProducts(data?.data);
             setTotalPages(data?.totalPages);
             setTotalProducts(data?.totalProducts)

@@ -7,7 +7,7 @@ export const fetchProducts = async (page?: number, sort?: string, limit?: number
     ]
         .filter(Boolean)
         .join("&");
-    console.log("queryString", queryString)
+
     try {
         const response = await fetch(`${process.env.API_URL}/products?${queryString}`, {
             method: "GET",

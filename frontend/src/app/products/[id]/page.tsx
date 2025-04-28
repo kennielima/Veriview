@@ -5,15 +5,14 @@ import React, { Fragment } from 'react'
 import RateProduct from '@/app/products/components/RateProduct';
 import RenderedStars from '@/components/renderStars';
 import RatingStats from '../components/RatingStats';
-import getCurrentUser from '@/lib/getCurrentUser';
-import getUserData from '@/app/hooks/useUser';
+import { getCurrentUserData } from '@/app/hooks/useUser';
 import Link from 'next/link';
 
 const productPage = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
     const product = await fetchProduct(id);
     // const user = await getCurrentUser()
-    const { userData } = await getUserData();
+    const { userData } = await getCurrentUserData();
 
     return (
         <Fragment>
