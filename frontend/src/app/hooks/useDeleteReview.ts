@@ -10,7 +10,7 @@ export const deleteReview = async (id: string) => {
     //     console.log('Please log in to delete review');
     // }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/reviews/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

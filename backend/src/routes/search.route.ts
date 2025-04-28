@@ -48,18 +48,25 @@ router.get("/search", async (req: Request, res: Response) => {
         if (category === "brands") {
             where = whereBrand;
             model = Product;
-            include = { model: Review, as: 'reviews' }
+            include = {
+                model: Review,
+                as: 'reviews',
+                attributes: ["id"],
+                separate: true
+            }
         } else {
             where = whereAll;
             model = Review;
             include = [
                 {
                     model: Product,
-                    as: 'product'
+                    as: 'product',
+                    attributes: ["name"],
                 },
                 {
                     model: User,
                     as: 'user',
+                    attributes: ["username"]
                 },
                 {
                     model: RatedHelpful,
@@ -79,6 +86,7 @@ router.get("/search", async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'No results found' });
         }
         const { rows, count } = searchResults;
+        console.log(searchResults)
 
         return res.status(200).json({ data: rows, count: count, page: Number(page) });
     }

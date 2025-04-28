@@ -82,8 +82,9 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                 <div className="grid grid-cols-2 gap-4 text-sm text-gray-800">
                                     {review.brand && (
                                         <div>
-                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-500'>
-                                                <strong>Product:</strong> {review.brand}
+                                            <strong>Product:</strong>
+                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-600'>
+                                                {" "}{review.brand}
                                             </Link>
                                         </div>
                                     )}

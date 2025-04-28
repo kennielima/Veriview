@@ -6,9 +6,11 @@ type PaginationTypeProps = {
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
 }
 
-const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage, totalPages }) => {
+const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage, totalPages, hasNextPage, hasPrevPage }) => {
     const handlePageChange = (currentPage: number) => {
         setCurrentPage(currentPage);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -20,8 +22,8 @@ const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage
             <nav className="flex items-center">
                 <button
                     onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
-                    className={`p-2 rounded-l-md border ${currentPage === 1
+                    disabled={!hasPrevPage}
+                    className={`p-2 rounded-l-md border ${!hasPrevPage
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-white text-gray-700 hover:bg-gray-50'
                         }`}
@@ -32,9 +34,7 @@ const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage
                     const pageNum = i + 1;
 
                     if (
-                        pageNum === 1 ||
-                        pageNum === totalPages ||
-                        (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                        !hasPrevPage || !hasNextPage || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
                     ) {
                         return (
                             <button
@@ -65,8 +65,8 @@ const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage
                 })}
                 <button
                     onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                    className={`p-2 rounded-r-md border ${currentPage === totalPages
+                    disabled={!hasNextPage}
+                    className={`p-2 rounded-r-md border ${!hasNextPage
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-white text-gray-700 hover:bg-gray-50'
                         }`}

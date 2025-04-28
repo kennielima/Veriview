@@ -6,6 +6,7 @@ import Product from "../models/Product";
 import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
 import RatedHelpful from "../models/RatedHelpful";
+import { Order } from "sequelize";
 
 const router = express.Router()
 
@@ -96,8 +97,22 @@ router.get("/reviews", async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
     const offset = (page - 1) * limit;
-    const sortBy = req.query.sort?.toString() || 'createdAt';
-    const sortOrder = req.query.order?.toString() || 'DESC';
+    const sort = req.query.sort?.toString();
+    // const order = req.query.order?.toString() || 'DESC';
+    const order: Order = [];
+
+    if (sort === "newest") {
+        order.push(["createdAt", "DESC"])
+    } else if (sort === "oldest") {
+        order.push(["createdAt", "ASC"])
+    } else if (sort === "highest") {
+        order.push(["rating", "DESC"])
+    } else if (sort === "lowest") {
+        order.push(["rating", "ASC"])
+    } else if (!sort) {
+        order.push(["createdAt", "DESC"])
+    }
+    console.log('req query:', req.query)
 
     try {
         const allReviews = await Review.findAndCountAll({
@@ -113,9 +128,7 @@ router.get("/reviews", async (req: Request, res: Response) => {
             ],
             limit,
             offset,
-            order: [
-                [sortBy, sortOrder]
-            ]
+            order: order
         });
 
         const { rows, count } = allReviews;

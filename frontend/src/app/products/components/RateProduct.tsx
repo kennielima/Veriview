@@ -54,13 +54,13 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
             <div className='flex flex-col gap-1 mb-4 md:mb-0'>
                 <button
                     type='submit'
-                    className='bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-2xl w-3/6 md:w-full md:mx-auto'
+                    className='bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-2xl w-3/6 md:w-full md:mx-auto'
                 >
                     Rate
                 </button>
                 {(reviewerCantRate && rating != 0) &&
-                    <span className='text-xs'>A product reviewer can't also rate.
-                        <Link href='' className='text-indigo-600'>Find out more</Link>
+                    <span className='text-xs'>A reviewer can't also rate.
+                        <Link href='' className='text-indigo-600'> Find out more</Link>
                     </span>
                 }
             </div>

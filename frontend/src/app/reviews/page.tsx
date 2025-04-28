@@ -8,56 +8,51 @@ import Pagination from '@/components/Pagination'
 const page = () => {
     const [Reviews, setReviews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalReviews, setTotalReviews] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
-    const [sortOptions, setSortOptions] = useState("newest");
-    const [sort, setSort] = useState<"createdAt" | "rating">("createdAt");
-    const [order, setOrder] = useState<"DESC" | "ASC">("DESC");
+    const [sort, setSort] = useState("newest");
+    const [hasNextPage, setHasNextPage] = useState(false);
+    const [hasPrevPage, setHasPrevPage] = useState(false);
 
     useEffect(() => {
         const FetchReviews = async () => {
-            const data = await fetchReviews(currentPage, sort, order)
+            const data = await fetchReviews(currentPage, sort)
             setReviews(data?.data);
             setTotalPages(data?.totalPages);
+            setTotalReviews(data?.totalReviews);
+            setHasNextPage(data?.hasNextPage)
+            setHasPrevPage(data?.hasPrevPage)
         }
         FetchReviews();
-    }, [currentPage, sort, order])
+    }, [currentPage, sort])
 
     const handleSortChange = (e: any) => {
-        setSortOptions(e.target.value);
-        if (e.target.value === "newest") {
-            setSort("createdAt");
-            setOrder("DESC");
-        } else if (e.target.value === "oldest") {
-            setSort("createdAt");
-            setOrder("ASC");
-        } else if (e.target.value === "highest") {
-            setSort("rating");
-            setOrder("DESC");
-        } else if (e.target.value === "lowest") {
-            setSort("rating");
-            setOrder("ASC");
-        }
+        setSort(e.target.value);
         setCurrentPage(1);
     };
+
     return (
         <div className='mx-auto sm:px-6 lg:px-8 md:py-8 px-16'>
             <h1 className='text-center font-bold text-2xl'>Recent Reviews</h1>
 
             {(Reviews && Reviews.length > 0) && (
                 <div className='flex flex-col'>
-                    <div className="flex items-center py-10 justify-end">
-                        <label htmlFor="sort" className="font-semibold mr-2">Sort by:</label>
-                        <select
-                            id="sort"
-                            value={sortOptions}
-                            onChange={handleSortChange}
-                            className="border border-gray-400 shadow-sm rounded-md px-3 py-1.5 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        >
-                            <option value="newest">Newest</option>
-                            <option value="oldest">Oldest</option>
-                            <option value="highest">Highest Rating</option>
-                            <option value="lowest">Lowest Rating</option>
-                        </select>
+                    <div className="flex items-center p-10 gap-12 justify-between">
+                        <p>Showing <span className='font-semibold'>5</span> of <span className='font-semibold'>{totalReviews}</span> reviews</p>
+                        <div>
+                            <label htmlFor="sort" className="text-sm md:text-base font-semibold mr-2">Sort Reviews by:</label>
+                            <select
+                                id="sort"
+                                value={sort}
+                                onChange={handleSortChange}
+                                className="border border-gray-400 shadow-sm rounded-md px-3 py-2 text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="highest">Highest Rating</option>
+                                <option value="lowest">Lowest Rating</option>
+                            </select>
+                        </div>
                     </div>
                     {Reviews.map((review: Review) => (
                         <ReviewCard key={review.id} review={review} />
@@ -66,6 +61,8 @@ const page = () => {
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
                         totalPages={totalPages}
+                        hasNextPage={hasNextPage}
+                        hasPrevPage={hasPrevPage}
                     />
                 </div>
             )}

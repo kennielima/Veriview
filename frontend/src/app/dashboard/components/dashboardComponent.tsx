@@ -1,11 +1,12 @@
 "use client"
 import { useState } from 'react';
-import { User as UserIcon, BookOpen, Clock, Plus } from 'lucide-react';
+import { User as UserIcon, BookOpen, Clock, Plus, LogOut } from 'lucide-react';
 import { formatDate, getInitials } from '@/lib/utils';
 import { RatedHelpful, Review, User, Userrating } from '@/lib/types';
 import ReviewCard from '@/components/Card';
 import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
+import { logout } from '@/app/hooks/useLogin';
 
 export const Dashboard = ({ user }: { user: User }) => {
     const [activeTab, setActiveTab] = useState('my-reviews');
@@ -79,6 +80,11 @@ export const Dashboard = ({ user }: { user: User }) => {
                                 >
                                     <Clock size={18} className="mr-3" />
                                     <span>Recent Activity </span>
+                                </button>
+                                <button
+                                    onClick={logout}
+                                    className='flex items-center gap-1 text-white px-4 py-2 mt-2 w-full text-left rounded-md transition bg-indigo-600 hover:bg-indigo-700'>
+                                    <LogOut size="15" /> Logout
                                 </button>
                             </nav>
                         </div>

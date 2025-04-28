@@ -4,11 +4,11 @@ import { fetchProducts } from '../hooks/useGetProducts';
 import getCurrentUser from '@/lib/getCurrentUser';
 
 const page = async () => {
-  const Brands = await fetchProducts();
+  const { data } = await fetchProducts();
   const user = await getCurrentUser();
 
   return (
-    <CreateReviewForm brands={Brands} user={user} />
+    <CreateReviewForm brands={data} user={user} />
   )
 }
 

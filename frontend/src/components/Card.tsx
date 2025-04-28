@@ -33,7 +33,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
                         </div>
                     </div>
                     <div className='flex flex-col sm:flex-row gap-1 sm:gap-6'>
-                        <p>Helpful ({ratedHelpful.length})</p>
+                        <p>Helpful ({ratedHelpful?.length})</p>
                         <p className='hidden sm:flex items-center gap-1'>
                             <Clock className='size-4' />
                             {timeAgo(review.createdAt)}

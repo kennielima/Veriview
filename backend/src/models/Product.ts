@@ -45,6 +45,7 @@ Product.init({
         modelName: 'Product',
         tableName: 'Products',
         timestamps: true,
+        updatedAt: true
     }
 );
 

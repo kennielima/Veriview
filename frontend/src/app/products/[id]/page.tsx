@@ -7,6 +7,7 @@ import RenderedStars from '@/components/renderStars';
 import RatingStats from '../components/RatingStats';
 import getCurrentUser from '@/lib/getCurrentUser';
 import getUserData from '@/app/hooks/useUser';
+import Link from 'next/link';
 
 const productPage = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
@@ -40,14 +41,18 @@ const productPage = async ({ params }: { params: { id: string } }) => {
                             <h2 className="text-xl font-semibold text-gray-800">
                                 All Reviews ({product?.reviews?.length})
                             </h2>
-                            {/* <button className='text-white bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-2xl'>Post a Review</button> */}
+                            <Link href={`/create-review?brand=${product.id}`}>
+                                <button className='text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl'>
+                                    Write a Review
+                                </button>
+                            </Link>
                             {/* <div className="flex gap-4">
-                        <select className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="newest">Newest First</option>
-                            <option value="highest">Highest Rated</option>
-                            <option value="lowest">Lowest Rated</option>
-                        </select>
-                    </div> */}
+                                <select className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="newest">Newest First</option>
+                                    <option value="highest">Highest Rated</option>
+                                    <option value="lowest">Lowest Rated</option>
+                                </select>
+                            </div> */}
                         </div>
 
                         {product.reviews.length > 0 ? (

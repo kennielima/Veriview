@@ -9,11 +9,12 @@ import { Star } from 'lucide-react'
 import Link from 'next/link'
 
 const page = async () => {
-  const data = await fetchReviews()
-  const Reviews = data?.data;
+  const ReviewsData = await fetchReviews()
+  const Reviews = ReviewsData?.data;
 
   const user = await getCurrentUser();
-  const Products = await fetchProducts();
+  const ProductData = await fetchProducts();
+  const Products = ProductData?.data
 
   return (
     <div className="flex flex-col md:flex-row mx-auto h-full md:h-[90vh]">
@@ -77,7 +78,7 @@ const page = async () => {
 
       {/* SIDEBAR */}
       <div className='pb-2 border shadow-md flex flex-col py-6 md:pt-12 md:h-[90vh] w-full md:w-1/3 lg:w-1/4 justify-between'>
-        <div className='flex flex-col gap-4 mx-auto px-6 justify-center '>
+        <div className='flex flex-col gap-4 mx-auto px-6 justify-center border shadow-sm py-8 rounded-md'>
           <h1 className='text-lg font-bold'>Highest Rated Brands</h1>
           <div className="space-y-4 w-full">
             {/* Brands Sidebar */}

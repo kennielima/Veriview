@@ -7,6 +7,7 @@ import { Product, User } from '@/lib/types';
 import { Check, X } from 'lucide-react';
 import Modal from '@/components/Modal';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type CreateReviewTypeProps = {
     brands: Product[];
@@ -17,8 +18,13 @@ type CreateReviewTypeProps = {
 }
 
 const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => {
+    const searchParams = useSearchParams();
+    const brandId = searchParams.get('brand');
+
+    const paramBrand = brands?.find((brand: Product) => brand.id === brandId);
+
     const [title, setTitle] = useState('');
-    const [brand, setBrand] = useState('');
+    const [brand, setBrand] = useState(paramBrand?.name || '');
     const [content, setContent] = useState('');
     const [rating, setRating] = useState(0);
     const [error, setError] = useState('');

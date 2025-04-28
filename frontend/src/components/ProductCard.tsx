@@ -8,7 +8,7 @@ const ProductCard = (productt: { product: Product }) => {
 
     return (
         <div key={product.id}>
-            <div className='flex flex-col border border-slate-300 shadow-md p-4 rounded-md' key={product.id}>
+            <div className='flex flex-col border max-w-4xl w-full border-gray-300 shadow-md p-5 rounded-md' key={product.id}>
                 <div className='flex gap-1 items-center'>
                     <Link href={`products/${product.id}`} className='text-gray-800 font-semibold'>{product.name}</Link>
                     <Star
@@ -28,8 +28,8 @@ const ProductCard = (productt: { product: Product }) => {
                     <span className='text-indigo-600 font-semibold'> {product.ratingsCount} </span> rating(s)
                 </p>
 
-                <div className='flex justify-between items-center'>
-                    <span className='text-sm flex items-center gap-1'>View more data here <ArrowRight className='text-indigo-600' /></span>
+                <div className='flex justify-between items-center gap-4'>
+                    <span className='text-sm flex items-center gap-1 w-auto'>View more data here <ArrowRight className='text-indigo-600' /></span>
                     <Link href={`/products/${product.id}`}>
                         <button className='px-3 py-2 rounded-lg text-white font-semibold text-sm bg-indigo-600'>View Brand</button>
                     </Link>

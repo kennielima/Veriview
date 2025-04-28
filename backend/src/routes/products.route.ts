@@ -5,25 +5,75 @@ import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
 import authenticate from "../middleware/protectRoute";
 import RatedHelpful from "../models/RatedHelpful";
+import { Order, Sequelize } from "sequelize";
 
 const router = express.Router()
 
 router.get("/products", async (req: Request, res: Response) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const sort = req.query.sort?.toString();
+    const order: Order = [];
+    console.log('req query:', req.query)
+
+    if (sort === "recent") {
+        order.push(["updatedAt", "DESC"])
+    } else if (sort === "desc") {
+        order.push(["name", "DESC"])
+    } else if (sort === "asc") {
+        order.push(["name", "ASC"])
+    } else if (sort === "highest") {
+        order.push(["averageRating", "DESC"])
+    } else if (sort === "lowest") {
+        order.push(["averageRating", "ASC"])
+    } else if (sort === "reviewcount-desc") {
+        // order.push([Sequelize.literal("reviewCount"), "DESC"])
+        order.push(["ratingsCount", "DESC"])
+    } else if (sort === "reviewcount-asc") {
+        // order.push([Sequelize.literal("reviewCount"), "ASC"])
+        order.push(["ratingsCount", "ASC"])
+    } else if (!sort) {
+        order.push(["updatedAt", "DESC"])
+    }
+
     try {
-        const allProducts = await Product.findAll({
+        const allProducts = await Product.findAndCountAll({
+            // subQuery: false,
             include: {
                 model: Review,
-                as: "reviews"
+                as: "reviews",
+                attributes: ["id"],
+                separate: true,
             },
-            order: [
-                ['createdAt', 'DESC'],
-            ]
+            // attributes: {
+            //     include: [
+            //         [Sequelize.fn('COUNT', Sequelize.col('reviews.id')), "reviewCount"],
+            //         "updatedAt"
+            //     ]
+            // },
+            // group: ["Product.id", "reviews.id"],
+            limit,
+            offset,
+            order: order,
+
         })
-        if (!allProducts || allProducts.length === 0) {
-            console.log("can't find reviews")
-            return res.status(404).json({ message: "no products found" })
+
+        const { rows, count } = allProducts;
+        if (!rows || count === 0) {
+            console.log("can't find products")
+            return res.status(404).json({ message: 'no products found' })
         }
-        return res.status(200).json(allProducts);
+        console.log("allProducts", allProducts)
+
+        return res.status(200).json({
+            data: rows,
+            totalProducts: count,
+            currentPage: Number(page),
+            totalPages: Math.ceil(count / limit),
+            hasNextPage: page < Math.ceil(count / limit),
+            hasPrevPage: page > 1
+        })
     }
     catch (error) {
         console.error('failed to get products:', error);
@@ -47,7 +97,10 @@ router.get("/products/:id", async (req: Request, res: Response) => {
                         model: RatedHelpful,
                         as: 'ratedhelpful',
                         attributes: ['id']
-                    }]
+                    }],
+                    order: [
+                        ["createdAt", "ASC"]
+                    ]
                 },
                 {
                     model: UserRating,

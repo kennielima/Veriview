@@ -58,7 +58,7 @@ const page = () => {
                                     {category === "all" ? "Go Back" : `Back to ${category && capitalizeFirstLetter(category)}`}
                                 </button>
                             </Link>
-                            <p>Showing {searchCount} of {searchCount} results</p>
+                            <p>Showing all <span className='font-semibold'>{searchCount}</span> results</p>
                         </div>
                         {category === "all" &&
                             searchResults.map((review: Review) => (

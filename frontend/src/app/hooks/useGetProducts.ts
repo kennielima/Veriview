@@ -1,6 +1,15 @@
-export const fetchProducts = async () => {
+"use server"
+export const fetchProducts = async (page?: number, sort?: string, limit?: number) => {
+    let queryString = [
+        page && `page=${page}`,
+        sort && `sort=${sort}`,
+        limit ? `limit=${limit}` : `limit=5`,
+    ]
+        .filter(Boolean)
+        .join("&");
+    console.log("queryString", queryString)
     try {
-        const response = await fetch(`${process.env.API_URL}/products`, {
+        const response = await fetch(`${process.env.API_URL}/products?${queryString}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
