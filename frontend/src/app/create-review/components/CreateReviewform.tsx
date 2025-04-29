@@ -80,7 +80,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     };
 
     return (
-        <div className="max-w-md mx-auto p-10 md:p-6 md:my-12 bg-indigo-50 shadow-md rounded-lg ">
+        <div className="max-w-3xl mx-auto p-10 md:p-6 md:my-12 bg-indigo-50 shadow-md rounded-lg ">
             <h2 className="text-2xl font-bold mb-6 text-center">Write a Review</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
