@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 const SearchBar = ({ searchCategory, setIsMenuOpen, placeholder }: {
     searchCategory: string;
-    setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+    setIsMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
     placeholder: string
 }) => {
     const [query, setQuery] = useState('');

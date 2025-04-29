@@ -3,8 +3,10 @@ import { ArrowRight, Star } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-const ProductCard = (productt: { product: Product }) => {
-    const product = productt?.product;
+
+const ProductCard = ({ product }: {
+    product: Product
+}) => {
 
     return (
         <div key={product.id}>

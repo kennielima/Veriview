@@ -50,7 +50,7 @@ const page = () => {
                     )}
                 </div>
                 <div className='flex flex-col gap-5 md:gap-10 md:border md:border-gray-3 md:py-10 px-6 h-fit md:h-screen md:rounded-md md:shadow'>
-                    <SearchBar searchCategory={"brands"} setIsMenuOpen={undefined} placeholder={"Search by brand..."} />
+                    <SearchBar searchCategory={"brands"} placeholder={"Search by brand..."} />
                     <div className="flex items-center justify-end md:justify-center w-full">
                         <label htmlFor="sort" className="font-semibold mr-2">Sort by:</label>
                         <select

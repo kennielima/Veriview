@@ -143,6 +143,11 @@ export const Dashboard = ({ user, id }: { user: User, id: string }) => {
                                                     userProductRating.map((userProductRating: Userrating) => (
                                                         userProductRating?.product && (
                                                             <div key={userProductRating.id}>
+                                                                <p className='text-start text-indigo-700 bg-indigo-200 font-semibold border border-b-0 border-gray-300 shadow-md p-4 rounded-md rounded-b-none shadow-b-none'>
+                                                                    {id === "me" ? 'You' : `${user?.username}`}
+                                                                    {" "}rated {userProductRating.product.name}{" "}
+                                                                    {userProductRating.productRating}/5
+                                                                </p>
                                                                 <ProductCard product={userProductRating.product} />
                                                             </div>
                                                         )
