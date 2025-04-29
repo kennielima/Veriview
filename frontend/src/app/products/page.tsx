@@ -14,6 +14,7 @@ const page = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPrevPage, setHasPrevPage] = useState(false);
+    const offset = currentPage * 5;
 
     useEffect(() => {
         const FetchProducts = async () => {
@@ -34,8 +35,8 @@ const page = () => {
 
     return (
         <div className='flex flex-col items-center gap-12 my-14 px-16'>
-            <h1 className='text-xl font-bold'>All Reviewed Brands ({totalProducts})</h1>
-
+            <h1 className='text-xl font-bold'>All Reviewed Brands</h1>
+            <p className='text-left w-full mb-[-2rem] pl-4'>Showing <span className='font-semibold'>{hasNextPage ? offset : totalProducts}</span> of <span className='font-semibold'>{totalProducts}</span> brands</p>
             <div className='flex flex-col-reverse md:flex-row gap-14 justify-between w-full'>
                 <div className="mx-auto px-4 space-y-4 w-full md:w-5/6">
                     {Products && Products.length > 0 ? (

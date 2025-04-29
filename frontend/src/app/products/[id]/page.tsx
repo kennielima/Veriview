@@ -31,7 +31,7 @@ const productPage = async ({ params }: { params: { id: string } }) => {
                                     </span>
                                 </div>
                             </div>
-                            <RateProduct id={id} user={userData} />
+                            <RateProduct id={id} user={userData} product={product} />
                         </div>
                     </div>
 

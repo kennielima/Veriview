@@ -22,6 +22,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             console.log("can't find title or brand")
             return res.status(400).json({ message: 'Please fill form' })
         }
+
         let product = await Product.findOne({
             where: {
                 name: brand
@@ -41,6 +42,16 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
                 averageRating: Number(rating),
                 ratingsCount: 1
             });
+        }
+
+        let existingReview = await Review.findOne({
+            where: {
+                productId: product.id,
+                userId: user.id
+            }
+        })
+        if (existingReview) {
+            return res.status(500).json({ message: 'You cannot review a product twice' })
         }
 
         const newReview = await Review.create({

@@ -13,6 +13,7 @@ const page = () => {
     const [sort, setSort] = useState("newest");
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPrevPage, setHasPrevPage] = useState(false);
+    const offset = currentPage * 5;
 
     useEffect(() => {
         const FetchReviews = async () => {
@@ -38,7 +39,7 @@ const page = () => {
             {(Reviews && Reviews.length > 0) && (
                 <div className='flex flex-col'>
                     <div className="flex items-center p-10 gap-12 justify-between">
-                        <p>Showing <span className='font-semibold'>5</span> of <span className='font-semibold'>{totalReviews}</span> reviews</p>
+                        <p>Showing <span className='font-semibold'>{hasNextPage ? offset : totalReviews}</span> of <span className='font-semibold'>{totalReviews}</span> reviews</p>
                         <div>
                             <label htmlFor="sort" className="text-sm md:text-base font-semibold mr-2">Sort Reviews by:</label>
                             <select

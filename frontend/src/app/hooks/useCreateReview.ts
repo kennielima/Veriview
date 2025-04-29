@@ -26,7 +26,9 @@ const createReview = async (title: string, brand: string, content: string, ratin
         })
     })
     if (!response.ok) {
-        throw new Error('Failed to post review');
+        const errorData = await response.json();
+        const message = errorData?.message || 'Failed to post review';
+        throw new Error(message || 'Failed to post review');
     }
     // redirect('/');
 }

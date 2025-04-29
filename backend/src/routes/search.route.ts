@@ -3,6 +3,7 @@ import Product from "../models/Product";
 import Review from "../models/Review";
 import User from "../models/User";
 import RatedHelpful from "../models/RatedHelpful";
+import { Sequelize } from "sequelize";
 const { Op } = require('sequelize');
 
 const router = express.Router();
@@ -13,20 +14,20 @@ router.get("/search", async (req: Request, res: Response) => {
             q,
             category,
             page = 1,
-            limit = 10,
+            // limit = 10,
             // sortBy = 'createdAt',
             // order = 'DESC',
         } = req.query;
 
-        const offset = (Number(page) - 1) * Number(limit);
+        // const offset = (Number(page) - 1) * Number(limit);
         const whereAll = {
             [Op.and]: [
                 q && {
                     [Op.or]:
                         [
-                            { title: { [Op.iLike]: `%${q}%` } },
-                            { brand: { [Op.iLike]: `%${q}%` } },
-                            { content: { [Op.iLike]: `%${q}%` } },
+                            { title: { [Op.iLike]: `${q}%` } },
+                            { brand: { [Op.iLike]: `${q}%` } },
+                            { content: { [Op.iLike]: `${q}%` } },
                         ]
                 }
             ].filter(Boolean)
@@ -35,29 +36,27 @@ router.get("/search", async (req: Request, res: Response) => {
             [Op.and]: [
                 q && {
                     [Op.or]: {
-                        name: { [Op.iLike]: `%${q}%` }
+                        name: { [Op.iLike]: `${q}%` }
                     },
                 }
             ].filter(Boolean)
         }
-        // let query = {};
-        let where;
+        let query: Record<string, any> = {};
         let model;
-        let include;
-
         if (category === "brands") {
-            where = whereBrand;
             model = Product;
-            include = {
+            query.where = whereBrand;
+            query.include = {
                 model: Review,
                 as: 'reviews',
                 attributes: ["id"],
                 separate: true
             }
+            query.order = [["updatedAt", "DESC"]]
         } else {
-            where = whereAll;
             model = Review;
-            include = [
+            query.where = whereAll;
+            query.include = [
                 {
                     model: Product,
                     as: 'product',
@@ -74,13 +73,10 @@ router.get("/search", async (req: Request, res: Response) => {
                     attributes: ['id']
                 }
             ];
+            query.order = [["createdAt", "DESC"]]
         }
         const searchResults = await model.findAndCountAll({
-            where: where,
-            offset: offset,
-            limit: limit as number,
-            // order: [order as string, sortBy as string],
-            include: include
+            ...query
         })
         if (!searchResults) {
             return res.status(404).json({ message: 'No results found' });

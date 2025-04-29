@@ -73,15 +73,15 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
             setError('');
             setAnonymous(false)
             // router.push('/')
-        } catch (error) {
-            setError('Error posting review')
+        } catch (error: any) {
+            console.log(error.message);
+            setError(error.message)
         }
     };
 
     return (
         <div className="max-w-md mx-auto p-10 md:p-6 md:my-12 bg-indigo-50 shadow-md rounded-lg ">
             <h2 className="text-2xl font-bold mb-6 text-center">Write a Review</h2>
-
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -187,6 +187,11 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 >
                     <span>Submit Review</span>
                 </button>
+                {(error === 'cannot review a product twice') && (
+                    <div className="text-red-700 text-sm mt-1">Sorry, {error}!
+                        <Link href='/faq' className='text-indigo-600 hover:text-indigo-500'> Find out why</Link>
+                    </div>
+                )}
             </form>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 {

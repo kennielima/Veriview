@@ -16,6 +16,7 @@ const SearchBar = ({ searchCategory, setIsMenuOpen, placeholder }: {
         if (query !== '') {
             router.push('/search?q=' + query + `&category=${searchCategory}`);
             setIsMenuOpen && setIsMenuOpen(false)
+            setQuery('')
         }
     };
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,7 +26,6 @@ const SearchBar = ({ searchCategory, setIsMenuOpen, placeholder }: {
 
     const clearSearchBar = () => {
         setQuery('')
-        router.push('/')
     }
     return (
         <form

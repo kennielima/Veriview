@@ -3,7 +3,7 @@ import { UserTypeProps } from '@/app/Header/HeaderClient';
 import { rateProduct } from '@/app/hooks/useRating';
 import Modal from '@/components/Modal';
 import { RenderStars } from '@/components/renderStars';
-import { Review, User } from '@/lib/types';
+import { Product, Review, User } from '@/lib/types';
 import { Check, Loader, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,10 +12,11 @@ import React, { useState } from 'react';
 
 export type ProductTypeProps = {
     id: string;
-    user: User
+    user: User;
+    product: Product
 }
 
-const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
+const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [rating, setRating] = useState(0);
@@ -60,7 +61,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
                 </button>
                 {(reviewerCantRate && rating != 0) &&
                     <span className='text-xs'>A reviewer can't also rate.
-                        <Link href='' className='text-indigo-600'> Find out why</Link>
+                        <Link href='/faq' className='text-indigo-600'> Find out why</Link>
                     </span>
                 }
             </div>
@@ -94,7 +95,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user }) => {
                                 <p className="mt-8 mb-2 text-lg font-semibold">You have successfully rated this brand!</p>
                                 <div className=''>
                                     <span>Drop a review instead? </span>
-                                    <Link href={`/create-review`} className='text-indigo-600 text-sm font-semibold'>Post Review</Link>
+                                    <Link href={`/create-review?brand=${product.id}`} className='text-indigo-600 text-sm font-semibold'>Post Review</Link>
                                 </div>
                                 <p className='text-xs text-gray-600 mx-3'>Posting reviews help others make better informed decisions about this brand</p>
                             </div>

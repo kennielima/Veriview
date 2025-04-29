@@ -98,7 +98,7 @@ router.get("/products/:id", async (req: Request, res: Response) => {
                         attributes: ['id']
                     }],
                     order: [
-                        ["createdAt", "ASC"]
+                        ["createdAt", "DESC"]
                     ]
                 },
                 {
