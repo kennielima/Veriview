@@ -141,7 +141,14 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
                 }
             ]
         });
+        const review = await Review.findOne({
+            where: {
+                productId: product?.id,
+                userId: user?.id
+            }
+        })
 
+        if (review) return res.status(400).json({ error: "Cannot re-rate a reviewed brand" });
         if (!rating) return res.status(400).json({ error: "Rating is missing" });
         if (!product) return res.status(404).json({ message: "no product found" });
 
@@ -154,13 +161,14 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
 
         if (existingRating) {
             const oldRating = existingRating?.productRating;
-
+            //if previously rated, calc av with old rating to be subtracted and new rating to be added
             const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount, Number(rating), oldRating);
 
             await product.update({ averageRating });
 
             await existingRating.update({ productRating: Number(rating) })
         } else {
+            //if not previously rated, calc av with new rating to be added, updated product rate count
             const averageRating = product?.reviews && calcAverageRating(product, product.ratingsCount + 1, Number(rating));
 
             await product.update({

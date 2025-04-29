@@ -8,16 +8,20 @@ export const calcAverageRating = (
     rating?: number | null,
     oldRating?: number | null
 ) => {
+    //aggregate ratings from reviews
     let totalReviewRating = Product.reviews && Product.reviews.reduce((sum: number, review: Review) => sum + Number(review.rating), 0);
-    let totalRatingCount = Array.isArray(Product.rating) ? Product.rating.reduce((sum: number, rating: UserRating) => sum + Number(rating.productRating), 0) : 0;
+    //aggregate direct ratings
+    let totalRatingSum = Array.isArray(Product.rating) ? Product.rating.reduce((sum: number, rating: UserRating) => sum + Number(rating.productRating), 0) : 0;
 
-    if (rating) {
-        if (oldRating) totalRatingCount -= Number(oldRating)
-        totalRatingCount += Number(rating)
+    // if (rating != null) {  
+    if (rating) { //if there's a new rating, remove previous rating, then add new rating
+        if (oldRating) totalRatingSum -= Number(oldRating)
+        totalRatingSum += Number(rating)
     }
 
-    let totalRating = totalReviewRating + totalRatingCount
-    // console.log("avdata", totalRating, ratingsCount, rating, oldRating, Product.rating)
+    //sum of ratings and review ratings
+    let totalRating = totalReviewRating + totalRatingSum
+    console.log("avdata", totalRating, ratingsCount, rating, oldRating, totalReviewRating, totalRatingSum, Product)
 
     const averageRating = totalRating / ratingsCount;
     const roundedRating = Math.round(averageRating * 10) / 10;

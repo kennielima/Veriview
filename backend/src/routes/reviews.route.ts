@@ -53,6 +53,17 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             anonymous
         });
 
+        const existingRating = await UserRating.findOne({
+            where: {
+                productId: product.id,
+                userId: user.id
+            }
+        });
+        //drop existing rating to re-tally aggregate correctly
+        if (existingRating) {
+            await existingRating.destroy()
+        }
+
         const updatedProduct = await Product.findOne({ //both newly created product and already existing product
             where: { id: product.id },
             include: [
@@ -67,9 +78,23 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             ]
         });
 
-        if (updatedProduct && updatedProduct?.reviews) {
-            const newRatingsCount = isNewProduct ? 1 : product?.ratingsCount + 1
+        if (updatedProduct && updatedProduct?.reviews) { //get updated product with new review
+            let newRatingsCount;
+            if (isNewProduct) {
+                newRatingsCount = 1
+            } else {
+                if (existingRating) {
+                    newRatingsCount = product?.ratingsCount
+                } else {
+                    newRatingsCount = product?.ratingsCount + 1
+                }
+            }
+
             const averageRating = calcAverageRating(updatedProduct, newRatingsCount)
+            // averageRating = existingRating ? calcAverageRating(updatedProduct, newRatingsCount, 0, existingRating?.productRating) :
+            // will also retally aggregate by adding the new review rating and sending old rating to be removed
+
+            // console.log(existingRating?.productRating, averageRating, newRatingsCount, rating, updatedProduct, product);
 
             await product.update({
                 averageRating: Number(averageRating),
@@ -215,7 +240,9 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
             if (!product.reviews || product?.reviews?.length === 0) {
                 await product?.destroy();
             } else {
+                // subtract deleted rate from count
                 const newRatingsCount = product?.ratingsCount - 1
+                //recalculate av rating with updated product
                 const averageRating = product?.reviews && calcAverageRating(product, newRatingsCount);
                 await product.update({
                     averageRating: averageRating,

@@ -90,6 +90,9 @@ router.get('/users/:userId', async (req: Request, res: Response) => {
                 {
                     model: Review,
                     as: "reviews",
+                    where: {
+                        anonymous: false
+                    },
 
                     include: [{
                         model: RatedHelpful,
