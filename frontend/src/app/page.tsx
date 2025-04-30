@@ -7,6 +7,7 @@ import { LogoutClient } from '@/components/LogoutClient'
 import { fetchProducts } from './hooks/useGetProducts'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
+import Faq from './faq/page'
 
 const page = async () => {
   const ReviewsData = await fetchReviews()
@@ -41,7 +42,7 @@ const page = async () => {
           </div>
         </div>
 
-        <div className='mx-auto sm:px-6 lg:px-8 md:py-8 px-16'>
+        <div className='mx-auto px-8'>
           {Reviews && Reviews.length > 0 ? (
             <div>
               {Reviews.map((review: Review) => (
@@ -70,7 +71,8 @@ const page = async () => {
               Write a Review
             </button>
           </Link>
-        </div><div></div>
+        </div>
+        <Faq />
         {/* </div> */}
       </div>
 
@@ -99,8 +101,7 @@ const page = async () => {
               ))
             ) : (
               <p>No Brands found</p>
-            )
-            }
+            )}
           </div>
         </div>
         {(user && user.loggedIn) &&

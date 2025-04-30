@@ -23,7 +23,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
         <header className="bg-white shadow-md py-2 sticky z-10 top-0 font-semibold">
             {/* DESKTOPS */}
             <div className="flex justify-between w-full mx-auto px-6 py-3 items-center">
-                <Link href='/' onClick={toggleMenu}>
+                <Link href='/' onClick={() => setIsMenuOpen(false)}>
                     <div className="flex text-2xl font-bold text-indigo-600">ReviewHub</div>
                 </Link>
                 <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-10 text-sm">
@@ -34,7 +34,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
-                        <Link href='/login' onClick={toggleMenu}>
+                        <Link href='/login' onClick={() => setIsMenuOpen(false)}>
                             <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Login </button>
                         </Link>
                         :

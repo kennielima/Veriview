@@ -10,7 +10,7 @@ const ProductCard = ({ product }: {
 
     return (
         <div key={product.id}>
-            <div className='flex flex-col border max-w-4xl w-full border-gray-300 shadow-md p-5 rounded-md' key={product.id}>
+            <div className='flex flex-col border max-w-4xl w-full border-gray-200 shadow-md p-5 rounded-md' key={product.id}>
                 <div className='flex gap-1 items-center'>
                     <Link href={`products/${product.id}`} className='text-gray-800 font-semibold'>{product.name}</Link>
                     <Star

@@ -3,17 +3,18 @@ import React from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 type PaginationTypeProps = {
-    currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    param: { page?: number; sort?: string; }
     totalPages: number;
     hasNextPage: boolean;
     hasPrevPage: boolean;
 }
 
-const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage, totalPages, hasNextPage, hasPrevPage }) => {
+const Pagination: React.FC<PaginationTypeProps> = ({ param, totalPages, hasNextPage, hasPrevPage }) => {
+    const currentPage = Number(param.page) || 1;
+
     const handlePageChange = (currentPage: number) => {
-        setCurrentPage(currentPage);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.location.href = `?${param.sort ? `sort=${param.sort}&` : ""}page=${currentPage}`;
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -32,9 +33,8 @@ const Pagination: React.FC<PaginationTypeProps> = ({ currentPage, setCurrentPage
                 </button>
                 {Array.from({ length: totalPages }).map((_, i) => {
                     const pageNum = i + 1;
-
                     if (
-                        !hasPrevPage || !hasNextPage || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                        pageNum === 1 || pageNum === totalPages || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
                     ) {
                         return (
                             <button

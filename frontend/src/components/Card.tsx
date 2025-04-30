@@ -13,12 +13,15 @@ const ReviewCard = ({ review }: { review: Review }) => {
             <div className="bg-white border-t border-t-slate-100 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-4xl">
                 <div className="flex justify-between items-start">
                     <h2 className="text-xl font-semibold text-gray-800">{review.title}</h2>
-                    <div className="flex">
+                    <div className="hidden md:flex">
                         <RenderedStars rating={review.rating} />
                     </div>
                 </div>
-                <p className="text-indigo-600 mb-3 mt-1 text-start">{review.brand}</p>
-                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] text-b">
+                <p className="text-indigo-600 md:mb-3 mt-1 text-start">{review.brand}</p>
+                <div className="flex mb-3 md:hidden mt-1">
+                    <RenderedStars rating={review.rating} />
+                </div>
+                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] h-24 overflow-hidden">
                     {review.content}
                 </p>
                 <div className="flex justify-between items-center text-sm text-gray-500">

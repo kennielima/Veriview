@@ -3,31 +3,8 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        // <div className='flex flex-col md:flex-row justify-between bg-indigo-800 text-white shadow-md py-16 px-12 w-full mt-auto mb-0 self-end'>
-        //     <div className="flex justify-between space-x-20 w-full md:w-1/3">
-        //         <div className='flex flex-col gap-4'>
-        //             <Link href='/'>
-        //                 <div className="flex text-2xl font-bold">ReviewHub</div>
-        //             </Link>
-        //             <div className='sm:hidden items-end flex'>© 2024 ReviewHub</div>
-        //         </div>
-        //         <div className='flex flex-col md:flex-row gap-3 md:space-x-20'>
-        //             <div className='flex flex-col gap-3 w-max'>
-        //                 <Link href='/products'>Brands</Link>
-        //                 <p>Contact</p>
-        //             </div>
-        //             <div className='flex flex-col gap-3 w-max'>
-        //                 {/* <p>Terms</p>
-        //                 <p>Privacy</p> */}
-        //                 <p>FAQ</p>
-        //                 <p>What we do</p>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div className='sm:flex items-end hidden'>© 2024 ReviewHub</div>
-        // </div>
         <footer className="bg-gray-800 text-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div>
                         <h3 className="text-lg font-bold mb-4">ReviewHub</h3>
@@ -64,7 +41,7 @@ const Footer = () => {
                     </div> */}
                 </div>
 
-                <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row md:justify-between items-center">
+                <div className="border-t border-gray-700 mt-5 pt-5 flex flex-col md:flex-row md:justify-between items-center">
                     <p className="text-gray-300 text-sm mb-4 md:mb-0">© 2025 ReviewHub. All rights reserved.</p>
                     <div className="flex space-x-6">
                         <a href="#" className="text-gray-300 hover:text-white">
@@ -89,6 +66,29 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
+        // <div className='flex flex-col md:flex-row justify-between bg-indigo-800 text-white shadow-md py-16 px-12 w-full mt-auto mb-0 self-end'>
+        //     <div className="flex justify-between space-x-20 w-full md:w-1/3">
+        //         <div className='flex flex-col gap-4'>
+        //             <Link href='/'>
+        //                 <div className="flex text-2xl font-bold">ReviewHub</div>
+        //             </Link>
+        //             <div className='sm:hidden items-end flex'>© 2024 ReviewHub</div>
+        //         </div>
+        //         <div className='flex flex-col md:flex-row gap-3 md:space-x-20'>
+        //             <div className='flex flex-col gap-3 w-max'>
+        //                 <Link href='/products'>Brands</Link>
+        //                 <p>Contact</p>
+        //             </div>
+        //             <div className='flex flex-col gap-3 w-max'>
+        //                 {/* <p>Terms</p>
+        //                 <p>Privacy</p> */}
+        //                 <p>FAQ</p>
+        //                 <p>What we do</p>
+        //             </div>
+        //         </div>
+        //     </div>
+        //     <div className='sm:flex items-end hidden'>© 2024 ReviewHub</div>
+        // </div>
     )
 }
 
