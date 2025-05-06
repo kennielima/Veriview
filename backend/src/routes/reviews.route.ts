@@ -7,6 +7,7 @@ import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
 import RatedHelpful from "../models/RatedHelpful";
 import { Order } from "sequelize";
+import logger from "../utils/logger";
 
 const router = express.Router()
 
@@ -19,7 +20,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
         }
 
         if (!title || !brand) {
-            console.log("can't find title or brand")
+            logger.info("can't find title or brand")
             return res.status(400).json({ message: 'Please fill form' })
         }
 
@@ -124,7 +125,7 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
     }
 
     catch (error) {
-        console.error("error posting review:", error)
+        logger.error("error posting review:", error)
         return res.status(500).json({ message: 'error posting reviews' })
     }
 })
@@ -148,7 +149,6 @@ router.get("/reviews", async (req: Request, res: Response) => {
     } else if (!sort) {
         order.push(["createdAt", "DESC"])
     }
-    console.log('req query:', req.query)
 
     try {
         const allReviews = await Review.findAndCountAll({
@@ -170,7 +170,7 @@ router.get("/reviews", async (req: Request, res: Response) => {
         const { rows, count } = allReviews;
 
         if (!rows || count === 0) {
-            console.log("can't find reviews")
+            logger.info("can't find reviews")
             return res.status(404).json({ message: 'no reviews found' })
         }
         return res.status(200).json({
@@ -183,7 +183,7 @@ router.get("/reviews", async (req: Request, res: Response) => {
         })
     }
     catch (error) {
-        console.error("error getting reviews:", error)
+        logger.error("error getting reviews:", error)
         return res.status(500).json({ message: 'error getting reviews' })
     }
 })
@@ -207,13 +207,13 @@ router.get("/reviews/:id", async (req: Request, res: Response) => {
             ]
         });
         if (!review) {
-            console.log("can't find review")
+            logger.warn("can't find review")
             return res.status(400).json({ message: 'no review found' })
         }
         return res.status(200).json({ review })
     }
     catch (error) {
-        console.error("error getting review:", error)
+        logger.error("error getting review:", error)
         return res.status(500).json({ message: 'error getting review' })
     }
 })
@@ -229,7 +229,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
             }
         });
         if (!review) {
-            console.log("can't find review")
+            logger.warn("can't find review")
             return res.status(400).json({ message: 'no review found' })
         }
         await review.destroy();
@@ -267,7 +267,7 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
         return res.status(200).json({ message: 'successfully deleted' })
     }
     catch (error) {
-        console.error("error deleting review:", error)
+        logger.error("error deleting review:", error)
         return res.status(500).json({ message: 'error deleting review' })
     }
 })
@@ -289,7 +289,6 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
             }
         })
         let rateValue = ratedHelpful === true ? 1 : 0;
-        console.log("rateValue", rateValue, ratedHelpful);
 
         if (!existingRatedHelpful) {
             const newv = await RatedHelpful.create({
@@ -297,7 +296,6 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
                 reviewId: reviewId,
                 userId: user?.id
             })
-            console.log("helpfulv", newv)
         } else {
             if (rateValue === 1) {
                 await existingRatedHelpful.update({ helpful: rateValue })
@@ -309,7 +307,7 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
         return res.status(200).json({ message: 'review successfully rated' })
     }
     catch (error) {
-        console.error("error rating review:", error)
+        logger.error("error rating review:", error)
         return res.status(500).json({ message: 'error rating review' })
     }
 })

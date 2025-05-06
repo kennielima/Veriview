@@ -1,6 +1,7 @@
 import Product from "../models/Product";
 import Review from "../models/Review";
 import UserRating from "../models/UserRating";
+import logger from "./logger";
 
 export const calcAverageRating = (
     Product: Product,
@@ -21,7 +22,7 @@ export const calcAverageRating = (
 
     //sum of ratings and review ratings
     let totalRating = totalReviewRating + totalRatingSum
-    console.log("avdata", totalRating, ratingsCount, rating, oldRating, totalReviewRating, totalRatingSum, Product)
+    logger.info("avdata", totalRating, ratingsCount, rating, oldRating, totalReviewRating, totalRatingSum, Product)
 
     const averageRating = totalRating / ratingsCount;
     const roundedRating = Math.round(averageRating * 10) / 10;

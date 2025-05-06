@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { getInitials, timeAgo } from '@/lib/utils';
+import { getInitials, timeAgo, truncate } from '@/lib/utils';
 import { RatedHelpful, Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 import { Clock } from 'lucide-react';
@@ -12,7 +12,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
         <Link href={`/reviews/${review.id}`}>
             <div className="bg-white border-t border-t-slate-100 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-4xl">
                 <div className="flex justify-between items-start">
-                    <h2 className="text-xl font-semibold text-gray-800">{review.title}</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 mr-4">{review.title}</h2>
                     <div className="hidden md:flex">
                         <RenderedStars rating={review.rating} />
                     </div>
@@ -21,8 +21,8 @@ const ReviewCard = ({ review }: { review: Review }) => {
                 <div className="flex mb-3 md:hidden mt-1">
                     <RenderedStars rating={review.rating} />
                 </div>
-                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] h-24 overflow-hidden">
-                    {review.content}
+                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
+                    {truncate(review.content)}
                 </p>
                 <div className="flex justify-between items-center text-sm text-gray-500">
                     <div className='flex gap-1 items-center'>

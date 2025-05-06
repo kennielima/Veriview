@@ -4,6 +4,7 @@ import Review from "../models/Review";
 import User from "../models/User";
 import RatedHelpful from "../models/RatedHelpful";
 import { Sequelize } from "sequelize";
+import logger from "../utils/logger";
 const { Op } = require('sequelize');
 
 const router = express.Router();
@@ -82,12 +83,12 @@ router.get("/search", async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'No results found' });
         }
         const { rows, count } = searchResults;
-        console.log(searchResults)
+        logger.info(searchResults)
 
         return res.status(200).json({ data: rows, count: count, page: Number(page) });
     }
     catch (err) {
-        console.error('Search Error:', err);
+        logger.error('Search Error:', err);
         res.status(500).json({ error: 'Failed to get search results' });
     }
 });

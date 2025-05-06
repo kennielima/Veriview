@@ -5,6 +5,7 @@ import Review from "../models/Review";
 import UserRating from "../models/UserRating";
 import RatedHelpful from "../models/RatedHelpful";
 import Product from "../models/Product";
+import logger from "../utils/logger";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.get('/me', authenticate, async (req: Request, res: Response) => {
         return res.status(200).json({ loggedIn: true, user: req.user });
     }
     catch (error) {
-        console.error('failed to get user:', error);
+        logger.error('failed to get user:', error);
     }
 });
 
@@ -74,7 +75,7 @@ router.get('/getCurrentUserData', authenticate, async (req: Request, res: Respon
         return res.status(200).json({ userData })
     }
     catch (error) {
-        console.error('failed to fetch user data:', error);
+        logger.error('failed to fetch user data:', error);
     }
 });
 
@@ -134,7 +135,7 @@ router.get('/users/:userId', async (req: Request, res: Response) => {
         return res.status(200).json({ userData })
     }
     catch (error) {
-        console.error('failed to fetch user data:', error);
+        logger.error('failed to fetch user data:', error);
     }
 });
 
@@ -156,13 +157,13 @@ router.get("/users/:userId/ratedhelpful", async (req: Request, res: Response) =>
             }
         });
         if (!UserRatedHelpful || UserRatedHelpful.length === 0) {
-            console.log("can't find rated helpful")
+            logger.warn("can't find rated helpful")
             return res.status(404).json({ message: 'no rated helpful found' })
         }
         return res.status(200).json(UserRatedHelpful)
     }
     catch (error) {
-        console.error("error rating review:", error)
+        logger.error("error rating review:", error)
         return res.status(500).json({ message: 'error fetching rated helpful' })
     }
 })
@@ -185,13 +186,13 @@ router.get("/users/:userId/productrating", async (req: Request, res: Response) =
             }
         });
         if (!ProductRating || ProductRating.length === 0) {
-            console.log("can't find product rating")
+            logger.warn("can't find product rating")
             return res.status(404).json({ message: 'no product rating found' })
         }
         return res.status(200).json(ProductRating)
     }
     catch (error) {
-        console.error("error rating review:", error)
+        logger.error("error rating review:", error)
         return res.status(500).json({ message: 'error fetching product rating' })
     }
 })

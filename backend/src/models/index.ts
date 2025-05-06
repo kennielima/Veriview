@@ -4,6 +4,7 @@ import Review from './Review';
 import Product from './Product';
 import UserRating from './UserRating';
 import RatedHelpful from './RatedHelpful';
+import logger from '../utils/logger';
 
 const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
     dialect: 'postgres',
@@ -27,9 +28,9 @@ RatedHelpful.belongsTo(User, { foreignKey: 'userId' });
 
 const initializeDatabase = async () => {
     try {
-        console.log('Starting database sync...');
+        logger.info('Starting database sync...');
         await sequelize.authenticate();
-        console.log('Database synced successfully!');
+        logger.info('Database synced successfully!');
     } catch (error) {
         console.error('Failed to sync database:', error);
     }

@@ -6,6 +6,7 @@ import UserRating from "../models/UserRating";
 import authenticate from "../middleware/protectRoute";
 import RatedHelpful from "../models/RatedHelpful";
 import { Order, Sequelize } from "sequelize";
+import logger from "../utils/logger";
 
 const router = express.Router()
 
@@ -15,7 +16,6 @@ router.get("/products", async (req: Request, res: Response) => {
     const offset = (page - 1) * limit;
     const sort = req.query.sort?.toString();
     const order: Order = [];
-    console.log('req query:', req.query)
 
     if (sort === "recent") {
         order.push(["updatedAt", "DESC"])
@@ -61,7 +61,7 @@ router.get("/products", async (req: Request, res: Response) => {
 
         const { rows, count } = allProducts;
         if (!rows || count === 0) {
-            console.log("can't find products")
+            logger.warn("can't find products")
             return res.status(404).json({ message: 'no products found' })
         }
 
@@ -75,7 +75,7 @@ router.get("/products", async (req: Request, res: Response) => {
         })
     }
     catch (error) {
-        console.error('failed to get products:', error);
+        logger.error('failed to get products:', error);
         return res.status(500).json({ message: 'failed to get products' })
     }
 })
@@ -99,7 +99,8 @@ router.get("/products/:id", async (req: Request, res: Response) => {
                     }],
                     order: [
                         ["createdAt", "DESC"]
-                    ]
+                    ],
+                    separate: true
                 },
                 {
                     model: UserRating,
@@ -108,14 +109,14 @@ router.get("/products/:id", async (req: Request, res: Response) => {
             ]
         })
         if (!product) {
-            console.log("can't find product")
+            logger.warn("can't find product")
             return res.status(404).json({ message: "no product found" })
         }
 
         return res.status(200).json(product);
     }
     catch (error) {
-        console.error('failed to get product:', error);
+        logger.error('failed to get product:', error);
         return res.status(500).json({ message: 'failed to get product' })
     }
 })
@@ -185,7 +186,7 @@ router.post("/products/:id/rate", authenticate, async (req: Request, res: Respon
         return res.status(200).json(product);
     }
     catch (error) {
-        console.error('failed to rate product:', error);
+        logger.error('failed to rate product:', error);
     }
 })
 

@@ -3,6 +3,7 @@ import User from "../models/User";
 import bcryptjs from "bcryptjs";
 import authenticate from "../middleware/protectRoute";
 import generateTokenSetCookies from "../utils/generateTokenSetCookies";
+import logger from "../utils/logger";
 
 const router = express.Router()
 router.post('/signup', async (request: Request, response: Response) => {
@@ -17,8 +18,8 @@ router.post('/signup', async (request: Request, response: Response) => {
         }
         const existingUser = await User.findOne({ where: { email } })
         if (existingUser) {
-            console.log("User already exists");
-            return response.status(401).json({ message: 'User already exists, login instead' })
+            logger.warn("User already exists");
+            return response.status(401).json({ message: 'User already exists with this email, use a different email or login instead' })
         }
 
         const hashedPassword = await bcryptjs.hash(password, 10)
@@ -37,7 +38,7 @@ router.post('/signup', async (request: Request, response: Response) => {
         })
     }
     catch (error) {
-        console.error('Signup error:', error);
+        logger.error('Signup error:', error);
         return response.status(500).json({ message: 'Signup error' });
     }
 })
@@ -54,7 +55,7 @@ router.post('/login', async (request: Request, response: Response) => {
         }
         const isPasswordValid = await bcryptjs.compare(password, user.password)
         if (!isPasswordValid) {
-            return response.status(400).json({ message: "Invalid email or password" })
+            return response.status(400).json({ message: "Invalid credentials" })
         }
 
         generateTokenSetCookies(user.id, response);
@@ -70,7 +71,7 @@ router.post('/login', async (request: Request, response: Response) => {
         })
     }
     catch (error) {
-        console.error('Login error:', error);
+        logger.error('Login error:', error);
         return response.status(500).json({ message: 'Login error' })
     }
 })
@@ -85,7 +86,7 @@ router.post('/logout', async (request: Request, response: Response) => {
         response.status(200).json({ message: "Logged out successfully" });
     }
     catch (error) {
-        console.error('Logout error:', error);
+        logger.error('Logout error:', error);
     }
 })
 export default router

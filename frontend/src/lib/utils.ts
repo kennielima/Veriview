@@ -72,3 +72,10 @@ export const getInitials = (name: string) => {
     .join('')
     .toUpperCase();
 };
+
+export function truncate(input: string) {
+  if (input.length > 250) {
+    return input.substring(0, 250) + '...';
+  }
+  return input;
+};

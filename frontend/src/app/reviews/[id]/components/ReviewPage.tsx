@@ -57,8 +57,8 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                         </button>
                     </Link>
 
-                    <div className="p-6 mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-                        <div className="flex justify-between items-start mb-4">
+                    <div className="p-6 mx-auto bg-white shadow-md rounded-lg">
+                        <div className="flex justify-between items-start mb-4 gap-4">
                             <div>
                                 <h1 className="text-3xl font-bold mb-4">{review.title}</h1>
                                 <div className="flex items-center mb-2 space-x-1 md:space-x-4">
@@ -79,10 +79,10 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
 
                         <div className="space-y-4">
                             <div className="border-b pb-6 mb-6 border-t pt-6 mt-6">
-                                <div className="grid grid-cols-2 gap-4 text-sm text-gray-800">
+                                <div className="grid md:grid-cols-2 gap-2 md:gap-4 text-sm text-gray-800">
                                     {review.brand && (
                                         <div>
-                                            <strong>Product:</strong>
+                                            <strong>Brand:</strong>
                                             <Link href={`/products/${review?.productId}`} className='hover:text-gray-600'>
                                                 {" "}{review.brand}
                                             </Link>

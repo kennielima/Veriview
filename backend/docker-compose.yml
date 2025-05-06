@@ -16,6 +16,8 @@ services:
           target: /backend
           ignore:
             - node_modules/
+    volumes: 
+      - ./logs:/backend/logs
   db:
     image: postgres:13
     environment:

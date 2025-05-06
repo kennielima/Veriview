@@ -7,6 +7,7 @@ import reviewsRoute from './routes/reviews.route';
 import productsRoute from './routes/products.route'
 import userRoute from './routes/user.route'
 import searchRoute from "./routes/search.route";
+import logger from "./utils/logger";
 
 const app = express();
 dotenv.config();
@@ -29,5 +30,5 @@ app.use('/', userRoute)
 app.use('/', searchRoute)
 
 app.listen(process.env.PORT, () => {
-    console.log(`server running on port ${process.env.PORT}`)
+    logger.info(`server running on port ${process.env.PORT}`)
 })

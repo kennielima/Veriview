@@ -112,9 +112,13 @@ export const Dashboard = ({ user, id }: { user: User, id: string }) => {
                         {/* Reviews Content */}
                         {activeTab === 'my-reviews' && (
                             <div className={"space-y-4"}>
-                                {reviews.map((review: Review) => (
-                                    <ReviewCard key={review.id} review={review} />
-                                ))}
+                                {reviews && reviews.length > 0 ? (
+                                    reviews.map((review: Review) => (
+                                        <ReviewCard key={review.id} review={review} />
+                                    ))
+                                ) : (
+                                    <p className='text-black text-center border shadow-sm p-6 rounded-md'>You have not reviewed any brands yet</p>
+                                )}
                             </div>
                         )}
 
@@ -139,7 +143,7 @@ export const Dashboard = ({ user, id }: { user: User, id: string }) => {
                                     {activityTab === 'brand-rating' && (
                                         <div>
                                             <div>
-                                                {userProductRating &&
+                                                {userProductRating && userProductRating.length ? (
                                                     userProductRating.map((userProductRating: Userrating) => (
                                                         userProductRating?.product && (
                                                             <div key={userProductRating.id}>
@@ -151,20 +155,26 @@ export const Dashboard = ({ user, id }: { user: User, id: string }) => {
                                                                 <ProductCard product={userProductRating.product} />
                                                             </div>
                                                         )
-                                                    ))}
+                                                    ))
+                                                ) : (
+                                                    <p className='text-black'>You have not rated any brands yet</p>
+                                                )}
                                             </div>
                                         </div>
                                     )}
                                     {activityTab === 'rated-helpful' && (
                                         <div>
-                                            {userRateHelpful &&
+                                            {userRateHelpful && userRateHelpful.length > 0 ? (
                                                 userRateHelpful.map((userRateHelpful: RatedHelpful) => (
                                                     userRateHelpful.review && (
                                                         <div key={userRateHelpful.id}>
                                                             <ReviewCard review={userRateHelpful?.review} />
                                                         </div>
                                                     )
-                                                ))}
+                                                ))
+                                            ) : (
+                                                <p className='text-black'>You have not rated any brand helpful</p>
+                                            )}
                                         </div>
                                     )}
                                 </div>

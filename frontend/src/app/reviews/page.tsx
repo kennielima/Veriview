@@ -18,21 +18,21 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
     const offset = (param.page ? param.page : 1) * 5;
 
     return (
-        <div className='mx-auto px-8 my-14'>
+        <div className='mx-auto px-8 my-10 md:my-14'>
             <h1 className='text-center font-bold text-2xl'>Recent Reviews</h1>
 
             {(Reviews && Reviews.length > 0) && (
                 <div className='flex flex-col'>
-                    <div className="flex flex-col sm:flex-row md:items-center w-full md:w-4/5 mx-auto py-10 gap-4 md:gap-12 md:justify-between">
-                        <p>Showing
-                            <span className='font-semibold'> {hasNextPage ? offset : totalReviews} </span>
-                            of
-                            <span className='font-semibold'> {totalReviews} </span>
-                            reviews
-                        </p>
-                        <div className='w-full flex justify-end'>
-                            <Sort param={param} />
-                        </div>
+                    <div className="flex flex-col-reverse md:flex-row md:items-center w-full md:w-4/5 mx-auto pt-8 pb-4 md:py-10 gap-8 max-w-4xl md:justify-between">
+                        {Reviews.length > 0 &&
+                            <p>Showing
+                                <span className='font-semibold'> {hasNextPage ? offset : totalReviews} </span>
+                                of
+                                <span className='font-semibold'> {totalReviews} </span>
+                                reviews
+                            </p>
+                        }
+                        <Sort param={param} />
                     </div>
                     {Reviews.map((review: Review) => (
                         <ReviewCard key={review.id} review={review} />
@@ -45,7 +45,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
                     />
                 </div>
             )}
-            {(!Reviews || (Reviews.length === 0)) && (<p>No reviews found</p>)}
+            {(!Reviews || (Reviews.length === 0)) && (<p className='text-center'>No reviews found</p>)}
         </div>
     )
 }

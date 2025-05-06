@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../models/User";
+import logger from "../utils/logger";
 
 interface decodedToken extends JwtPayload {
     id: string
@@ -8,23 +9,23 @@ interface decodedToken extends JwtPayload {
 
 declare global {
     namespace Express {
-      interface Request {
-        user?: User;
-      }
+        interface Request {
+            user?: User;
+        }
     }
-  }
+}
 
 const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const tokenkey = req.cookies.tokenkey;
         const authHeader = req.headers['authorization']; // FETCHING FROM authHeader INSTEAD OF COOKIE
-        const token = authHeader && authHeader.split(' ')[1]; 
+        const token = authHeader && authHeader.split(' ')[1];
 
         if (!tokenkey) {
             return res.status(401).json({ message: 'User unauthorized to make request' })
         }
         const decoded = jwt.verify(tokenkey, process.env.JWT_SECRET as string) as decodedToken
-         
+
         if (!decoded) {
             return res.status(404).json({ message: 'Invalid token' })
         }
@@ -40,7 +41,7 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         next()
     }
     catch (error) {
-        console.error("Authorization failed:", error)
+        logger.error("Authorization failed:", error)
         return res.status(401).json({ message: 'Authentication failed: User unauthorized to make requesA' });
     }
 }
