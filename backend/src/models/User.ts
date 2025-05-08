@@ -9,6 +9,7 @@ declare module 'sequelize' {
     email: string;
     username: string;
     password: string;
+    googleId: string
   }
 }
 class User extends Model {
@@ -38,9 +39,13 @@ User.init({
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-
+  googleId: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true,
+  }
 },
   {
     sequelize,

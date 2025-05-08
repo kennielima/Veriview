@@ -1,11 +1,19 @@
 import express, { Request, Response } from "express";
 import User from "../models/User";
 import bcryptjs from "bcryptjs";
-import authenticate from "../middleware/protectRoute";
 import generateTokenSetCookies from "../utils/generateTokenSetCookies";
 import logger from "../utils/logger";
+import axios, { AxiosError } from "axios";
 
 const router = express.Router()
+const GOOGLE_AUTH_URI = process.env.GOOGLE_AUTH_URI;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_TOKEN_URI = process.env.GOOGLE_TOKEN_URI
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_USERINFO_URL = process.env.GOOGLE_USERINFO_URL;
+const BASE_URL = process.env.BASE_URL;
+
 router.post('/signup', async (request: Request, response: Response) => {
     const { fullName, email, username, password, confirmPassword } = request.body
     try {
@@ -87,6 +95,139 @@ router.post('/logout', async (request: Request, response: Response) => {
     }
     catch (error) {
         logger.error('Logout error:', error);
+        return response.status(500).json({ message: 'Logout error' })
     }
 })
-export default router
+
+router.get('/google', async (request: Request, response: Response) => {
+    try {
+        if (!GOOGLE_CLIENT_ID || !GOOGLE_REDIRECT_URI) {
+            logger.error('Google client ID or redirect URI is not defined');
+            return response.status(500).json({ message: 'Server configuration error' });
+        }
+        const params = {
+            client_id: GOOGLE_CLIENT_ID,
+            redirect_uri: GOOGLE_REDIRECT_URI,
+            response_type: 'code',
+            scope: "email profile"
+        };
+        const authURL = `${GOOGLE_AUTH_URI}?${new URLSearchParams(params).toString()}`;
+        response.redirect(authURL);
+    }
+    catch (error) {
+        logger.error('Google OAuth error:', error);
+        return response.status(500).json({ message: 'Google OAuth error' })
+    }
+})
+
+router.get('/google/callback', async (request: Request, response: Response) => {
+    const param = request.query;
+    const code = param.code as string;
+
+    try {
+        if (!GOOGLE_TOKEN_URI || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !GOOGLE_REDIRECT_URI || !GOOGLE_USERINFO_URL) {
+            return response.status(500).json({ message: 'Server configuration error' });
+        }
+
+        const tokenResponse = await axios.post(
+            GOOGLE_TOKEN_URI,
+            new URLSearchParams({
+                code,
+                client_id: GOOGLE_CLIENT_ID,
+                client_secret: GOOGLE_CLIENT_SECRET,
+                redirect_uri: GOOGLE_REDIRECT_URI,
+                grant_type: "authorization_code"
+            }).toString(),
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+            }
+        )
+        logger.info('Token request body:', {
+            code,
+            client_id: GOOGLE_CLIENT_ID,
+            client_secret: GOOGLE_CLIENT_SECRET,
+            redirect_uri: GOOGLE_REDIRECT_URI,
+            grant_type: "authorization_code"
+        });
+        const data = tokenResponse.data;
+        logger.info("datacreated:", data);
+
+        const accessToken = data.access_token;
+
+        const userInfoResponse = await axios.get(GOOGLE_USERINFO_URL, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        const userData = userInfoResponse.data;
+
+        logger.info("usercreated:", userInfoResponse);
+
+        let token;
+        const emailUser = await User.findOne({
+            where: {
+                email: userData.email
+            }
+        })
+
+        logger.info(emailUser);
+
+        if (emailUser) {
+            if (!emailUser?.googleId) {
+                await emailUser.update({
+                    googleId: userData.sub
+                })
+            }
+            token = generateTokenSetCookies(emailUser.id, response);
+            return response.status(200).json({
+                loggedIn: true,
+                message: 'User logged in successfully',
+                user: {
+                    id: emailUser.id,
+                    fullName: emailUser.fullName,
+                    email: emailUser.email,
+                    username: emailUser.username,
+                },
+            })
+        } else {
+            const newUser = await User.create({
+                googleId: userData.sub,
+                email: userData.email,
+                fullName: userData.name,
+                username: userData.name.split(" ")[0]
+            })
+            token = generateTokenSetCookies(newUser.id, response);
+            logger.info(newUser);
+            return response.status(200).json({
+                loggedIn: true,
+                message: 'User logged in successfully',
+                user: {
+                    id: newUser.id,
+                    fullName: newUser.fullName,
+                    email: newUser.email,
+                    username: newUser.username,
+                },
+            })
+        }
+        // return response.redirect(`${BASE_URL}/callback?token=${token}`);
+    }
+    catch (err) {
+        // if (axios.isAxiosError(error)) {
+        const axiosError = err as AxiosError;
+        logger.error("Google callback error:", axiosError.response?.data || axiosError.message);
+        return response.status(axiosError.response?.status || 500).json({
+            details: axiosError.response?.data || axiosError.message,
+        });
+        // } else {
+        //     console.error("Unexpected error:", error);
+        //     return response.status(500).json({
+        //         message: "Unexpected error occurred",
+        //         details: error instanceof Error ? error.message : 'Unknown error',
+        //     });
+        // }
+    }
+});
+
+export default router;
