@@ -1,7 +1,7 @@
 "use client"
 import React, { FormEvent, useState } from 'react';
 import { User, Mail, Lock, AtSign, Eye, EyeOff, Loader } from 'lucide-react';
-import signupUser from '../hooks/useSignup';
+import signupUser from '@/app/hooks/useSignup';
 import { useRouter } from 'next/navigation';
 
 const SignupPage: React.FC = () => {
@@ -154,7 +154,7 @@ const SignupPage: React.FC = () => {
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
                         Already have an account?{' '}
-                        <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <a href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Sign in
                         </a>
                     </p>

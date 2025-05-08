@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { FAQS } from "@/components/FAQ";
+import { FAQS } from "@/lib/FAQ";
 
 export default function faq() {
     const [expandedIndex, setExpandedIndex] = useState(null);

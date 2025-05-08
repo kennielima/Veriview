@@ -34,8 +34,8 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
-                        <Link href='/login' onClick={() => setIsMenuOpen(false)}>
-                            <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Login </button>
+                        <Link href='/auth' onClick={() => setIsMenuOpen(false)}>
+                            <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Get Started </button>
                         </Link>
                         :
                         // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>

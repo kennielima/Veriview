@@ -205,7 +205,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         {(!user || !user.loggedIn) ? (
                             <div className='flex flex-col w-full font-bold  items-center text-center gap-2'>
                                 <div>Sorry, you must be logged in to create a review</div>
-                                <Link href='/login'>
+                                <Link href='/auth/login'>
                                     <button
                                         className='bg-indigo-600 mx-auto my-2 hover:bg-indigo-700 w-fit rounded-md text-white px-4 py-2'
                                     >

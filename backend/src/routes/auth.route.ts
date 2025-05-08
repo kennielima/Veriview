@@ -181,16 +181,16 @@ router.get('/google/callback', async (request: Request, response: Response) => {
                 })
             }
             token = generateTokenSetCookies(emailUser.id, response);
-            return response.status(200).json({
-                loggedIn: true,
-                message: 'User logged in successfully',
-                user: {
-                    id: emailUser.id,
-                    fullName: emailUser.fullName,
-                    email: emailUser.email,
-                    username: emailUser.username,
-                },
-            })
+            // response.status(200).json({
+            //     loggedIn: true,
+            //     message: 'User logged in successfully',
+            //     user: {
+            //         id: emailUser.id,
+            //         fullName: emailUser.fullName,
+            //         email: emailUser.email,
+            //         username: emailUser.username,
+            //     },
+            // })
         } else {
             const newUser = await User.create({
                 googleId: userData.sub,
@@ -200,18 +200,18 @@ router.get('/google/callback', async (request: Request, response: Response) => {
             })
             token = generateTokenSetCookies(newUser.id, response);
             logger.info(newUser);
-            return response.status(200).json({
-                loggedIn: true,
-                message: 'User logged in successfully',
-                user: {
-                    id: newUser.id,
-                    fullName: newUser.fullName,
-                    email: newUser.email,
-                    username: newUser.username,
-                },
-            })
+            // response.status(200).json({
+            //     loggedIn: true,
+            //     message: 'User logged in successfully',
+            //     user: {
+            //         id: newUser.id,
+            //         fullName: newUser.fullName,
+            //         email: newUser.email,
+            //         username: newUser.username,
+            //     },
+            // })
         }
-        // return response.redirect(`${BASE_URL}/callback?token=${token}`);
+        return response.redirect(`${BASE_URL}/auth/google/callback`);
     }
     catch (err) {
         // if (axios.isAxiosError(error)) {
