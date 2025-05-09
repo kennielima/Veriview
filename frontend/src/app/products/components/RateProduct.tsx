@@ -4,7 +4,7 @@ import { rateProduct } from '@/app/hooks/useRating';
 import Modal from '@/components/Modal';
 import { RenderStars } from '@/components/renderStars';
 import { Product, Review, User } from '@/lib/types';
-import { Check, Loader, X } from 'lucide-react';
+import { Check, Loader, LoaderCircle, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -67,7 +67,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 {isLoading ? (
-                    <div className='flex w-full justify-center text-indigo-600'><Loader className='h-10 w-10' /></div>
+                    <div className='flex w-full justify-center text-indigo-600'><LoaderCircle className='h-10 w-10 animate-spin' /></div>
                 ) : (
                     <div>
                         <div

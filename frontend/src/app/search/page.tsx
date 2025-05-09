@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import Search from '../hooks/useSearch';
 import Link from 'next/link';
 import ReviewCard from '@/components/Card';
-import { ArrowLeft, Loader } from 'lucide-react';
+import { ArrowLeft, Loader, LoaderCircle } from 'lucide-react';
 import ProductCard from '../../components/ProductCard';
 import { capitalizeFirstLetter } from '@/lib/utils';
 
@@ -43,7 +43,7 @@ const page = () => {
         <div className='m-8'>
             {isLoading && (
                 <div className='flex w-full items-center justify-center text-indigo-600'>
-                    <Loader className='h-16 w-16' />
+                    <LoaderCircle className='h-16 w-16 animate-spin' />
                 </div>
             )}
             {!isLoading &&
