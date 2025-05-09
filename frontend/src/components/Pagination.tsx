@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type PaginationTypeProps = {
     param: { page?: number; sort?: string; }
@@ -10,16 +11,20 @@ type PaginationTypeProps = {
 }
 
 const Pagination: React.FC<PaginationTypeProps> = ({ param, totalPages, hasNextPage, hasPrevPage }) => {
-    const currentPage = Number(param.page) || 1;
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    let currentPage = Number(param.page) || 1;
 
     const handlePageChange = (currentPage: number) => {
-        window.location.href = `?${param.sort ? `sort=${param.sort}&` : ""}page=${currentPage}`;
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('page', currentPage.toString());
+        router.push(`?${params.toString()}`);
+        // window.location.href = `?${param.sort ? `sort=${param.sort}&` : ""}page=${currentPage}`;
         // window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
         <div className="mt-8 flex justify-center">
-
             <nav className="flex items-center">
                 <button
                     onClick={() => handlePageChange(Math.max(1, currentPage - 1))}

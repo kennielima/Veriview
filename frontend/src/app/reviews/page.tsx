@@ -7,18 +7,13 @@ import Sort from '@/components/Sort'
 
 const page = async ({ searchParams }: { searchParams: { page: number, sort: string } }) => {
     const param = await searchParams;
-    // console.log("params", param)
-    const FetchReviews = await fetchReviews(param.page, param.sort)
 
-    const Reviews = FetchReviews?.data;
-    const totalReviews = FetchReviews?.totalReviews;
-    const totalPages = FetchReviews?.totalPages;
-    const hasNextPage = FetchReviews?.hasNextPage;
-    const hasPrevPage = FetchReviews?.hasPrevPage;
-    const offset = (param.page ? param.page : 1) * 5;
+    const FetchReviews = await fetchReviews(param.page, param.sort)
+    const { data: Reviews, totalReviews, totalPages, hasNextPage, hasPrevPage } = FetchReviews;
+    let offset = (param.page ? param.page : 1) * 5;
 
     return (
-        <div className='mx-auto px-8 my-10 md:my-14'>
+        <div className='mx-auto px-8 my-10'>
             <h1 className='text-center font-bold text-2xl'>Recent Reviews</h1>
 
             {(Reviews && Reviews.length > 0) && (

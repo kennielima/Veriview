@@ -24,9 +24,9 @@ const page = () => {
         setIsLoading(true);
         try {
             if (q) {
-                const searchData = await Search({ q, category: category || "all" });
-                setSearchResults(searchData.data);
-                setSearchCount(searchData.count);
+                const { data, count } = await Search({ q, category: category || "all" });
+                setSearchResults(data);
+                setSearchCount(count);
             }
         } catch (error) {
             console.error('Error fetching search results:', error);

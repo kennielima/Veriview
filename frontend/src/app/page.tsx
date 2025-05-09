@@ -10,12 +10,10 @@ import Link from 'next/link'
 import Faq from './faq/page'
 
 const page = async () => {
-  const ReviewsData = await fetchReviews()
-  const Reviews = ReviewsData?.data;
+  const { data: Reviews } = await fetchReviews()
 
   const user = await getCurrentUser();
-  const ProductData = await fetchProducts();
-  const Products = ProductData?.data
+  const { data: Products } = await fetchProducts();
 
   return (
     <div className="flex flex-col md:flex-row mx-auto h-full md:h-[90vh]">

@@ -1,5 +1,5 @@
 "use client"
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 

@@ -151,7 +151,7 @@ router.get('/google/callback', async (request: Request, response: Response) => {
             redirect_uri: GOOGLE_REDIRECT_URI,
             grant_type: "authorization_code"
         });
-        const data = tokenResponse.data;
+        const { data } = tokenResponse;
         logger.info("datacreated:", data);
 
         const accessToken = data.access_token;
@@ -181,16 +181,6 @@ router.get('/google/callback', async (request: Request, response: Response) => {
                 })
             }
             token = generateTokenSetCookies(emailUser.id, response);
-            // response.status(200).json({
-            //     loggedIn: true,
-            //     message: 'User logged in successfully',
-            //     user: {
-            //         id: emailUser.id,
-            //         fullName: emailUser.fullName,
-            //         email: emailUser.email,
-            //         username: emailUser.username,
-            //     },
-            // })
         } else {
             const newUser = await User.create({
                 googleId: userData.sub,
@@ -200,33 +190,16 @@ router.get('/google/callback', async (request: Request, response: Response) => {
             })
             token = generateTokenSetCookies(newUser.id, response);
             logger.info(newUser);
-            // response.status(200).json({
-            //     loggedIn: true,
-            //     message: 'User logged in successfully',
-            //     user: {
-            //         id: newUser.id,
-            //         fullName: newUser.fullName,
-            //         email: newUser.email,
-            //         username: newUser.username,
-            //     },
-            // })
         }
         return response.redirect(`${BASE_URL}/auth/google/callback`);
     }
     catch (err) {
         // if (axios.isAxiosError(error)) {
-        const axiosError = err as AxiosError;
-        logger.error("Google callback error:", axiosError.response?.data || axiosError.message);
-        return response.status(axiosError.response?.status || 500).json({
-            details: axiosError.response?.data || axiosError.message,
+        const error = err as AxiosError;
+        logger.error("Google callback error:", error.response?.data || error.message);
+        return response.status(error.response?.status || 500).json({
+            details: error.response?.data || error.message,
         });
-        // } else {
-        //     console.error("Unexpected error:", error);
-        //     return response.status(500).json({
-        //         message: "Unexpected error occurred",
-        //         details: error instanceof Error ? error.message : 'Unknown error',
-        //     });
-        // }
     }
 });
 

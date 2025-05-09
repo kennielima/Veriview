@@ -26,7 +26,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 <Link href='/' onClick={() => setIsMenuOpen(false)}>
                     <div className="flex text-2xl font-bold text-indigo-600">ReviewHub</div>
                 </Link>
-                <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-10 text-sm">
+                <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-16 text-sm">
                     <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} placeholder={"Search by review, brand..."} />
                     <Link href='/products' className=' text-gray-800 hover:text-gray-800 text-base transition'>Brands</Link>
                     <Link href='/reviews' className=' text-gray-800 hover:text-gray-800 text-base transition'>Reviews</Link>

@@ -9,16 +9,11 @@ import BrandSort from '@/components/BrandSort';
 const page = async ({ searchParams }: { searchParams: { page: number, sort: string } }) => {
     const param = await searchParams;
     const FetchProducts = await fetchProducts(param.page, param.sort)
-
-    const Products = FetchProducts?.data;
-    const totalProducts = FetchProducts?.totalProducts;
-    const totalPages = FetchProducts?.totalPages;
-    const hasNextPage = FetchProducts?.hasNextPage;
-    const hasPrevPage = FetchProducts?.hasPrevPage;
-    const offset = (param.page ? param.page : 1) * 5;
+    const { data: Products, totalProducts, totalPages, hasNextPage, hasPrevPage } = FetchProducts;
+    let offset = (param.page ? param.page : 1) * 5;
 
     return (
-        <div className='flex flex-col items-center gap-8 md:gap-12 my-10 md:my-14 px-8'>
+        <div className='flex flex-col items-center gap-8 md:gap-12 my-10 px-8'>
             <h1 className='text-xl font-bold'>All Reviewed Brands</h1>
             {Products?.length > 0 &&
                 <p className='hidden md:flex gap-1 text-left w-full mb-[-2rem] pl-4'>
