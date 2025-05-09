@@ -79,7 +79,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
                         {!user ? (
                             <div className='flex flex-col w-full font-bold  items-center text-center gap-2'>
                                 <div>You must be logged in to rate a product</div>
-                                <Link href='/auth/login'>
+                                <Link href='/auth'>
                                     <button
                                         className='bg-indigo-600 mx-auto my-2 hover:bg-indigo-700 w-fit rounded-md text-white px-4 py-2'
                                     >

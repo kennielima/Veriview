@@ -1,13 +1,13 @@
 import Link from "next/link"
-import { LogIn, UserPlus, Mail } from "lucide-react"
+import { LogIn, UserPlus, Layers } from "lucide-react"
 
 export default function CTAPage() {
     return (
-        <div className="flex min-h-screen flex-col items-center bg-indigo-50 p-4">
-            <div className="w-full max-w-md p-8">
+        <div className="flex min-h-screen flex-col items-center p-4">
+            <div className="w-full max-w-md p-8 border shadow-md rounded bg-indigo-50 mt-8">
                 <div className="mb-6 flex justify-center">
-                    <div className="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center">
-                        <Mail className="h-8 w-8 text-indigo-600" />
+                    <div className="h-20 w-20 rounded-full bg-indigo-100 flex items-center justify-center">
+                        <Layers className="h-10 w-10 text-indigo-600" />
                     </div>
                 </div>
                 <h1 className="mb-2 text-center text-3xl font-bold text-gray-900">Welcome</h1>
@@ -41,7 +41,7 @@ export default function CTAPage() {
 
                     <Link href={`${process.env.API_URL}/google`}>
                         <button
-                            className="w-full h-12 text-base flex items-center justify-center gap-2 bg-white border-gray-300 rounded-md border font-semibold"
+                            className="w-full h-12 mt-4 text-base flex items-center justify-center gap-2 bg-white border-gray-300 rounded-md border font-semibold"
                         >
                             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
                                 <path

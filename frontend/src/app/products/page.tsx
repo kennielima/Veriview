@@ -20,7 +20,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
     return (
         <div className='flex flex-col items-center gap-8 md:gap-12 my-10 md:my-14 px-8'>
             <h1 className='text-xl font-bold'>All Reviewed Brands</h1>
-            {Products.length > 0 &&
+            {Products?.length > 0 &&
                 <p className='hidden md:flex gap-1 text-left w-full mb-[-2rem] pl-4'>
                     Showing{" "}
                     <span className='font-semibold'>{hasNextPage ? offset : totalProducts}</span>
@@ -31,7 +31,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
             }
             <div className='flex flex-col-reverse md:flex-row gap-14 justify-between w-full'>
                 <div className="mx-auto px-4 space-y-4 w-full md:w-5/6">
-                    {Products.length > 0 &&
+                    {Products?.length > 0 &&
                         <p className='md:hidden text-left w-full md:mb-[-2rem]'>
                             Showing{" "}
                             <span className='font-semibold'>{hasNextPage ? offset : totalProducts}</span>
@@ -40,7 +40,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
                             {" "}brands
                         </p>
                     }
-                    {Products && Products.length > 0 ? (
+                    {Products && Products?.length > 0 ? (
                         Products.map((product: Product) => (
                             <div key={product.id}>
                                 <ProductCard product={product} />

@@ -4,7 +4,7 @@ import createReview from '@/app/hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import { Product, User } from '@/lib/types';
-import { Check, X } from 'lucide-react';
+import { Check, FilePenLine, Send, UserRoundPen, X } from 'lucide-react';
 import Modal from '@/components/Modal';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -80,11 +80,19 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-10 md:p-6 md:my-12 bg-indigo-50 shadow-md rounded-lg ">
-            <h2 className="text-2xl font-bold mb-6 text-center">Write a Review</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="md:my-10 max-w-2xl mx-auto p-10 md:p-8 bg-indigo-50 shadow-md rounded-xl border">
+            <div className="mb-4 flex justify-center">
+                <div className="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <UserRoundPen className="h-8 w-8 text-indigo-600" />
+                </div>
+            </div>
+            <div className='flex flex-col mb-8 text-center gap-1'>
+                <h2 className="text-2xl font-bold">Write a Review</h2>
+                <p className='font-medium text-gray-700'>Share your experience and help others make better decisions</p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="title" className="block text-sm font-semibold mb-2">
                         Review Title
                     </label>
                     <input
@@ -104,7 +112,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                     )}
                 </div>
                 <div>
-                    <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="brand" className="block text-sm font-semibold mb-2">
                         Product/Brand Name
                     </label>
                     <div className="relative w-full" onMouseLeave={() => setShowSuggestions(false)}>
@@ -139,16 +147,16 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 </div>
 
                 <div>
-                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="content" className="block text-sm font-semibold mb-2">
                         Review Content
                     </label>
                     <textarea
                         id="content"
                         value={content}
                         onChange={(e) => { setContent(e.target.value), setError('') }}
-                        rows={5}
+                        rows={10}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Tell us about your experience"
+                        placeholder="Tell us about your experience..."
                     />
                     {(error === 'Please write your review' && content === '') && (
                         <div className="text-red-700 text-xs mt-1">{error}</div>
@@ -159,7 +167,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold mb-2">
                         Rating
                     </label>
                     <div className="flex space-x-1">
@@ -169,7 +177,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         <div className="text-red-700 text-xs mt-1">{error}</div>
                     )}
                 </div>
-                <label className='flex items-center gap-2'>
+                <label className='flex items-center gap-2 font-semibold text-sm'>
                     <input
                         type="checkbox"
                         id="anon"
@@ -183,8 +191,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
 
                 <button
                     type="submit"
-                    className="w-full py-2 font-semibold bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                    className="w-full py-2 font-semibold flex items-center justify-center bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                 >
+                    <Send className="mr-2 h-4 w-4" />
                     <span>Submit Review</span>
                 </button>
                 {(error === 'cannot review a product twice') && (
@@ -193,6 +202,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                     </div>
                 )}
             </form>
+
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 {
                     <div>
@@ -205,7 +215,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         {(!user || !user.loggedIn) ? (
                             <div className='flex flex-col w-full font-bold  items-center text-center gap-2'>
                                 <div>Sorry, you must be logged in to create a review</div>
-                                <Link href='/auth/login'>
+                                <Link href='/auth'>
                                     <button
                                         className='bg-indigo-600 mx-auto my-2 hover:bg-indigo-700 w-fit rounded-md text-white px-4 py-2'
                                     >

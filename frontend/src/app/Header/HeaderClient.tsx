@@ -38,8 +38,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Get Started </button>
                         </Link>
                         :
-                        // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>
-                        // {/* {getInitials(currentUser.fullName)} */ }
+                        // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>{getInitials(currentUser.fullName)}}
                         <Link href='/dashboard/me' className='text-base flex gap-1 cursor-pointer items-center text-gray-800 font-semibold'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>

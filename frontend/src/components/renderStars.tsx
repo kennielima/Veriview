@@ -10,7 +10,7 @@ export const RenderStars: React.FC<RenderStarsProps> = ({ rating, setRating, siz
     <Star
       key={index}
       onClick={() => setRating(index + 1)}
-      className={`${size} cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+      className={`${size} cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-400'}`}
       fill={index < rating ? 'currentColor' : 'none'}
       stroke="currentColor"
     />
