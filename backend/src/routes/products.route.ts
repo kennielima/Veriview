@@ -7,6 +7,7 @@ import authenticate from "../middleware/protectRoute";
 import RatedHelpful from "../models/RatedHelpful";
 import { Order, Sequelize } from "sequelize";
 import logger from "../utils/logger";
+import { postLimiter } from "../middleware/rate-limit";
 
 const router = express.Router()
 
@@ -121,7 +122,7 @@ router.get("/products/:id", async (req: Request, res: Response) => {
     }
 })
 
-router.post("/products/:id/rate", authenticate, async (req: Request, res: Response) => {
+router.post("/products/:id/rate", postLimiter, authenticate, async (req: Request, res: Response) => {
     const productId = req.params.id;
     const { rating } = req.body;
     const user = req.user;

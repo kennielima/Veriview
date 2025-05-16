@@ -5,11 +5,12 @@ import Product from './Product';
 import UserRating from './UserRating';
 import RatedHelpful from './RatedHelpful';
 import logger from '../utils/logger';
+import { DATABASE_URL, DB_HOST, PORT } from '../utils/config';
 
-const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
+const sequelize = new Sequelize(DATABASE_URL as string, {
     dialect: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.PORT),
+    host: DB_HOST,
+    port: Number(PORT),
     logging: console.log
 });
 

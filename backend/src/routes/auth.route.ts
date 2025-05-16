@@ -4,17 +4,11 @@ import bcryptjs from "bcryptjs";
 import generateTokenSetCookies from "../utils/generateTokenSetCookies";
 import logger from "../utils/logger";
 import axios, { AxiosError } from "axios";
-
+import { GOOGLE_AUTH_URI, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, GOOGLE_TOKEN_URI, GOOGLE_USERINFO_URL, BASE_URL } from "../utils/config";
+import { authLimiter } from "../middleware/rate-limit";
 const router = express.Router()
-const GOOGLE_AUTH_URI = process.env.GOOGLE_AUTH_URI;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_TOKEN_URI = process.env.GOOGLE_TOKEN_URI
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const GOOGLE_USERINFO_URL = process.env.GOOGLE_USERINFO_URL;
-const BASE_URL = process.env.BASE_URL;
 
-router.post('/signup', async (request: Request, response: Response) => {
+router.post('/signup', authLimiter, async (request: Request, response: Response) => {
     const { fullName, email, username, password, confirmPassword } = request.body
     try {
         if (!fullName || !email || !username || !password || !confirmPassword) {
@@ -51,7 +45,7 @@ router.post('/signup', async (request: Request, response: Response) => {
     }
 })
 
-router.post('/login', async (request: Request, response: Response) => {
+router.post('/login', authLimiter, async (request: Request, response: Response) => {
     const { email, password } = request.body;
     try {
         if (!email || !password) {
@@ -99,7 +93,7 @@ router.post('/logout', async (request: Request, response: Response) => {
     }
 })
 
-router.get('/google', async (request: Request, response: Response) => {
+router.get('/google', authLimiter, async (request: Request, response: Response) => {
     try {
         if (!GOOGLE_CLIENT_ID || !GOOGLE_REDIRECT_URI) {
             logger.error('Google client ID or redirect URI is not defined');

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../models/User";
 import logger from "../utils/logger";
+import { JWT_SECRET } from "../utils/config";
 
 interface decodedToken extends JwtPayload {
     id: string
@@ -24,7 +25,7 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
         if (!tokenkey) {
             return res.status(401).json({ message: 'User unauthorized to make request' })
         }
-        const decoded = jwt.verify(tokenkey, process.env.JWT_SECRET as string) as decodedToken
+        const decoded = jwt.verify(tokenkey, JWT_SECRET as string) as decodedToken
 
         if (!decoded) {
             return res.status(404).json({ message: 'Invalid token' })

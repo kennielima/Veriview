@@ -8,6 +8,7 @@ import productsRoute from './routes/products.route'
 import userRoute from './routes/user.route'
 import searchRoute from "./routes/search.route";
 import logger from "./utils/logger";
+import { BASE_URL, PORT } from "./utils/config";
 
 const app = express();
 dotenv.config();
@@ -16,7 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: process.env.BASE_URL,
+    origin: BASE_URL,
     credentials: true,
     methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
@@ -29,6 +30,6 @@ app.use('/', productsRoute)
 app.use('/', userRoute)
 app.use('/', searchRoute)
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     logger.info(`server running on port ${process.env.PORT}`)
 })

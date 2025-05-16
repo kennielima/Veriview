@@ -77,7 +77,7 @@ const page = async () => {
       {/* <hr className='hidden md:flex w-[1px] h-full bg-slate-300 px-0' /> */}
 
       {/* SIDEBAR */}
-      <div className='pb-2 border shadow-md flex flex-col py-6 md:pt-12 md:h-[90vh] w-full md:w-1/3 lg:w-1/4 justify-between'>
+      <div className='pb-2 border shadow-md flex flex-col py-6 md:pt-6 md:h-[90vh] w-full md:w-1/3 lg:w-1/4 justify-between'>
         <div className='flex flex-col gap-4 mx-auto px-6 justify-center py-8'>
           <h1 className='text-lg font-bold'>Highest Rated Brands</h1>
           <div className="space-y-4 w-full">

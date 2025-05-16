@@ -1,12 +1,13 @@
 import { Sequelize } from 'sequelize'
 import dotenv from "dotenv";
 import logger from '../utils/logger';
+import { DATABASE_URL, DB_HOST } from '../utils/config';
 
 dotenv.config();
 
-const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
+const sequelize = new Sequelize(`${DATABASE_URL}`, {
   dialect: "postgres",
-  host: process.env.DB_HOST,
+  host: DB_HOST,
   // logging: console.log
   // logging: (x: any) => logger.info(x)
 });
