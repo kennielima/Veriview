@@ -138,13 +138,7 @@ router.get('/google/callback', async (request: Request, response: Response) => {
                 },
             }
         )
-        logger.info('Token request body:', {
-            code,
-            client_id: GOOGLE_CLIENT_ID,
-            client_secret: GOOGLE_CLIENT_SECRET,
-            redirect_uri: GOOGLE_REDIRECT_URI,
-            grant_type: "authorization_code"
-        });
+
         const { data } = tokenResponse;
         logger.info("datacreated:", data);
 

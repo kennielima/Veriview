@@ -22,13 +22,10 @@ export type reviewTypeProps = {
 const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) => {
     const router = useRouter();
     const review = reviewData?.review;
-
     const ratedHelpfulArray = Array.isArray(review?.ratedhelpful) ? review?.ratedhelpful : [];
     const ratedhelpfulCount = ratedHelpfulArray.length;
     const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
-
-    // console.log("urh", userRatedHelpful, "aa", ratedHelpfulArray, isRatedHelpful)
 
     const thumbsUpHandler = async () => {
         const newRateHelpful = !isRatedHelpful;
@@ -102,7 +99,9 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     </div>
                                 </div>
                             </div>
-
+                            {review.images && review.images.map((image: string, index: number) => (
+                                <img src={image} key={index} alt={`review-image-${index}`} className="w-3/4 h-full object-cover mb-4 rounded-lg" />
+                            ))}
                             <p className="text-gray-800 text-base leading-relaxed">{review.content}</p>
                         </div>
                     </div>

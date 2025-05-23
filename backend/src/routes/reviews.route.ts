@@ -8,13 +8,33 @@ import UserRating from "../models/UserRating";
 import RatedHelpful from "../models/RatedHelpful";
 import { Order } from "sequelize";
 import logger from "../utils/logger";
+import axios, { AxiosError } from "axios";
+import { CLOUDFLARE_ACCESS_KEY_ID, CLOUDFLARE_API_TOKEN, CLOUDFLARE_R2_BUCKET, CLOUDFLARE_R2_ENDPOINT, CLOUDFLARE_R2_PUBLIC_DOMAIN, CLOUDFLARE_SECRET_ACCESS_KEY } from "../utils/config";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const router = express.Router()
+const upload = multer({ dest: 'uploads/' })
+
+const S3 = new S3Client({
+    region: "auto",
+    endpoint: CLOUDFLARE_R2_ENDPOINT,
+    credentials: {
+        accessKeyId: `${CLOUDFLARE_ACCESS_KEY_ID}`,
+        secretAccessKey: `${CLOUDFLARE_SECRET_ACCESS_KEY}`,
+    },
+});
 
 router.post("/create-review", authenticate, async (req: Request, res: Response) => {
     const user = req.user;
     try {
-        const { title, brand, content, rating, anonymous } = req.body;
+        const { title, brand, content, rating, anonymous, images } = req.body;
+
         if (!user) {
             return res.status(404).json({ message: 'You must be logged in to post a review' })
         }
@@ -45,13 +65,13 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             });
         }
 
-        let existingReview = await Review.findOne({
+        let existingProductReview = await Review.findOne({
             where: {
                 productId: product.id,
                 userId: user.id
             }
         })
-        if (existingReview) {
+        if (existingProductReview) {
             return res.status(500).json({ message: 'You cannot review a product twice' })
         }
 
@@ -62,7 +82,8 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             rating: Number(rating),
             userId: user.id,
             productId: product?.id,
-            anonymous
+            anonymous: anonymous as boolean,
+            images
         });
 
         const existingRating = await UserRating.findOne({
@@ -120,13 +141,59 @@ router.post("/create-review", authenticate, async (req: Request, res: Response) 
             content: newReview.content,
             rating: newReview.rating,
             userId: user.id,
-            anonymous: newReview.anonymous
+            anonymous: newReview.anonymous,
+            images: newReview.images
         })
     }
 
-    catch (error) {
-        logger.error("error posting review:", error)
-        return res.status(500).json({ message: 'error posting reviews' })
+    catch (err) {
+        if (axios.isAxiosError(err)) {
+            const error = err as AxiosError;
+            logger.error("Post Review error:", error.response?.data || error.message);
+            return res.status(error.response?.status || 500).json({
+                details: error.response?.data || error.message,
+            });
+        } else {
+            logger.error("error posting review:", err)
+            return res.status(500).json({ message: 'error posting reviews' })
+        }
+    }
+})
+
+router.post("/presign-images", authenticate, async (req: Request, res: Response) => {
+    const user = req.user;
+
+    try {
+        const { fileName } = req.query;
+
+        if (!user) {
+            return res.status(404).json({ message: 'You must be logged in to post a review' })
+        }
+
+        const key = `${user.id}/${uuidv4()}-${fileName}`;
+        const signedURL = await getSignedUrl(
+            S3,
+            new PutObjectCommand({
+                Bucket: `${CLOUDFLARE_R2_BUCKET}`,
+                Key: key,
+            }),
+            { expiresIn: 10000 },
+        );
+        const publicUrl = `${CLOUDFLARE_R2_PUBLIC_DOMAIN}/${key}`;
+        return res.json({ url: signedURL, publicUrl });
+    }
+
+    catch (err) {
+        if (axios.isAxiosError(err)) {
+            const error = err as AxiosError;
+            logger.error("Post Review error:", error.response?.data || error.message);
+            return res.status(error.response?.status || 500).json({
+                details: error.response?.data || error.message,
+            });
+        } else {
+            logger.error("error posting review:", err)
+            return res.status(500).json({ message: 'error posting reviews' })
+        }
     }
 })
 
@@ -263,7 +330,16 @@ router.delete("/reviews/:id", authenticate, async (req: Request, res: Response) 
                 });
             }
         }
-
+        if (review.images?.length) {
+            for (const image of review.images as string[]) {
+                const key = image.replace(`${CLOUDFLARE_R2_PUBLIC_DOMAIN}/`, '');
+                const deleteCommand = new DeleteObjectCommand({
+                    Bucket: CLOUDFLARE_R2_BUCKET,
+                    Key: key,
+                });
+                await S3.send(deleteCommand);
+            }
+        }
         return res.status(200).json({ message: 'successfully deleted' })
     }
     catch (error) {
@@ -313,4 +389,3 @@ router.post("/reviews/:id/ratehelpful", authenticate, async (req: Request, res: 
 })
 
 export default router;
-

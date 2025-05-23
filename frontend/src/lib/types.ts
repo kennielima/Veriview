@@ -2,6 +2,7 @@ export interface Review {
     title: string
     brand: string
     content: string
+    images?: string[]
     id: string
     createdAt: string
     rating: number

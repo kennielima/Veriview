@@ -1,13 +1,15 @@
 "use client"
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import createReview from '@/app/hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import { Product, User } from '@/lib/types';
-import { Check, FilePenLine, Send, UserRoundPen, X } from 'lucide-react';
+import { Check, Send, UserRoundPen, X } from 'lucide-react';
 import Modal from '@/components/Modal';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { FileUploadWithPreview } from 'file-upload-with-preview';
+import 'file-upload-with-preview/dist/style.css';
 
 type CreateReviewTypeProps = {
     brands: Product[];
@@ -32,6 +34,8 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     const [filteredSuggestions, setFilteredSuggestions] = useState<Product[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
+    const [images, setImages] = useState<File[]>([])
+
 
     const handleChangeBrandName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBrand(e.target.value);
@@ -45,6 +49,24 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         setBrand(suggestion.name);
         setShowSuggestions(false);
     };
+
+    useEffect(() => {
+        const upload = new FileUploadWithPreview('image_id', {
+            text: {
+                chooseFile: 'Click here to select images',
+                browse: 'Browse',
+                selectedCount: 'Selected Images',
+                label: 'Upload images for your review - max 10'
+            },
+            multiple: true,
+            maxFileCount: 10, //todo: fix
+            accept: 'image/*, .png, .jpg, .webp',
+        });
+
+        const imageList = upload.cachedFileArray;
+        setImages(imageList);
+    }, []);
+
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -63,7 +85,8 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 capitalizeFirstLetter(brand),
                 content,
                 rating,
-                anonymous
+                anonymous,
+                images
             );
             setIsOpen(true);
             setTitle('');
@@ -72,7 +95,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
             setRating(0);
             setError('');
             setAnonymous(false)
-            // router.push('/')
+            setImages([])
         } catch (error: any) {
             console.log(error.message);
             setError(error.message)
@@ -165,6 +188,8 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                         <div className="text-red-700 text-xs mt-1">{error}</div>
                     )}
                 </div>
+                {/* image uploader */}
+                <div className="custom-file-container" data-upload-id="image_id"></div>
 
                 <div>
                     <label className="block text-sm font-semibold mb-2">
@@ -196,7 +221,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                     <Send className="mr-2 h-4 w-4" />
                     <span>Submit Review</span>
                 </button>
-                {(error === 'cannot review a product twice') && (
+                {(error === 'You cannot review a product twice') && (
                     <div className="text-red-700 text-sm mt-1">Sorry, {error}!
                         <Link href='/faq' className='text-indigo-600 hover:text-indigo-500'> Find out why</Link>
                     </div>

@@ -11,4 +11,13 @@ export const PORT = process.env.PORT;
 export const DATABASE_URL = process.env.DATABASE_URL;
 export const DB_HOST = process.env.DB_HOST;
 export const JWT_SECRET = process.env.JWT_SECRET;
-
+export const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+export const CLOUDFLARE_ACCOUNT_HASH = process.env.CLOUDFLARE_ACCOUNT_HASH;
+export const CLOUDFLARE_IMAGE_DELIVERY_URL = process.env.CLOUDFLARE_IMAGE_DELIVERY_URL;
+export const CLOUDFLARE_URL = process.env.CLOUDFLARE_URL;
+export const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+export const CLOUDFLARE_R2_PUBLIC_DOMAIN = process.env.CLOUDFLARE_R2_PUBLIC_DOMAIN;
+export const CLOUDFLARE_ACCESS_KEY_ID = process.env.CLOUDFLARE_ACCESS_KEY_ID;
+export const CLOUDFLARE_SECRET_ACCESS_KEY = process.env.CLOUDFLARE_SECRET_ACCESS_KEY;
+export const CLOUDFLARE_R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET;
+export const CLOUDFLARE_R2_ENDPOINT = process.env.CLOUDFLARE_R2_ENDPOINT;

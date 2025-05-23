@@ -17,6 +17,7 @@ declare module 'sequelize' {
         productId: string;
         userId: string,
         anonymous: boolean,
+        images: []
     }
 }
 
@@ -70,6 +71,10 @@ Review.init({
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    images: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true
     }
 },
     {
