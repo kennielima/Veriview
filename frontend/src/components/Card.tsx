@@ -7,6 +7,7 @@ import { Clock } from 'lucide-react';
 
 const ReviewCard = ({ review }: { review: Review }) => {
     const ratedHelpful = review?.ratedhelpful;
+    const image = review?.images?.[0];
 
     return (
         <Link href={`/reviews/${review.id}`}>
@@ -21,9 +22,23 @@ const ReviewCard = ({ review }: { review: Review }) => {
                 <div className="flex mb-3 md:hidden mt-1">
                     <RenderedStars rating={review.rating} />
                 </div>
-                <p className="mb-4 flex justify-start text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
-                    {truncate(review.content)}
-                </p>
+                {image ? (
+                    <div className='flex relative gap-4 mb-4 justify-start'>
+                        <img
+                            src={image}
+                            alt='review-image-card'
+                            className='w-28 h-28 object-cover rounded-lg border border-gray-200'
+                        />
+                        <span className='absolute left-1 bottom-1 px-1 py-[0.15rem] text-sm bg-gray-700 rounded-md text-white'>{review?.images?.length}</span>
+                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
+                            {truncate(review.content)}
+                        </p>
+                    </div>
+                ) : (
+                    <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
+                        {truncate(review.content)}
+                    </p>
+                )}
                 <div className="flex justify-between items-center text-sm text-gray-500">
                     <div className='flex gap-1 items-center'>
                         {review?.user?.fullName && <p className={`${review.anonymous ? "bg-gray-400" : "bg-indigo-600 "} p-3 rounded-full mr-2 text-white`}>{getInitials(review.anonymous ? "A non" : review?.user?.fullName)}</p>}

@@ -31,7 +31,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const ratedhelpfulCount = ratedHelpfulArray.length;
     const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
-    const [openImage, setOpenImage] = useState(true);
+    const [openImage, setOpenImage] = useState(false);
     const [currImage, setCurrImage] = useState(review?.images?.[0] || '');
     const [currImageIndex, setCurrImageIndex] = useState(0);
     // const currentImage = Array.isArray(review.images) && review.images.length && review.images[currImageIndex];
@@ -141,7 +141,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                             onClick={() => setOpenImage(true)}
                                             key={currImage}
                                             alt={`review-image-${currImage}`}
-                                            className="w-full h-[32rem] object-cover rounded-lg mb-8 border border-gray-300"
+                                            className="w-full h-[32rem] object-cover rounded-lg mb-8 border border-gray-300 cursor-pointer"
                                         />
                                         <p className='absolute bottom-10 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-70 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
                                         <button
