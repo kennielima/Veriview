@@ -21,7 +21,7 @@ const ProductCard = ({ product }: {
                     <p className='text-gray-600 text-sm'>{product.averageRating}</p>
                 </div >
                 <p className='flex justify-start text-indigo-600 text-sm'>{product?.reviews?.length} review(s)</p>
-                <p className=' text-sm text-slate-600 py-4'>
+                <p className=' text-sm text-start text-slate-600 py-4'>
                     {product.name} has an average rating of
                     <span className='text-indigo-600 font-semibold'> {product.averageRating}/5 </span>
                     across a total of

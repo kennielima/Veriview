@@ -1,10 +1,10 @@
 "use client"
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState, useRef } from 'react';
 import createReview from '@/app/hooks/useCreateReview';
 import { RenderStars } from '@/components/renderStars';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import { Product, User } from '@/lib/types';
-import { Check, Send, UserRoundPen, X } from 'lucide-react';
+import { Check, Loader, Send, UserRoundPen, X } from 'lucide-react';
 import Modal from '@/components/Modal';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -35,6 +35,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
     const [images, setImages] = useState<File[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const uploadRef = useRef<FileUploadWithPreview | null>(null);
 
 
     const handleChangeBrandName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,16 +59,22 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 chooseFile: 'Click here to select images',
                 browse: 'Browse',
                 selectedCount: 'Selected Images',
-                label: 'Upload images for your review - max 10'
+                label: 'Upload images for your review (max 10)'
             },
             multiple: true,
-            maxFileCount: 10, //todo: fix
+            maxFileCount: 10,
             accept: 'image/*, .png, .jpg, .webp',
         });
-
+        uploadRef.current = upload;
         const imageList = upload.cachedFileArray;
         setImages(imageList);
     }, []);
+
+    useEffect(() => {
+        if (images.length <= 10 && error === 'You can not select more than 10 pictures!') {
+            setError('');
+        }
+    }, [images, error]);
 
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -77,6 +86,8 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         if (!content.trim()) { setError('Please write your review'); return; }
         if (content.length < 60) { setError('Review must be at least 60 characters long'); return; }
         if (rating === 0) { setError('Please select a rating'); return; }
+        if (images.length > 10) { setError('You can not select more than 10 pictures!'); return; }
+        setIsLoading(true);
 
         try {
             if (!user.loggedIn) setIsOpen(true);
@@ -96,9 +107,14 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
             setError('');
             setAnonymous(false)
             setImages([])
+            uploadRef.current?.resetPreviewPanel();
+            setIsLoading(false);
+
         } catch (error: any) {
             console.log(error.message);
             setError(error.message)
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -191,6 +207,10 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 {/* image uploader */}
                 <div className="custom-file-container" data-upload-id="image_id"></div>
 
+                {(error === 'You can not select more than 10 pictures!') && (
+                    <div className="text-red-700 text-xs mt-1">{error}</div>
+                )}
+
                 <div>
                     <label className="block text-sm font-semibold mb-2">
                         Rating
@@ -218,8 +238,19 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                     type="submit"
                     className="w-full py-2 font-semibold flex items-center justify-center bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                 >
-                    <Send className="mr-2 h-4 w-4" />
-                    <span>Submit Review</span>
+                    {isLoading ? (
+                        <>
+                            <Loader className="mr-2 h-4 w-4" />
+                            <span>Submitting</span>
+                        </>
+                    ) : (
+                        <>
+                            <Send className="mr-2 h-4 w-4" />
+                            <span>Submit Review</span>
+                        </>
+                    )}
+
+
                 </button>
                 {(error === 'You cannot review a product twice') && (
                     <div className="text-red-700 text-sm mt-1">Sorry, {error}!

@@ -40,6 +40,13 @@ User.init({
   password: {
     type: DataTypes.STRING,
     allowNull: true,
+    // validate: {
+    //   passwordOrGoogleId(this: any) {
+    //     if (!this.password && !this.googleId) {
+    //       throw new Error('Password is required if not using Google authentication');
+    //     }
+    //   }
+    // }
   },
   googleId: {
     type: DataTypes.STRING,

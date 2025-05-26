@@ -21,7 +21,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
                 <div className="flex mb-3 md:hidden mt-1">
                     <RenderedStars rating={review.rating} />
                 </div>
-                <p className="mb-4 flex justify-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
+                <p className="mb-4 flex justify-start text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
                     {truncate(review.content)}
                 </p>
                 <div className="flex justify-between items-center text-sm text-gray-500">

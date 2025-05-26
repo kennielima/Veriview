@@ -22,6 +22,11 @@ const createReview = async (title: string, brand: string, content: string, ratin
                     },
                     credentials: 'include',
                 });
+            if (!presignURL.ok) {
+                const errorText = await presignURL.text();
+                console.error('Failed to get presigned URL:', errorText);
+                throw new Error(`Failed to get presigned URL: ${errorText}`);
+            }
             const { url, publicUrl } = await presignURL.json();
 
             const uploadImage = await fetch(`${url}`, {
@@ -35,7 +40,8 @@ const createReview = async (title: string, brand: string, content: string, ratin
             if (!uploadImage.ok) {
                 const errorData = await uploadImage.json();
                 const message = errorData?.message || 'Failed to upload image';
-                throw new Error(message || 'Failed to upload image');
+                console.error('error uploading to cloudflare:', errorData);
+                throw new Error(message || 'Failed to upload image to cloudflare');
             }
             uploadedImageUrls.push(publicUrl)
         }

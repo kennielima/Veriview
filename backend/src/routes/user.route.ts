@@ -32,6 +32,7 @@ router.get('/getCurrentUserData', authenticate, async (req: Request, res: Respon
                 {
                     model: Review,
                     as: "reviews",
+                    order: [['createdAt', 'DESC']],
 
                     include: [{
                         model: RatedHelpful,
@@ -43,6 +44,7 @@ router.get('/getCurrentUserData', authenticate, async (req: Request, res: Respon
                 {
                     model: UserRating,
                     as: "userratings",
+                    order: [['createdAt', 'DESC']],
 
                     include: [{
                         model: Product,
@@ -58,6 +60,7 @@ router.get('/getCurrentUserData', authenticate, async (req: Request, res: Respon
                 {
                     model: RatedHelpful,
                     as: "ratedhelpful",
+                    order: [['createdAt', 'DESC']],
 
                     include: [{
                         model: Review,

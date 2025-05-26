@@ -3,11 +3,16 @@ import DeleteComponent from '@/app/reviews/[id]/components/DeleteComponent'
 import RenderedStars from '@/components/renderStars'
 import { RatedHelpful, Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
-import { ArrowLeft, ThumbsUp } from 'lucide-react'
+import { ArrowLeft, CircleArrowLeft, CircleArrowRight, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { rateHelpful } from '@/app/hooks/useRating'
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/styles.css";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 export type reviewTypeProps = {
     reviewData: {
@@ -26,6 +31,16 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const ratedhelpfulCount = ratedHelpfulArray.length;
     const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
+    const [openImage, setOpenImage] = useState(true);
+    const [currImage, setCurrImage] = useState(review?.images?.[0] || '');
+    const [currImageIndex, setCurrImageIndex] = useState(0);
+    // const currentImage = Array.isArray(review.images) && review.images.length && review.images[currImageIndex];
+    // console.log('currentImage:', currentImage, currImageIndex);
+    const thumbRefs = useRef<(HTMLImageElement | null)[]>([]);
+
+    useEffect(() => {
+        thumbRefs.current[currImageIndex]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }, [currImageIndex]);
 
     const thumbsUpHandler = async () => {
         const newRateHelpful = !isRatedHelpful;
@@ -34,12 +49,21 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
         router.push(`/reviews/${id}`)
     }
 
+    const slides = Array.isArray(review.images) && review.images.length > 0
+        ? review.images.map((image) => ({ src: image }))
+        : [];
+
     return (
         <Fragment>
             {!review ? (
                 <div className="container h-screen mx-auto px-4 py-8 text-center">
                     <h1 className="text-2xl font-bold">Review Not Found</h1>
-                    <Link href='#' onClick={(e) => { e.preventDefault(); router.back() }}>
+                    <Link
+                        href='#'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.back()
+                        }}>
                         <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
                             Back to Reviews
                         </button>
@@ -99,9 +123,70 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     </div>
                                 </div>
                             </div>
-                            {review.images && review.images.map((image: string, index: number) => (
-                                <img src={image} key={index} alt={`review-image-${index}`} className="w-3/4 h-full object-cover mb-4 rounded-lg" />
-                            ))}
+
+                            {Array.isArray(review.images) && review.images.length > 0 && (
+                                <div>
+                                    <div className='relative flex items-center justify-center'>
+                                        <button
+                                            onClick={() => {
+                                                setCurrImage(review.images![currImageIndex - 1]);
+                                                setCurrImageIndex((prevIndex) => (prevIndex - 1));
+                                            }}
+                                            disabled={currImageIndex === 0}
+                                        >
+                                            <CircleArrowLeft className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`} />
+                                        </button>
+                                        <img
+                                            src={currImage}
+                                            onClick={() => setOpenImage(true)}
+                                            key={currImage}
+                                            alt={`review-image-${currImage}`}
+                                            className="w-full h-[32rem] object-cover rounded-lg mb-8 border border-gray-300"
+                                        />
+                                        <p className='absolute bottom-10 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-70 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
+                                        <button
+                                            disabled={currImageIndex === review.images!.length - 1}
+                                            onClick={() => {
+                                                setCurrImage(review.images![currImageIndex + 1]);
+                                                setCurrImageIndex((prevIndex) => (prevIndex + 1));
+                                            }}>
+                                            <CircleArrowRight className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 opacit-80 cursor-pointer`} />
+                                        </button>
+                                    </div>
+
+                                    <div className="flex items-center gap-1 w-full overflow-x-scroll border border-gray-300 p-3 rounded-lg mb-4">
+                                        {review.images && review.images.map((image: string, index: number) => (
+                                            <img
+                                                ref={(el) => { thumbRefs.current[index] = el }}
+                                                src={image}
+                                                onClick={() => {
+                                                    setCurrImage(image)
+                                                    setCurrImageIndex(index)
+                                                }}
+                                                key={index}
+                                                alt={`review-image-${index}`}
+                                                className={` ${currImageIndex === index && 'border-2 border-indigo-500'} w-28 h-28 object-cover rounded-lg hover:cursor-pointer border hover:border-2 border-gray-300 hover:border-indigo-500 transition-colors`}
+                                            />
+                                        ))}
+                                    </div>
+                                    <Lightbox
+                                        open={openImage}
+                                        close={() => setOpenImage(false)}
+                                        slides={slides}
+                                        plugins={[Thumbnails]}
+                                        thumbnails={{ width: 100, height: 100, position: 'bottom' }}
+                                        styles={{
+                                            container: {
+                                                maxWidth: '800px',
+                                                maxHeight: '80vh',
+                                                margin: 'auto',
+                                                borderRadius: '16px',
+                                                overflow: 'hidden',
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            )}
                             <p className="text-gray-800 text-base leading-relaxed">{review.content}</p>
                         </div>
                     </div>
