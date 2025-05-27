@@ -18,6 +18,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "ReviewHub",
   description: "An app to review companies and services",
+  icons: {
+    icon: "/icon.png",
+  }
 };
 
 

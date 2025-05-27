@@ -1,7 +1,7 @@
 "use client"
 import { deleteReview } from '@/app/hooks/useDeleteReview';
 import Modal from '@/components/Modal';
-import { X } from 'lucide-react';
+import { Trash2, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
@@ -22,12 +22,16 @@ const DeleteComponent = ({ id }: { id: string }) => {
     }
     return (
         <div className='grid gap-4'>
-            <button
-                className='bg-indigo-600  mx-auto hover:bg-opacity-80 w-fit rounded-md mt-4 text-white px-4 py-2'
+            {/* <button className='bg-indigo-600  mx-auto hover:bg-opacity-80 w-fit rounded-md mt-4 text-white px-4 py-2' onClick={() => setIsOpen(true)}>
+                Delete
+            </button> */}
+            <div
+                className='flex items-center gap-1 cursor-pointer hover:text-black'
                 onClick={() => setIsOpen(true)}
             >
-                Delete
-            </button>
+                <Trash2 className='size-5 cursor-pointer' onClick={() => setIsOpen(true)} />
+                <p className='text-xs'>Delete</p>
+            </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div
                     className='flex w-full justify-end text-gray-600 cursor-pointer'

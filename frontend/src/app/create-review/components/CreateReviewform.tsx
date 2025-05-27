@@ -70,11 +70,11 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         setImages(imageList);
     }, []);
 
-    useEffect(() => {
-        if (images.length <= 10 && error === 'You can not select more than 10 pictures!') {
-            setError('');
-        }
-    }, [images, error]);
+    // useEffect(() => {
+    //     if (images.length <= 10 && error === 'You can not select more than 10 pictures!') {
+    //         setError('');
+    //     }
+    // }, [images, error]);
 
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -86,7 +86,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         if (!content.trim()) { setError('Please write your review'); return; }
         if (content.length < 60) { setError('Review must be at least 60 characters long'); return; }
         if (rating === 0) { setError('Please select a rating'); return; }
-        if (images.length > 10) { setError('You can not select more than 10 pictures!'); return; }
+        // if (images.length > 10) { setError('You can not select more than 10 pictures!'); return; }
         setIsLoading(true);
 
         try {
@@ -207,9 +207,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 {/* image uploader */}
                 <div className="custom-file-container" data-upload-id="image_id"></div>
 
-                {(error === 'You can not select more than 10 pictures!') && (
+                {/* {(error === 'You can not select more than 10 pictures!') && (
                     <div className="text-red-700 text-xs mt-1">{error}</div>
-                )}
+                )} */}
 
                 <div>
                     <label className="block text-sm font-semibold mb-2">

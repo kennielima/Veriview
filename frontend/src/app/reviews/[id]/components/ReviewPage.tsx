@@ -1,5 +1,5 @@
 "use client"
-import DeleteComponent from '@/app/reviews/[id]/components/DeleteComponent'
+import DeleteComponent from '@/app/reviews/[id]/components/Delete'
 import RenderedStars from '@/components/renderStars'
 import { RatedHelpful, Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
@@ -13,6 +13,7 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/styles.css";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import Share from './Share'
 
 export type reviewTypeProps = {
     reviewData: {
@@ -34,8 +35,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const [openImage, setOpenImage] = useState(false);
     const [currImage, setCurrImage] = useState(review?.images?.[0] || '');
     const [currImageIndex, setCurrImageIndex] = useState(0);
-    // const currentImage = Array.isArray(review.images) && review.images.length && review.images[currImageIndex];
-    // console.log('currentImage:', currentImage, currImageIndex);
+
     const thumbRefs = useRef<(HTMLImageElement | null)[]>([]);
 
     useEffect(() => {
@@ -53,24 +53,11 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
         ? review.images.map((image) => ({ src: image }))
         : [];
 
+
     return (
         <Fragment>
-            {!review ? (
-                <div className="container h-screen mx-auto px-4 py-8 text-center">
-                    <h1 className="text-2xl font-bold">Review Not Found</h1>
-                    <Link
-                        href='#'
-                        onClick={(e) => {
-                            e.preventDefault();
-                            router.back()
-                        }}>
-                        <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
-                            Back to Reviews
-                        </button>
-                    </Link>
-                </div>
-            ) : (
-                <div className="container mx-auto px-4 py-8 max-w-4xl">
+            {review && (
+                <div className="container mx-auto px-4 py-8 max-w-5xl">
                     <Link href='#' onClick={(e) => { e.preventDefault(); router.back() }}>
                         <button className="mb-6 flex items-center px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
                             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -78,7 +65,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                         </button>
                     </Link>
 
-                    <div className="p-6 mx-auto bg-white shadow-md rounded-lg">
+                    <div className="p-8 mx-auto bg-white shadow-md rounded-lg border border-gray-200">
                         <div className="flex justify-between items-start mb-4 gap-4">
                             <div>
                                 <h1 className="text-3xl font-bold mb-4">{review.title}</h1>
@@ -86,15 +73,6 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     <RenderedStars rating={review.rating} />
                                     <span className="ml-2 text-gray-600">({review.rating}/5)</span>
                                 </div>
-                            </div>
-                            <div className='flex items-center gap-1 text-gray-800'>
-                                <ThumbsUp
-                                    className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
-                                    onClick={thumbsUpHandler}
-                                    fill={isRatedHelpful ? 'currentColor' : 'none'}
-                                    stroke="currentColor"
-                                />
-                                <p className='text-xs'>rate as helpful ({ratedhelpfulCount})</p>
                             </div>
                         </div>
 
@@ -127,31 +105,32 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             {Array.isArray(review.images) && review.images.length > 0 && (
                                 <div>
                                     <div className='relative flex items-center justify-center'>
-                                        <button
+                                        {/* <button disabled={currImageIndex === 0}> */}
+                                        <CircleArrowLeft
+                                            className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`}
                                             onClick={() => {
                                                 setCurrImage(review.images![currImageIndex - 1]);
                                                 setCurrImageIndex((prevIndex) => (prevIndex - 1));
                                             }}
-                                            disabled={currImageIndex === 0}
-                                        >
-                                            <CircleArrowLeft className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`} />
-                                        </button>
+                                        />
+                                        {/* </button> */}
                                         <img
                                             src={currImage}
                                             onClick={() => setOpenImage(true)}
                                             key={currImage}
                                             alt={`review-image-${currImage}`}
-                                            className="w-full h-[32rem] object-cover rounded-lg mb-8 border border-gray-300 cursor-pointer"
+                                            className="w-full h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-pointer"
                                         />
-                                        <p className='absolute bottom-10 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-70 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
-                                        <button
-                                            disabled={currImageIndex === review.images!.length - 1}
+                                        <p className='absolute bottom-5 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-80 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
+                                        {/* <button disabled={currImageIndex === review.images!.length - 1}> */}
+                                        <CircleArrowRight
+                                            className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer`}
                                             onClick={() => {
                                                 setCurrImage(review.images![currImageIndex + 1]);
                                                 setCurrImageIndex((prevIndex) => (prevIndex + 1));
-                                            }}>
-                                            <CircleArrowRight className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 opacit-80 cursor-pointer`} />
-                                        </button>
+                                            }}
+                                        />
+                                        {/* </button> */}
                                     </div>
 
                                     <div className="flex items-center gap-1 w-full overflow-x-scroll border border-gray-300 p-3 rounded-lg mb-4">
@@ -175,29 +154,54 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         slides={slides}
                                         plugins={[Thumbnails]}
                                         thumbnails={{ width: 100, height: 100, position: 'bottom' }}
-                                        styles={{
-                                            container: {
-                                                maxWidth: '800px',
-                                                maxHeight: '80vh',
-                                                margin: 'auto',
-                                                borderRadius: '16px',
-                                                overflow: 'hidden',
-                                            }
-                                        }}
+                                    // styles={{
+                                    //     container: {
+                                    //         maxWidth: '800px',
+                                    //         maxHeight: '80vh',
+                                    //         margin: 'auto',
+                                    //         borderRadius: '16px',
+                                    //         overflow: 'hidden',
+                                    //     }
+                                    // }}
                                     />
                                 </div>
                             )}
                             <p className="text-gray-800 text-base leading-relaxed">{review.content}</p>
                         </div>
-                    </div>
-                    {review.userId === currentUser?.user?.id && (
-                        <div className="mt-6 flex justify-end">
-                            <DeleteComponent id={id} />
+                        <div className='border-t pt-3 mt-6 text-gray-600 flex gap-5 items-center'>
+                            <div className='flex items-center gap-1 cursor-pointer hover:text-black'>
+                                <ThumbsUp
+                                    className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
+                                    onClick={thumbsUpHandler}
+                                    fill={isRatedHelpful ? 'currentColor' : 'none'}
+                                    stroke="currentColor"
+                                />
+                                <p className='text-xs'>Helpful ({ratedhelpfulCount})</p>
+                            </div>
+                            <Share reviewId={review.id} />
+                            {review.userId === currentUser?.user?.id && (
+                                <DeleteComponent id={id} />
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             )
             }
+            {!review && (
+                <div className="container h-screen mx-auto px-4 py-8 text-center">
+                    <h1 className="text-2xl font-bold">Review Not Found</h1>
+                    <Link
+                        href='#'
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.back()
+                        }}>
+                        <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
+                            Back to Reviews
+                        </button>
+                    </Link>
+                </div>
+            )}
         </Fragment>
     )
 }
