@@ -61,7 +61,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
                 </button>
                 {(reviewerCantRate && rating != 0) &&
                     <span className='text-xs'>A reviewer can't also rate.
-                        <Link href='/faq' className='text-indigo-600'> Find out why</Link>
+                        <Link href='/faq?index=2' className='text-indigo-600 hover:text-indigo-500 font-bold'> Find out why</Link>
                     </span>
                 }
             </div>

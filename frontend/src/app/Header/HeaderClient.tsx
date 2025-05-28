@@ -28,9 +28,9 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 </Link>
                 <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-16 text-sm">
                     <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} placeholder={"Search by review, brand..."} />
-                    <Link href='/products' className=' text-gray-800 hover:text-gray-800 text-base transition'>Brands</Link>
-                    <Link href='/reviews' className=' text-gray-800 hover:text-gray-800 text-base transition'>Reviews</Link>
-                    <Link href='/create-review' className='text-gray-800 hover:text-gray-800 text-base transition'>Post a Review</Link>
+                    <Link href='/products' className=' text-black hover:text-gray-700 text-base transition'>Brands</Link>
+                    <Link href='/reviews' className=' text-black hover:text-gray-700 text-base transition'>Reviews</Link>
+                    <Link href='/create-review' className='text-black hover:text-gray-700 text-base transition'>Post a Review</Link>
                 </nav>
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
@@ -39,7 +39,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                         </Link>
                         :
                         // <Link href='/dashboard' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>{getInitials(currentUser.fullName)}}
-                        <Link href='/dashboard/me' className='text-base flex gap-1 cursor-pointer items-center text-gray-800 font-semibold'>
+                        <Link href='/dashboard/me' className='text-base flex gap-1 cursor-pointer items-center text-black hover:text-gray-700 transition font-semibold'>
                             <UserIcon className='sm:w-5 sm:h-5' />
                             <span className='hidden sm:flex'>{currentUser?.username} </span>
                         </Link>
@@ -65,20 +65,20 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             <Link
                                 href='/products'
                                 onClick={toggleMenu}
-                                className='text-gray-800 hover:text-gray-900 transition'
+                                className='text-black hover:text-gray-700 transition'
                             >
                                 Brands
                             </Link>
                             <Link
                                 href='/reviews'
                                 onClick={toggleMenu}
-                                className='text-gray-800 hover:text-gray-900 transition'
+                                className='text-black hover:text-gray-700 transition'
                             >
                                 Reviews
                             </Link>
                             <Link
                                 href='/create-review'
-                                className='text-gray-800 hover:text-gray-900 transition'
+                                className='text-black hover:text-gray-700 transition'
                                 onClick={toggleMenu}
                             >
                                 Post a Review

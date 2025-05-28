@@ -1,12 +1,23 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { FAQS } from "@/lib/FAQ";
+import { useSearchParams } from "next/navigation";
 
 export default function faq() {
-    const [expandedIndex, setExpandedIndex] = useState(null);
+    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+    const param = useSearchParams();
+    const index = param.get('index')
+    let faqRef = useRef<any>([]);
 
-    const toggleFAQ = (index: any) => {
+    useEffect(() => {
+        if (index) {
+            faqRef.current[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
+            setExpandedIndex(Number(index))
+        }
+    }, [index]);
+
+    const toggleFAQ = (index: number) => {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
 
@@ -18,6 +29,7 @@ export default function faq() {
                 {FAQS.map((faq, index) => (
                     <div
                         key={index}
+                        ref={(i) => { faqRef.current[index] = i }}
                         className="overflow-hidden transition-all duration-200"
                     >
                         <div

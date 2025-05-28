@@ -45,7 +45,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
                         <p className='text-center'>No Brands found</p>
                     )}
                 </div>
-                <div className='flex flex-col gap-5 md:gap-10 md:border md:border-gray-3 md:py-10 px-6 h-fit md:h-screen md:rounded-md md:shadow'>
+                <div className='flex flex-col gap-5 md:gap-6 md:border md:border-gray-3 md:py-10 px-6 h-fit md:h-screen md:rounded-md md:shadow'>
                     <SearchBar searchCategory={"brands"} placeholder={"Search by brand..."} />
                     <BrandSort param={param} />
                 </div>

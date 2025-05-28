@@ -254,7 +254,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 </button>
                 {(error === 'You cannot review a product twice') && (
                     <div className="text-red-700 text-sm mt-1">Sorry, {error}!
-                        <Link href='/faq' className='text-indigo-600 hover:text-indigo-500'> Find out why</Link>
+                        <Link href='/faq?index=5' className='text-indigo-600 hover:text-indigo-500 font-bold'> Find out why</Link>
                     </div>
                 )}
             </form>
