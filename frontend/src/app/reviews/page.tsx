@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchReviews } from '../hooks/useGetReviews'
+import { fetchReviews } from '../services/useGetReviews'
 import ReviewCard from '@/components/Card'
 import { Review } from '@/lib/types'
 import Pagination from '@/components/Pagination'

@@ -1,11 +1,11 @@
-import { fetchProduct } from '@/app/hooks/useGetProducts';
+import { fetchProduct } from '@/app/services/useGetProducts';
 import ReviewCard from '@/components/Card';
 import { Review } from '@/lib/types';
 import React, { Fragment } from 'react'
 import RateProduct from '@/app/products/components/RateProduct';
 import RenderedStars from '@/components/renderStars';
 import RatingStats from '../components/RatingStats';
-import { getCurrentUserData } from '@/app/hooks/useUser';
+import { getCurrentUserData } from '@/app/services/useUser';
 import Link from 'next/link';
 
 const productPage = async ({ params }: { params: { id: string } }) => {

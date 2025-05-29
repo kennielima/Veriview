@@ -1,6 +1,6 @@
 import React from 'react';
 import getCurrentUser from '@/lib/getCurrentUser';
-import { fetchReview } from '@/app/hooks/useGetReviews';
+import { fetchReview } from '@/app/services/useGetReviews';
 import ReviewPage from './components/ReviewPage';
 
 const reviewPage = async ({ params }: { params: { id: string } }) => {

@@ -1,7 +1,7 @@
 "use client"
 import React, { FormEvent, useState } from 'react';
 import { User, Mail, Lock, AtSign, Eye, EyeOff, Loader } from 'lucide-react';
-import signupUser from '@/app/hooks/useSignup';
+import signupUser from '@/app/services/useSignup';
 import { useRouter } from 'next/navigation';
 
 const SignupPage: React.FC = () => {

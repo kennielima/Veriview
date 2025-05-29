@@ -7,7 +7,7 @@ import { ArrowLeft, CircleArrowLeft, CircleArrowRight, ThumbsUp } from 'lucide-r
 import Link from 'next/link'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import { rateHelpful } from '@/app/hooks/useRating'
+import { rateHelpful } from '@/app/services/useRating'
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/styles.css";
@@ -93,7 +93,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <Link href={`/dashboard/${review.userId}`}><span>{review?.user?.username}</span></Link>
+                                            <Link href={`/users/${review.userId}`}><span>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>

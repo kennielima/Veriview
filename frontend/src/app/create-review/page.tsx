@@ -1,6 +1,6 @@
 import React from 'react'
 import CreateReviewForm from './components/CreateReviewform'
-import { fetchProducts } from '../hooks/useGetProducts';
+import { fetchProducts } from '../services/useGetProducts';
 import getCurrentUser from '@/lib/getCurrentUser';
 
 const page = async () => {

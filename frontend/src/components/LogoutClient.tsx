@@ -1,5 +1,5 @@
 "use client"
-import { logout } from '@/app/hooks/useLogin'
+import { logout } from '@/app/services/useLogin'
 import { LogOut } from 'lucide-react'
 import React from 'react'
 

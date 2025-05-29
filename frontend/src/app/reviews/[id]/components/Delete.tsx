@@ -1,5 +1,5 @@
 "use client"
-import { deleteReview } from '@/app/hooks/useDeleteReview';
+import { deleteReview } from '@/app/services/useDeleteReview';
 import Modal from '@/components/Modal';
 import { Trash2, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';

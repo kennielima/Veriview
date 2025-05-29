@@ -1,7 +1,7 @@
 "use client"
 import React, { FormEvent, useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, Loader } from 'lucide-react';
-import loginUser from '@/app/hooks/useLogin';
+import loginUser from '@/app/services/useLogin';
 import { useRouter } from 'next/navigation';
 
 const page = () => {

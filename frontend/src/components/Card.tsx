@@ -11,7 +11,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
 
     return (
         <Link href={`/reviews/${review.id}`}>
-            <div className="bg-white border-t border-t-slate-100 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-4xl">
+            <div className="bg-white border border-slate-200 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg p-6 mb-8 mx-auto max-w-4xl">
                 <div className="flex justify-between items-start">
                     <h2 className="text-xl font-semibold text-gray-800 mr-4">{review.title}</h2>
                     <div className="hidden md:flex">
@@ -29,7 +29,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
                             alt='review-image-card'
                             className='w-28 h-28 object-cover rounded-lg border border-gray-200'
                         />
-                        <span className='absolute left-1 bottom-1 px-1 py-[0.15rem] text-sm bg-gray-700 rounded-md text-white'>{review?.images?.length}</span>
+                        <span className='absolute left-1 bottom-1 w-6 h-6 flex justify-center items-center text-sm bg-black bg-opacity-70 rounded-md text-white'>{review?.images?.length}</span>
                         <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
                             {truncate(review.content)}
                         </p>

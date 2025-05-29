@@ -1,6 +1,6 @@
 "use client"
 import { UserTypeProps } from '@/app/Header/HeaderClient';
-import { rateProduct } from '@/app/hooks/useRating';
+import { rateProduct } from '@/app/services/useRating';
 import Modal from '@/components/Modal';
 import { RenderStars } from '@/components/renderStars';
 import { Product, Review, User } from '@/lib/types';

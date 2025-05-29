@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBar from '../../components/Searchbar'
-import { fetchProducts } from '../hooks/useGetProducts';
+import { fetchProducts } from '../services/useGetProducts';
 import { Product } from '@/lib/types';
 import ProductCard from '@/components/ProductCard';
 import Pagination from '@/components/Pagination';

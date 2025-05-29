@@ -3,7 +3,7 @@
 import { Product, Review } from '@/lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import Search from '../hooks/useSearch';
+import Search from '../services/useSearch';
 import Link from 'next/link';
 import ReviewCard from '@/components/Card';
 import { ArrowLeft, Loader, LoaderCircle } from 'lucide-react';
