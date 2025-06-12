@@ -21,7 +21,6 @@ const page = () => {
             router.push('/')
         } catch (error) {
             setError((error as Error).message)
-            // console.error(error)
         } finally {
             setIsLoading(false)
         }

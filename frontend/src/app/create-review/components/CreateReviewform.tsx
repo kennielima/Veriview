@@ -54,28 +54,33 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
     };
 
     useEffect(() => {
-        const upload = new FileUploadWithPreview('image_id', {
-            text: {
-                chooseFile: 'Click here to select images',
-                browse: 'Browse',
-                selectedCount: 'Selected Images',
-                label: 'Upload images for your review (max 10)'
-            },
-            multiple: true,
-            maxFileCount: 10,
-            accept: 'image/*, .png, .jpg, .webp',
-        });
-        uploadRef.current = upload;
-        const imageList = upload.cachedFileArray;
-        setImages(imageList);
+        const container = document.querySelector('[data-upload-id="image_id"]');
+        if (container) {
+            container.innerHTML = '';
+        }
+        if (!uploadRef.current) {
+            const upload = new FileUploadWithPreview('image_id', {
+                text: {
+                    chooseFile: 'Click here to select images',
+                    browse: 'Browse',
+                    selectedCount: 'Selected Images',
+                    label: 'Upload images for your review (max 10)'
+                },
+                multiple: true,
+                maxFileCount: 10,
+                accept: 'image/*, .png, .jpg, .webp',
+            });
+            uploadRef.current = upload;
+            setImages(upload.cachedFileArray);
+        }
+        return () => {
+            const container = document.querySelector('[data-upload-id="image_id"]');
+            if (container) {
+                container.innerHTML = '';
+            }
+            uploadRef.current = null;
+        };
     }, []);
-
-    // useEffect(() => {
-    //     if (images.length <= 10 && error === 'You can not select more than 10 pictures!') {
-    //         setError('');
-    //     }
-    // }, [images, error]);
-
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

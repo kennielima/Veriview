@@ -40,7 +40,7 @@ const page = async ({ searchParams }: { searchParams: { page: number, sort: stri
                     />
                 </div>
             )}
-            {(!Reviews || (Reviews.length === 0)) && (<p className='text-center'>No reviews found</p>)}
+            {(!Reviews || (Reviews.length === 0)) && (<p className='text-center mt-12'>No reviews found</p>)}
         </div>
     )
 }
