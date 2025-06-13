@@ -1,8 +1,10 @@
 services:
-  reviews:
+  backend:
     build: 
       context: ./backend
       dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
     ports:
       - "${PORT}:${PORT}"
     environment:
@@ -23,6 +25,8 @@ services:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env.local
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     develop:
@@ -33,7 +37,7 @@ services:
           ignore:
             - ./frontend/node_modules/
     environment:
-      - API_URL=http://reviews:${PORT}
+      - API_URL=http://backend:${PORT}
       - NEXT_PUBLIC_API_URL=${API_URL}
   db:
     image: postgres:13
