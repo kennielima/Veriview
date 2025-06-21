@@ -42,7 +42,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
 
     const handleChangeBrandName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBrand(e.target.value);
-        const filtered = brands.filter(brand => brand.name.toLowerCase().includes(e.target.value.toLowerCase()));
+        const filtered = brands?.filter(brand => brand.name.toLowerCase().includes(e.target.value.toLowerCase())) || [];
 
         setFilteredSuggestions(filtered);
         setShowSuggestions(true);

@@ -146,7 +146,7 @@ const SignupPage: React.FC = () => {
                     </div>
                     {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}
                     {error && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        <div className="bg-indigo-100 border border-indigo-400 text-indigo-700 px-4 py-3 rounded mb-4">
                             {error}
                         </div>
                     )}
