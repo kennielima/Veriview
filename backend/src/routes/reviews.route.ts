@@ -4,16 +4,16 @@ import { CreateReview, PresignImages, GetAllReviews, GetReview, DeleteReview, Ra
 
 const router = express.Router()
 
-router.post("/create-review", authenticate, CreateReview)
+router.post("/api/create-review", authenticate, CreateReview)
 
-router.post("/presign-images", authenticate, PresignImages)
+router.post("/api/presign-images", authenticate, PresignImages)
 
-router.get("/reviews", GetAllReviews)
+router.get("/api/reviews", GetAllReviews)
 
-router.get("/reviews/:id", GetReview)
+router.get("/api/reviews/:id", GetReview)
 
-router.delete("/reviews/:id", authenticate, DeleteReview)
+router.delete("/api/reviews/:id", authenticate, DeleteReview)
 
-router.post("/reviews/:id/ratehelpful", authenticate, RateAsHelpful)
+router.post("/api/reviews/:id/ratehelpful", authenticate, RateAsHelpful)
 
 export default router;

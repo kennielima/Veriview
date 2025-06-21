@@ -5,10 +5,10 @@ import { AllProducts, GetProduct, RateProduct } from "../controllers/products.co
 
 const router = express.Router()
 
-router.get("/products", AllProducts)
+router.get("/api/products", AllProducts)
 
-router.get("/products/:id", GetProduct)
+router.get("/api/products/:id", GetProduct)
 
-router.post("/products/:id/rate", postLimiter, authenticate, RateProduct)
+router.post("/api/products/:id/rate", postLimiter, authenticate, RateProduct)
 
 export default router;

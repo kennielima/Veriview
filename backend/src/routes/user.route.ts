@@ -5,15 +5,15 @@ import { GetCurrentUserData, GetMe, GetUser, GetUserProductRating, GetUserRatedH
 const router = express.Router();
 
 
-router.get('/me', authenticate, GetMe);
+router.get('/api/me', authenticate, GetMe);
 
 
-router.get('/getCurrentUserData', authenticate, GetCurrentUserData);
+router.get('/api/getCurrentUserData', authenticate, GetCurrentUserData);
 
-router.get('/users/:userId', GetUser);
+router.get('/api/users/:userId', GetUser);
 
-router.get("/users/:userId/ratedhelpful", GetUserRatedHelpful)
+router.get("/api/users/:userId/ratedhelpful", GetUserRatedHelpful)
 
-router.get("/users/:userId/productrating", GetUserProductRating)
+router.get("/api/users/:userId/productrating", GetUserProductRating)
 
 export default router;

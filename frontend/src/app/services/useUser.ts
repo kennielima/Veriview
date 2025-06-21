@@ -8,7 +8,7 @@ export const getCurrentUserData = async () => {
         return { loggedIn: false, message: 'No token found' };
     }
     try {
-        const response = await fetch(`${process.env.API_URL}/getCurrentUserData`, {
+        const response = await fetch(`${process.env.API_URL}/api/getCurrentUserData`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const getCurrentUserData = async () => {
 
 export const getAUser = async (userId: string) => {
     try {
-        const response = await fetch(`${process.env.API_URL}/users/${userId}`, {
+        const response = await fetch(`${process.env.API_URL}/api/users/${userId}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const getUserRateHelpful = async (userId: string) => {
         return { loggedIn: false, message: 'No token found' };
     }
     try {
-        const response = await fetch(`${process.env.API_URL}/users/${userId}/ratedhelpful`, {
+        const response = await fetch(`${process.env.API_URL}/api/users/${userId}/ratedhelpful`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const getProductRating = async (userId: string) => {
         return { loggedIn: false, message: 'No token found' };
     }
     try {
-        const response = await fetch(`${process.env.API_URL}/users/${userId}/productrating`, {
+        const response = await fetch(`${process.env.API_URL}/api/users/${userId}/productrating`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

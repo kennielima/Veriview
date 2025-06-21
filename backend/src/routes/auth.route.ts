@@ -4,14 +4,14 @@ import { Signup, Login, Logout, GoogleOauth, GoogleCallback } from "../controlle
 
 const router = express.Router()
 
-router.post('/signup', authLimiter, Signup)
+router.post('/api/auth/signup', authLimiter, Signup)
 
-router.post('/login', authLimiter, Login)
+router.post('/api/auth/login', authLimiter, Login)
 
-router.post('/logout', Logout)
+router.post('/api/auth/logout', Logout)
 
-router.get('/google', authLimiter, GoogleOauth)
+router.get('/api/auth/google', authLimiter, GoogleOauth)
 
-router.get('/google/callback', GoogleCallback);
+router.get('/api/auth/google/callback', GoogleCallback);
 
 export default router;

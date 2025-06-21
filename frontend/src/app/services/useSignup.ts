@@ -1,5 +1,5 @@
 const signupUser = async (formData: FormData) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -15,7 +15,6 @@ const signupUser = async (formData: FormData) => {
     }
 
     window.location.href = '/';
-    console.log("formData", formData);
     return data;
 }
 

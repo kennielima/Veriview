@@ -1,5 +1,5 @@
 const loginUser = async (formData: FormData) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -19,7 +19,7 @@ const loginUser = async (formData: FormData) => {
 export default loginUser;
 
 export const logout = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

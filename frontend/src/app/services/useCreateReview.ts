@@ -13,7 +13,7 @@ const createReview = async (title: string, brand: string, content: string, ratin
     if (images?.length) {
         for (const image of images) {
             const presignURL = await fetch(
-                `${process.env.API_URL}/presign-images?fileName=${image.name}`,
+                `${process.env.API_URL}/api/presign-images?fileName=${image.name}`,
                 {
                     method: "POST",
                     headers: {
@@ -48,7 +48,7 @@ const createReview = async (title: string, brand: string, content: string, ratin
     }
 
 
-    const response = await fetch(`${process.env.API_URL}/create-review`, {
+    const response = await fetch(`${process.env.API_URL}/api/create-review`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

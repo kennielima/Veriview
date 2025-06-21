@@ -8,7 +8,7 @@ const getCurrentUser = async () => {
         return { loggedIn: false, message: 'No token found' };
     }
     try {
-        const response = await fetch(`${process.env.API_URL}/me`, {
+        const response = await fetch(`${process.env.API_URL}/api/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

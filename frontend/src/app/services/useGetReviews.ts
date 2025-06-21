@@ -9,7 +9,7 @@ export const fetchReviews = async (page?: number, sort?: string, limit?: number)
         .join("&");
 
     try {
-        const response = await fetch(`${process.env.API_URL}/reviews?${queryString}`, {
+        const response = await fetch(`${process.env.API_URL}/api/reviews?${queryString}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -24,7 +24,7 @@ export const fetchReviews = async (page?: number, sort?: string, limit?: number)
 
 export const fetchReview = async (id: string) => {
     try {
-        const response = await fetch(`${process.env.API_URL}/reviews/${id}`, {
+        const response = await fetch(`${process.env.API_URL}/api/reviews/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
