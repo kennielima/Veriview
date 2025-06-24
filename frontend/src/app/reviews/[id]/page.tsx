@@ -3,7 +3,11 @@ import getCurrentUser from '@/lib/getCurrentUser';
 import { fetchReview } from '@/app/services/useGetReviews';
 import ReviewPage from './components/ReviewPage';
 
-const reviewPage = async ({ params }: { params: { id: string } }) => {
+type Params = Promise<{
+  id: string
+}>
+
+const reviewPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const currentUser = await getCurrentUser();
 

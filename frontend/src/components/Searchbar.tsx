@@ -20,7 +20,9 @@ const SearchBar = ({ searchCategory, setIsMenuOpen, placeholder }: {
             params.set('category', searchCategory);
             router.push(`/search?${params.toString()}`);
             // router.push('/search?q=' + query + `&category=${searchCategory}`);
-            setIsMenuOpen && setIsMenuOpen(false)
+            if (setIsMenuOpen) {
+                setIsMenuOpen(false);
+            }
             setQuery('')
         }
     };

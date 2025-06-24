@@ -6,11 +6,16 @@ import ProductCard from '@/components/ProductCard';
 import Pagination from '@/components/Pagination';
 import BrandSort from '@/components/BrandSort';
 
-const page = async ({ searchParams }: { searchParams: { page: number, sort: string } }) => {
+type Params = Promise<{
+    page: number
+    sort: string
+}>
+
+const page = async ({ searchParams }: { searchParams: Params }) => {
     const param = await searchParams;
     const FetchProducts = await fetchProducts(param.page, param.sort)
     const { data: Products, totalProducts, totalPages, hasNextPage, hasPrevPage } = FetchProducts;
-    let offset = (param.page ? param.page : 1) * 5;
+    const offset = (param.page ? param.page : 1) * 5;
 
     return (
         <div className='flex flex-col items-center gap-8 md:gap-12 my-10 px-8'>

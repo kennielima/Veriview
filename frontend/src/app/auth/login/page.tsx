@@ -4,7 +4,7 @@ import { Mail, Lock, Eye, EyeOff, Loader } from 'lucide-react';
 import loginUser from '@/app/services/useLogin';
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const Login = () => {
     const [error, setError] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -112,7 +112,7 @@ const page = () => {
                 </form>
                 <div className="text-center">
                     <p className="mt-2 text-sm text-gray-600">
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <a href="/auth/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
                             Sign up
                         </a>
@@ -123,4 +123,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Login;

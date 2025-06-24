@@ -6,14 +6,21 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '1000mb',
     },
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/api/:path*',
-  //       destination: 'http://backend:4000/api/:path*',
-  //     }
-  //   ]
-  // }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "pub-922e9f2c314d45d3a144da28bf276e62.r2.dev/**",
+      }],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:4000/api/:path*',
+      }
+    ]
+  }
 };
 
 export default nextConfig;

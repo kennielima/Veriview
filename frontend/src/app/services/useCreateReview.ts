@@ -5,10 +5,7 @@ const createReview = async (title: string, brand: string, content: string, ratin
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
-    // if (!token){
-    //     throw new Error('Please log in to post a review');
-    // }
-    let uploadedImageUrls: string[] = [];
+    const uploadedImageUrls: string[] = [];
 
     if (images?.length) {
         for (const image of images) {

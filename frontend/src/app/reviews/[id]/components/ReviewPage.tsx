@@ -14,6 +14,7 @@ import "yet-another-react-lightbox/styles.css";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import Share from './Share'
+import Image from 'next/image'
 
 export type reviewTypeProps = {
     reviewData: {
@@ -82,7 +83,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     {review.brand && (
                                         <div>
                                             <strong>Brand:</strong>
-                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-600'>
+                                            <Link href={`/products/${review?.productId}`} className='hover:text-black'>
                                                 {" "}{review.brand}
                                             </Link>
                                         </div>
@@ -93,7 +94,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <Link href={`/users/${review.userId}`}><span>{review?.user?.username}</span></Link>
+                                            <Link href={`/users/${review.userId}`} className='hover:text-black'><span>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>
@@ -113,13 +114,14 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                                 setCurrImageIndex((prevIndex) => (prevIndex - 1));
                                             }}
                                         />
-                                        {/* </button> */}
-                                        <img
+                                        <Image
                                             src={currImage}
                                             onClick={() => setOpenImage(true)}
                                             key={currImage}
                                             alt={`review-image-${currImage}`}
                                             className="w-full h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-pointer"
+                                            width={1000}
+                                            height={1000}
                                         />
                                         <p className='absolute bottom-5 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-80 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
                                         {/* <button disabled={currImageIndex === review.images!.length - 1}> */}
@@ -135,7 +137,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
 
                                     <div className="flex items-center gap-1 w-full overflow-x-scroll border border-gray-300 p-3 rounded-lg mb-4">
                                         {review.images && review.images.map((image: string, index: number) => (
-                                            <img
+                                            <Image
                                                 ref={(el) => { thumbRefs.current[index] = el }}
                                                 src={image}
                                                 onClick={() => {
@@ -145,6 +147,8 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                                 key={index}
                                                 alt={`review-image-${index}`}
                                                 className={` ${currImageIndex === index && 'border-2 border-indigo-500'} w-28 h-28 object-cover rounded-lg hover:cursor-pointer border hover:border-2 border-gray-300 hover:border-indigo-500 transition-colors`}
+                                                width={600}
+                                                height={600}
                                             />
                                         ))}
                                     </div>
@@ -168,15 +172,15 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             )}
                             <p className="text-gray-800 text-base leading-relaxed">{review.content}</p>
                         </div>
-                        <div className='border-t pt-3 mt-6 text-gray-600 flex gap-5 items-center'>
-                            <div className='flex items-center gap-1 cursor-pointer hover:text-black'>
+                        <div className='border-t pt-3 mt-6 text-gray-600 flex gap-7 items-center'>
+                            <div className='flex items-center gap-2 cursor-pointer hover:text-black'>
                                 <ThumbsUp
-                                    className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
+                                    className={`size-6 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
                                     onClick={thumbsUpHandler}
                                     fill={isRatedHelpful ? 'currentColor' : 'none'}
                                     stroke="currentColor"
                                 />
-                                <p className='text-xs'>Helpful ({ratedhelpfulCount})</p>
+                                <p className=''>Helpful ({ratedhelpfulCount})</p>
                             </div>
                             <Share reviewId={review.id} />
                             {review.userId === currentUser?.user?.id && (

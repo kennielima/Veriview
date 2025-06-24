@@ -1,6 +1,6 @@
 "use server"
 export const fetchProducts = async (page?: number, sort?: string, limit?: number) => {
-    let queryString = [
+    const queryString = [
         page && `page=${page}`,
         sort && `sort=${sort}`,
         limit ? `limit=${limit}` : `limit=5`,

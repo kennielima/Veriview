@@ -62,7 +62,7 @@ const page = async () => {
         <div className="flex flex-col items-center justify-center bg-indigo-600 lg:col-span-2 md:w-3/4 mx-6 md:mx-auto rounded-lg shadow-md p-6 text-white">
           <div className="mb-4 text-center">
             <h2 className="text-xl font-bold mb-1">Share Your Experience</h2>
-            <p className="text-indigo-100">Help others make better decisions by sharing your honest review of brands you've experienced.</p>
+            <p className="text-indigo-100">Help others make better decisions by sharing your honest review of brands you&apos;ve experienced.</p>
           </div>
           <Link href='/create-review' className='w-full'>
             <button className="px-6 py-3 w-full bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 shadow-md">
@@ -83,7 +83,7 @@ const page = async () => {
           <div className="space-y-4 w-full">
             {/* Brands Sidebar */}
             {Products && Products.length > 0 ? (
-              [...Products].sort((a: any, b: any) => b.averageRating - a.averageRating).slice(0, 3).map((product: Product) => (
+              [...Products].sort((a: Product, b: Product) => b.averageRating - a.averageRating).slice(0, 3).map((product: Product) => (
                 <Link href={`products/${product.id}`} className='flex flex-col gap-1' key={product.id}>
                   <div className='flex gap-1 items-center'>
                     <p className='hover:text-gray-600 text-sm'>{product.name}</p>

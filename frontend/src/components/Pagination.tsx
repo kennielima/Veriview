@@ -13,7 +13,7 @@ type PaginationTypeProps = {
 const Pagination: React.FC<PaginationTypeProps> = ({ param, totalPages, hasNextPage, hasPrevPage }) => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    let currentPage = Number(param.page) || 1;
+    const currentPage = Number(param.page) || 1;
 
     const handlePageChange = (currentPage: number) => {
         const params = new URLSearchParams(searchParams.toString());

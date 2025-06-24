@@ -1,10 +1,9 @@
 "use client"
-import { UserTypeProps } from '@/app/Header/HeaderClient';
 import { rateProduct } from '@/app/services/useRating';
 import Modal from '@/components/Modal';
 import { RenderStars } from '@/components/renderStars';
 import { Product, Review, User } from '@/lib/types';
-import { Check, Loader, LoaderCircle, X } from 'lucide-react';
+import { Check, LoaderCircle, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -35,8 +34,10 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
                 setReviewerCantRate(true)
                 return;
             }
-            (rating != 0 && user && !userHasRatedBrand) && await rateProduct(rating, id);
-            setIsOpen(true)
+            if (rating != 0 && user && !userHasRatedBrand) {
+                await rateProduct(rating, id);
+            }
+            setIsOpen(true);
             router.push(`/products/${id}`);
 
         } catch (error) {
@@ -60,7 +61,7 @@ const RateProduct: React.FC<ProductTypeProps> = ({ id, user, product }) => {
                     Rate
                 </button>
                 {(reviewerCantRate && rating != 0) &&
-                    <span className='text-xs'>A reviewer can't also rate.
+                    <span className='text-xs'>A reviewer can&apos;t also rate.
                         <Link href='/faq?index=2' className='text-indigo-600 hover:text-indigo-500 font-bold'> Find out why</Link>
                     </span>
                 }

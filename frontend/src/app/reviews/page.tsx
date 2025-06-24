@@ -5,12 +5,17 @@ import { Review } from '@/lib/types'
 import Pagination from '@/components/Pagination'
 import Sort from '@/components/Sort'
 
-const page = async ({ searchParams }: { searchParams: { page: number, sort: string } }) => {
+type Params = Promise<{
+    page: number
+    sort: string
+}>
+
+const page = async ({ searchParams }: { searchParams: Params }) => {
     const param = await searchParams;
 
     const FetchReviews = await fetchReviews(param.page, param.sort)
     const { data: Reviews, totalReviews, totalPages, hasNextPage, hasPrevPage } = FetchReviews;
-    let offset = (param.page ? param.page : 1) * 5;
+    const offset = (param.page ? param.page : 1) * 5;
 
     return (
         <div className='mx-auto px-8 my-10'>

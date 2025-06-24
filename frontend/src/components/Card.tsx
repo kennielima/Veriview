@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link';
 import { getInitials, timeAgo, truncate } from '@/lib/utils';
-import { RatedHelpful, Review } from '@/lib/types';
+import { Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 import { Clock } from 'lucide-react';
+import Image from 'next/image';
 
 const ReviewCard = ({ review }: { review: Review }) => {
     const ratedHelpful = review?.ratedhelpful;
@@ -24,7 +25,9 @@ const ReviewCard = ({ review }: { review: Review }) => {
                 </div>
                 {image ? (
                     <div className='flex relative gap-4 mb-4 justify-start'>
-                        <img
+                        <Image
+                            width={500}
+                            height={500}
                             src={image}
                             alt='review-image-card'
                             className='w-28 h-28 object-cover rounded-lg border border-gray-200'

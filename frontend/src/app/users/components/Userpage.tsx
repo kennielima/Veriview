@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import { User as UserIcon, BookOpen, Clock, Plus, LogOut } from 'lucide-react';
+import { BookOpen, Clock, Plus, LogOut } from 'lucide-react';
 import { formatDate, getInitials } from '@/lib/utils';
 import { RatedHelpful, Review, User, Userrating } from '@/lib/types';
 import ReviewCard from '@/components/Card';
@@ -30,7 +30,7 @@ export const Userpage = ({ user, id }: { user: User, id: string }) => {
                 clearTimeout(redirect);
             }
         }
-    }, [user, id]);
+    }, [user, id, router]);
 
     if (id === "me" && !user) {
         return (

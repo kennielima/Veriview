@@ -10,7 +10,6 @@ const Search = async ({ q, category }: { q: string, category: string }) => {
             credentials: "include"
         })
         const data = await response.json();
-
         if (!response.ok) {
             console.log("response is not ok:", response);
         }

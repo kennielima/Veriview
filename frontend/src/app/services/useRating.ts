@@ -1,6 +1,5 @@
 "use server"
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const rateProduct = async (rating: number, id: string) => {
     const cookieStore = await cookies()

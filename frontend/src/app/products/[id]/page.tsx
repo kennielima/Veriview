@@ -8,7 +8,9 @@ import RatingStats from '../components/RatingStats';
 import { getCurrentUserData } from '@/app/services/useUser';
 import Link from 'next/link';
 
-const productPage = async ({ params }: { params: { id: string } }) => {
+type Params = Promise<{ id: string }>
+
+export default async function ProductPage({ params }: { params: Params }) {
     const { id } = await params;
     const product = await fetchProduct(id);
     // const user = await getCurrentUser()
@@ -72,5 +74,3 @@ const productPage = async ({ params }: { params: { id: string } }) => {
         </Fragment>
     )
 }
-
-export default productPage

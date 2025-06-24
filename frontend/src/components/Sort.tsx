@@ -6,7 +6,7 @@ const Sort = ({ param }: { param: { page?: number; sort?: string; } }) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const handleSortChange = (e: any) => {
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault()
         // window.location.href = `?sort=${e.target.value}`;
         const params = new URLSearchParams(searchParams.toString());

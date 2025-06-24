@@ -1,8 +1,8 @@
 "use client"
 import React, { useState } from 'react'
-import { Copy, Mail, Share as ShareIcon, X } from 'lucide-react';
+import { Copy, Share as ShareIcon, X } from 'lucide-react';
 import Modal from '@/components/Modal'
-import { Twitter, Instagram, Whatsapp, Facebook, MailIcon } from '@/lib/Icons'
+import { Twitter, Whatsapp, Facebook, MailIcon } from '@/lib/Icons'
 import Link from 'next/link';
 
 const Share = ({ reviewId }: { reviewId: string }) => {
@@ -21,11 +21,11 @@ const Share = ({ reviewId }: { reviewId: string }) => {
     return (
         <div>
             <div
-                className='flex items-center gap-1 cursor-pointer hover:text-black'
+                className='flex items-center gap-2 cursor-pointer hover:text-black'
                 onClick={() => setIsOpen(true)}
             >
-                <ShareIcon className='size-5 cursor-pointer' />
-                <p className='text-xs'>Share</p>
+                <ShareIcon className='size-6 cursor-pointer' />
+                <p className=''>Share</p>
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div

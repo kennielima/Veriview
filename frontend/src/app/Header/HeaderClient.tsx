@@ -84,7 +84,10 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             </Link>
                             {(user && (user as UserTypeProps).loggedIn) && (
                                 <button
-                                    onClick={() => { logout; toggleMenu }}
+                                    onClick={() => {
+                                        logout();
+                                        toggleMenu();
+                                    }}
                                     className='text-white transition w-full bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md'
                                 >
                                     Logout

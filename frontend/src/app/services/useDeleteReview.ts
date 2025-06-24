@@ -1,14 +1,10 @@
 "use server"
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const deleteReview = async (id: string) => {
     const cookieStore = await cookies()
     const token = cookieStore.get('tokenkey')
     const tokenValue = token?.value;
-    // if (!token){
-    //     console.log('Please log in to delete review');
-    // }
 
     const response = await fetch(`${process.env.API_URL}/api/reviews/${id}`, {
         method: "DELETE",

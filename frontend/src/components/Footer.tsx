@@ -14,24 +14,33 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-bold mb-4">Explore</h3>
                         <ul className="space-y-2 text-gray-300 text-sm">
-                            <li><a href="/products" className="hover:text-white">Top Brands</a></li>
+                            <li>
+                                <Link href="/products" className="hover:text-white">Top Brands</Link>
+                            </li>
                             {/* <li><a href="#" className="hover:text-white">Categories</a></li> */}
-                            <li><a href="/reviews" className="hover:text-white">Latest Reviews</a></li>
+                            <li>
+                                <Link href="/reviews" className="hover:text-white">Latest Reviews</Link>
+                            </li>
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-lg font-bold mb-4">Company</h3>
                         <ul className="space-y-2 text-gray-300 text-sm">
-                            <li><a href="/faq" className="hover:text-white">FAQ</a></li>
-                            <li><a
-                                className="hover:text-white"
-                                href={`mailto:${'kennylima970@gmail.com'}?subject=${'ReviewHub Support'}&body=Hello ReviewHub, I'm reaching out regarding...`}
-                                target='_blank'>
-                                Contact Us
-                            </a>
+                            <li>
+                                <Link href="/faq" className="hover:text-white">FAQ</Link>
                             </li>
-                            <li><a href="/policy" className="hover:text-white">Privacy Policy</a></li>
+                            <li>
+                                <Link
+                                    className="hover:text-white"
+                                    href={`mailto:${'kennylima970@gmail.com'}?subject=${'ReviewHub Support'}&body=Hello ReviewHub, I'm reaching out regarding...`}
+                                    target='_blank'>
+                                    Contact Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/policy" className="hover:text-white">Privacy Policy</Link>
+                            </li>
                             {/* <li><a href="#" className="hover:text-white">What we do</a></li> */}
                             {/* <li><a href="#" className="hover:text-white">Blog</a></li>
                             <li><a href="#" className="hover:text-white">Careers</a></li> */}

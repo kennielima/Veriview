@@ -6,7 +6,7 @@ const BrandSort = ({ param }: { param: { page?: number; sort?: string; } }) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const handleSortChange = (e: any) => {
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault()
         const params = new URLSearchParams(searchParams.toString());
         params.set('sort', e.target.value);

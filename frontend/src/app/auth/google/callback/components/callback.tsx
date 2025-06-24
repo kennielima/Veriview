@@ -1,6 +1,6 @@
 "use client"
 import { UserTypeProps } from '@/app/Header/HeaderClient';
-import { CircleX, Loader, LoaderCircle } from 'lucide-react';
+import { CircleX, LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -25,7 +25,7 @@ const CallbackPage = ({ user }: { user: UserTypeProps }) => {
                 clearTimeout(redirect);
             }
         }
-    }, [user]);
+    }, [router, user]);
 
     return (
         <div className='flex justify-center my-20 font-bold'>
