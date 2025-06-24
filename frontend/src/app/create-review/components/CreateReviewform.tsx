@@ -68,7 +68,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 },
                 multiple: true,
                 maxFileCount: 10,
-                accept: 'image/*, .png, .jpg, .webp',
+                accept: 'image/*, .png, .jpg, .webp, .jpeg',
             });
             uploadRef.current = upload;
             setImages(upload.cachedFileArray);

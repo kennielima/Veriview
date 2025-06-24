@@ -23,7 +23,7 @@ const page = async () => {
         <div className="max-w-7xl py-10 md:py-16 px-6 bg-indigo-600 text-white">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Find and Share Authentic Brand Experiences</h1>
-            <p className="text-indigo-100 text-lg mb-8">Join other users who trust ReviewHub to discover honest reviews and make informed decisions.</p>
+            <p className="text-indigo-100 text-lg mb-8">Join other users who trust Veriview to discover honest reviews and make informed decisions.</p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center w-full space-y-4 sm:space-y-0 sm:space-x-4">
               <Link href='/create-review'>

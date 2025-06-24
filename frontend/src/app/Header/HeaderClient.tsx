@@ -23,7 +23,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
             {/* DESKTOPS */}
             <div className="flex justify-between w-full mx-auto px-6 py-3 items-center">
                 <Link href='/' onClick={() => setIsMenuOpen(false)}>
-                    <div className="flex text-2xl font-bold text-indigo-600">ReviewHub</div>
+                    <div className="flex text-2xl font-bold text-indigo-600">Veriview</div>
                 </Link>
                 <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-16 text-sm">
                     <SearchBar searchCategory={"all"} setIsMenuOpen={setIsMenuOpen} placeholder={"Search by review, brand..."} />
@@ -34,7 +34,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                 <div className="flex items-center space-x-4 text-sm">
                     {!user || !user.loggedIn ?
                         <Link href='/auth' onClick={() => setIsMenuOpen(false)}>
-                            <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Get Started </button>
+                            <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Log in </button>
                         </Link>
                         :
                         // <Link href='/users' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>{getInitials(currentUser.fullName)}}

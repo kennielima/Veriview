@@ -83,7 +83,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     {review.brand && (
                                         <div>
                                             <strong>Brand:</strong>
-                                            <Link href={`/products/${review?.productId}`} className='hover:text-black'>
+                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-600'>
                                                 {" "}{review.brand}
                                             </Link>
                                         </div>
@@ -94,7 +94,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <Link href={`/users/${review.userId}`} className='hover:text-black'><span>{review?.user?.username}</span></Link>
+                                            <Link href={`/users/${review.userId}`}><span>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>
@@ -170,17 +170,18 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     />
                                 </div>
                             )}
+
                             <p className="text-gray-800 text-base leading-relaxed">{review.content}</p>
                         </div>
-                        <div className='border-t pt-3 mt-6 text-gray-600 flex gap-7 items-center'>
-                            <div className='flex items-center gap-2 cursor-pointer hover:text-black'>
+                        <div className='border-t pt-3 mt-6 text-gray-600 flex gap-5 items-center'>
+                            <div className='flex items-center gap-1 cursor-pointer hover:text-black'>
                                 <ThumbsUp
-                                    className={`size-6 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
+                                    className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
                                     onClick={thumbsUpHandler}
                                     fill={isRatedHelpful ? 'currentColor' : 'none'}
                                     stroke="currentColor"
                                 />
-                                <p className=''>Helpful ({ratedhelpfulCount})</p>
+                                <p className='text-xs'>Helpful ({ratedhelpfulCount})</p>
                             </div>
                             <Share reviewId={review.id} />
                             {review.userId === currentUser?.user?.id && (

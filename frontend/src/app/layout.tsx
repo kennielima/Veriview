@@ -16,10 +16,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ReviewHub",
-  description: "An app to review companies and services",
+  title: "Veriview: Trusted Reviews Platform",
+  description: "An app to review  companies, products and services",
   icons: {
-    icon: "/icon.png",
+    icon: "/icon1.svg",
   }
 };
 

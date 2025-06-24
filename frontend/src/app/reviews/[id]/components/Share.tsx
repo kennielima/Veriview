@@ -21,11 +21,11 @@ const Share = ({ reviewId }: { reviewId: string }) => {
     return (
         <div>
             <div
-                className='flex items-center gap-2 cursor-pointer hover:text-black'
+                className='flex items-center gap-1 cursor-pointer hover:text-black'
                 onClick={() => setIsOpen(true)}
             >
-                <ShareIcon className='size-6 cursor-pointer' />
-                <p className=''>Share</p>
+                <ShareIcon className='size-5 cursor-pointer' />
+                <p className='text-xs'>Share</p>
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div
@@ -76,7 +76,7 @@ const Share = ({ reviewId }: { reviewId: string }) => {
                     </Link>
                     <Link
                         className='flex flex-col justify-center items-center gap-1 cursor-pointer'
-                        href={`mailto:?subject=${'Review from ReviewHub'}&body=See this review: ${link}`}
+                        href={`mailto:?subject=${'Review from Veriview'}&body=See this review: ${link}`}
                         target='_blank'
                     >
                         <MailIcon />

@@ -64,7 +64,7 @@ const reviewPolicy = {
 export default function page() {
     return (
         <div className="flex flex-col gap-6 max-w-4xl mx-auto m-12">
-            <h1 className="flex justify-center font-bold text-xl">ReviewHub Policies</h1>
+            <h1 className="flex justify-center font-bold text-xl">Veriview Policies</h1>
 
             {/* Prohibited Behaviors */}
             <section>

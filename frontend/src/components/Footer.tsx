@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div>
-                        <h3 className="text-lg font-bold mb-4">ReviewHub</h3>
+                        <h3 className="text-lg font-bold mb-4">Veriview</h3>
                         <p className="text-gray-300 text-sm">The trusted platform for authentic brand reviews and ratings from real users.</p>
                     </div>
 
@@ -33,7 +33,7 @@ const Footer = () => {
                             <li>
                                 <Link
                                     className="hover:text-white"
-                                    href={`mailto:${'kennylima970@gmail.com'}?subject=${'ReviewHub Support'}&body=Hello ReviewHub, I'm reaching out regarding...`}
+                                    href={`mailto:${'kennylima970@gmail.com'}?subject=${'Veriview Support'}&body=Hello Veriview, I'm reaching out regarding...`}
                                     target='_blank'>
                                     Contact Us
                                 </Link>
@@ -59,7 +59,7 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-gray-700 mt-5 pt-5 flex flex-col md:flex-row md:justify-between items-center">
-                    <p className="text-gray-300 text-sm mb-0 md:mb-0">© 2025 ReviewHub. All rights reserved.</p>
+                    <p className="text-gray-300 text-sm mb-0 md:mb-0">© 2025 Veriview. All rights reserved.</p>
                     {/* <div className="flex space-x-6">
                         <a href="#" className="text-gray-300 hover:text-white">
                             <span className="sr-only">Facebook</span>
@@ -87,9 +87,9 @@ const Footer = () => {
         //     <div className="flex justify-between space-x-20 w-full md:w-1/3">
         //         <div className='flex flex-col gap-4'>
         //             <Link href='/'>
-        //                 <div className="flex text-2xl font-bold">ReviewHub</div>
+        //                 <div className="flex text-2xl font-bold">Veriview</div>
         //             </Link>
-        //             <div className='sm:hidden items-end flex'>© 2024 ReviewHub</div>
+        //             <div className='sm:hidden items-end flex'>© 2024 Veriview</div>
         //         </div>
         //         <div className='flex flex-col md:flex-row gap-3 md:space-x-20'>
         //             <div className='flex flex-col gap-3 w-max'>
@@ -104,7 +104,7 @@ const Footer = () => {
         //             </div>
         //         </div>
         //     </div>
-        //     <div className='sm:flex items-end hidden'>© 2024 ReviewHub</div>
+        //     <div className='sm:flex items-end hidden'>© 2024 Veriview</div>
         // </div>
     )
 }

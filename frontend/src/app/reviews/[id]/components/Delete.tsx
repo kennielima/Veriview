@@ -23,11 +23,11 @@ const DeleteComponent = ({ id }: { id: string }) => {
     return (
         <div className='grid gap-4'>
             <div
-                className='flex items-center gap-2 cursor-pointer hover:text-black'
+                className='flex items-center gap-1 cursor-pointer hover:text-black'
                 onClick={() => setIsOpen(true)}
             >
                 <Trash2 className='size-6 cursor-pointer' onClick={() => setIsOpen(true)} />
-                <p className=''>Delete</p>
+                <p className='text-xs'>Delete</p>
             </div>
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <div
