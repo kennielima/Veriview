@@ -1,19 +1,27 @@
 FROM node:22-slim AS builder
 
-WORKDIR /frontend
-COPY .env.local .env.local
+WORKDIR /app
+# COPY .env.local .env.local
 
 COPY package*.json ./
 RUN npm install
+
 COPY . .
 RUN npm run build
 
+
 FROM node:22-slim AS runner
 
-WORKDIR /frontend
-COPY .env.local .env.local
+WORKDIR /app
+# COPY .env.local .env.local
+ENV NODE_ENV=production
+COPY package*.json ./
+RUN npm install --omit=dev
 
-ENV NODE_ENV=development
-COPY --from=builder ./frontend .
+COPY --from=builder /app/.next .next
+COPY --from=builder /app/public public
+COPY --from=builder /app/next.config.ts .
+COPY --from=builder /app/package.json .
+
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
