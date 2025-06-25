@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { logout } from '../services/useLogin';
 import { User } from '@/lib/types';
 import SearchBar from '../../components/Searchbar';
+import Image from 'next/image';
 
 export type UserTypeProps = {
     loggedIn: boolean;
@@ -22,7 +23,14 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
         <header className="bg-white shadow-md py-2 sticky z-10 top-0 font-semibold">
             {/* DESKTOPS */}
             <div className="flex justify-between w-full mx-auto px-6 py-3 items-center">
-                <Link href='/' onClick={() => setIsMenuOpen(false)}>
+                <Link href='/' onClick={() => setIsMenuOpen(false)} className='flex items-end'>
+                    <Image
+                        src="/icon1.svg"
+                        alt="Veriview Logo"
+                        width={150}
+                        height={50}
+                        className="h-10 w-auto"
+                    />
                     <div className="flex text-2xl font-bold text-indigo-600">Veriview</div>
                 </Link>
                 <nav className="hidden md:flex md:w-3/4 mx-4 justify-center items-center space-x-6 lg:space-x-16 text-sm">
