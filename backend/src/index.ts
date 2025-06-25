@@ -13,6 +13,8 @@ import { BASE_URL, PORT } from "./utils/config";
 const app = express();
 dotenv.config();
 
+const port = process.env.PORT || 4000;
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
@@ -30,6 +32,6 @@ app.use('/', productsRoute)
 app.use('/', userRoute)
 app.use('/', searchRoute)
 
-app.listen(PORT, () => {
-    logger.info(`server running on port ${process.env.PORT}`)
+app.listen(port, () => {
+    logger.info(`server running on port ${port}`)
 })
