@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://backend:4000/api/:path*',
+        destination: `${process.env.CLOUD_RUN_API_URL}/api/:path*`,
       }
     ]
   }
