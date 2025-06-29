@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_URL}/api/:path*`,
+        destination: `https://backend-76807082784.us-central1.run.app/api/:path*`,
       }
     ]
   }
