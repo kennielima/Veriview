@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FileUploadWithPreview } from 'file-upload-with-preview';
 import 'file-upload-with-preview/dist/style.css';
+import { useRouter } from 'next/navigation';
 
 type CreateReviewTypeProps = {
     brands: Product[];
@@ -21,6 +22,7 @@ type CreateReviewTypeProps = {
 
 const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const brandId = searchParams.get('brand');
 
     const paramBrand = brands?.find((brand: Product) => brand.id === brandId);
@@ -301,7 +303,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                                 <Link href='/'>
                                     <button
                                         className='bg-indigo-600 mx-auto my-2 hover:bg-indigo-700 w-fit rounded-md text-white px-4 py-2'
-                                    >
+                                        onClick={() => {
+                                            router.push('/')
+                                        }}>
                                         Back to Home
                                     </button>
                                 </Link>
