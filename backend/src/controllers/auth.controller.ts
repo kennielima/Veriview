@@ -38,8 +38,8 @@ const Signup = async (request: Request, response: Response) => {
         })
     }
     catch (error) {
-        logger.error('Signup error:', error);
-        return response.status(500).json({ message: 'Signup error' });
+        logger.error('Signup error: ', error);
+        return response.status(500).json({ message: 'Signup error: ' + error });
     }
 }
 const Login = async (request: Request, response: Response) => {
@@ -70,8 +70,8 @@ const Login = async (request: Request, response: Response) => {
         })
     }
     catch (error) {
-        logger.error('Login error:', error);
-        return response.status(500).json({ message: 'Login error' })
+        logger.error('Login error: ', error);
+        return response.status(500).json({ message: `Login error: , ${error}` })
     }
 }
 
@@ -85,8 +85,8 @@ const Logout = async (request: Request, response: Response) => {
         response.status(200).json({ message: "Logged out successfully" });
     }
     catch (error) {
-        logger.error('Logout error:', error);
-        return response.status(500).json({ message: 'Logout error' })
+        logger.error('Logout error: ', error);
+        return response.status(500).json({ message: 'Logout error: ' + error })
     }
 }
 
@@ -94,7 +94,7 @@ const GoogleOauth = async (request: Request, response: Response) => {
     try {
         if (!GOOGLE_CLIENT_ID || !GOOGLE_REDIRECT_URI) {
             logger.error('Google client ID or redirect URI is not defined');
-            return response.status(500).json({ message: 'Server configuration error' });
+            return response.status(500).json({ message: 'Server configuration error: Google OAuth variables are missing' });
         }
         const params = {
             client_id: GOOGLE_CLIENT_ID,
@@ -106,8 +106,8 @@ const GoogleOauth = async (request: Request, response: Response) => {
         response.redirect(authURL);
     }
     catch (error) {
-        logger.error('Google OAuth error:', error);
-        return response.status(500).json({ message: 'Google OAuth error' })
+        logger.error('Google OAuth error: ', error);
+        return response.status(500).json({ message: 'Google OAuth error: ' + error })
     }
 }
 
@@ -117,7 +117,7 @@ const GoogleCallback = async (request: Request, response: Response) => {
 
     try {
         if (!GOOGLE_TOKEN_URI || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !GOOGLE_REDIRECT_URI || !GOOGLE_USERINFO_URL) {
-            return response.status(500).json({ message: 'Server configuration error' });
+            return response.status(500).json({ message: 'Server configuration error: Google OAuth variables are missing' });
         }
 
         const tokenResponse = await axios.post(
@@ -148,7 +148,7 @@ const GoogleCallback = async (request: Request, response: Response) => {
         });
         const userData = userInfoResponse.data;
 
-        logger.info("usercreated:", userInfoResponse);
+        // logger.info("usercreated:", userInfoResponse);
 
         let token;
         const emailUser = await User.findOne({
@@ -157,7 +157,7 @@ const GoogleCallback = async (request: Request, response: Response) => {
             }
         })
 
-        logger.info(emailUser);
+        // logger.info(emailUser);
 
         if (emailUser) {
             if (!emailUser?.googleId) {
@@ -174,14 +174,14 @@ const GoogleCallback = async (request: Request, response: Response) => {
                 username: userData.name.split(" ")[0]
             })
             token = generateTokenSetCookies(newUser.id, response);
-            logger.info(newUser);
+            // logger.info(newUser);
         }
         return response.redirect(`${BASE_URL}/auth/google/callback`);
     }
     catch (err) {
         // if (axios.isAxiosError(error)) {
         const error = err as AxiosError;
-        logger.error("Google callback error:", error.response?.data || error.message);
+        logger.error("Google callback error: ", error.response?.data || error.message);
         return response.status(error.response?.status || 500).json({
             details: error.response?.data || error.message,
         });

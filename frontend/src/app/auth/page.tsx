@@ -41,7 +41,7 @@ export default function CTAPage() {
                     </div>
 
                     <a
-                        href={`${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`}
+                        href={`/api/auth/google`}
                         className="w-full h-12 mt-4 text-base flex items-center justify-center gap-2 bg-white border-gray-300 rounded-md border font-semibold"
                     >
                         <Google />
