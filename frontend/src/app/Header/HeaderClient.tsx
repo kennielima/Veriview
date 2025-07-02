@@ -67,7 +67,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
             {
                 isMenuOpen && (
                     <div
-                        className="md:hidden fixed inset-x-0 inset-t-0 inset-b-16 border border-gray-300 shadow-md top-18 p-8 bg-white z-50"
+                        className="md:hidden fixed inset-x-0 border border-gray-300 shadow-md top-[4.5rem] p-8 bg-white z-50"
                         onMouseLeave={() => isMenuOpen && setIsMenuOpen(false)}
                     >
                         <div className="flex flex-col items-center justify-center h-full space-y-6">

@@ -106,9 +106,10 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             {Array.isArray(review.images) && review.images.length > 0 && (
                                 <div>
                                     <div className='relative flex items-center justify-center'>
-                                        <button disabled={currImageIndex === 0}>
+                                        <button
+                                            disabled={currImageIndex === 0}>
                                             <CircleArrowLeft
-                                                className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`}
+                                                className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 cursor-pointer z-10`}
                                                 onClick={() => {
                                                     setCurrImage(review.images![currImageIndex - 1]);
                                                     setCurrImageIndex((prevIndex) => (prevIndex - 1));
@@ -120,14 +121,19 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                             onClick={() => setOpenImage(true)}
                                             key={currImage}
                                             alt={`review-image-${currImage}`}
-                                            className="w-full h-[24rem] md:h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-pointer"
+                                            className="w-full h-[24rem] md:h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-zoom-in transition-transform duration-200 md:hover:scale-105"
                                             width={1000}
                                             height={1000}
                                         />
                                         <p className='absolute bottom-5 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-80 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
-                                        <button disabled={currImageIndex === review.images!.length - 1}>
+                                        <span className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-xs px-3 py-1 rounded">
+                                            Tap to zoom
+                                        </span>
+                                        <button
+                                            disabled={currImageIndex === review.images!.length - 1}
+                                        >
                                             <CircleArrowRight
-                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer backdrop-blur-lg backdrop-brightness-90 rounded-full`}
+                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer rounded-full z-10`}
                                                 onClick={() => {
                                                     setCurrImage(review.images![currImageIndex + 1]);
                                                     setCurrImageIndex((prevIndex) => (prevIndex + 1));
