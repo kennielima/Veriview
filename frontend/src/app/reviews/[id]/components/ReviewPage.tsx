@@ -133,7 +133,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                             disabled={currImageIndex === review.images!.length - 1}
                                         >
                                             <CircleArrowRight
-                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer rounded-full z-10`}
+                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer rounded-full`}
                                                 onClick={() => {
                                                     setCurrImage(review.images![currImageIndex + 1]);
                                                     setCurrImageIndex((prevIndex) => (prevIndex + 1));

@@ -50,7 +50,8 @@ export default function CTAPage() {
                 </div>
 
                 <p className="mt-8 text-center text-xs text-gray-600">
-                    By continuing, you agree to our Terms of Service and Privacy Policy.
+                    By continuing, you agree to our <Link href='/terms' className="text-indigo-600">Terms of Service</Link>.
+                    {/* and Privacy Policy. */}
                 </p>
             </div>
         </div>

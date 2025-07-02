@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Share = ({ reviewId }: { reviewId: string }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-    const link = `${process.env.NEXT_PUBLIC_BASE_URL}/reviews/${reviewId}`;
+    const link = `https://veriview.com.ng/reviews/${reviewId}`;
 
     const copyToClipboard = async () => {
         // const body = 'See this review:';

@@ -1,6 +1,6 @@
 import React from "react";
 
-const reviewPolicy = {
+const reviewTerms = {
     respectfulCommunication: {
         title: "Respectful Communication",
         points: [
@@ -68,8 +68,8 @@ export default function page() {
 
             {/* Prohibited Behaviors */}
             <section>
-                <h2 className="font-bold mb-2 text-lg">{reviewPolicy.prohibitedBehaviors.title} ❌</h2>
-                {reviewPolicy.prohibitedBehaviors.list.map(({ heading, description }, i) => (
+                <h2 className="font-bold mb-2 text-lg">{reviewTerms.prohibitedBehaviors.title} ❌</h2>
+                {reviewTerms.prohibitedBehaviors.list.map(({ heading, description }, i) => (
                     <div key={i} className="mb-3">
                         <h3 className="font-semibold">{heading}</h3>
                         <p>{description}</p>
@@ -79,9 +79,9 @@ export default function page() {
 
             {/* Respectful Communication */}
             <section>
-                <h2 className="font-bold mb-2 text-lg">{reviewPolicy.respectfulCommunication.title}</h2>
+                <h2 className="font-bold mb-2 text-lg">{reviewTerms.respectfulCommunication.title}</h2>
                 <ul>
-                    {reviewPolicy.respectfulCommunication.points.map((point, i) => (
+                    {reviewTerms.respectfulCommunication.points.map((point, i) => (
                         <li key={i}>{point}</li>
                     ))}
                 </ul>
@@ -89,9 +89,9 @@ export default function page() {
 
             {/* Authenticity & Integrity */}
             <section>
-                <h2 className="font-bold mb-2 text-lg">{reviewPolicy.authenticityIntegrity.title}</h2>
+                <h2 className="font-bold mb-2 text-lg">{reviewTerms.authenticityIntegrity.title}</h2>
                 <ul>
-                    {reviewPolicy.authenticityIntegrity.points.map((point, i) => (
+                    {reviewTerms.authenticityIntegrity.points.map((point, i) => (
                         <li key={i}>{point}</li>
                     ))}
                 </ul>
@@ -99,9 +99,9 @@ export default function page() {
 
             {/* Moderation & Enforcement */}
             <section>
-                <h2 className="font-bold mb-2 text-lg">{reviewPolicy.moderationEnforcement.title}</h2>
+                <h2 className="font-bold mb-2 text-lg">{reviewTerms.moderationEnforcement.title}</h2>
                 <ul>
-                    {reviewPolicy.moderationEnforcement.points.map((point, i) => (
+                    {reviewTerms.moderationEnforcement.points.map((point, i) => (
                         <li key={i}>{point}</li>
                     ))}
                 </ul>
@@ -109,8 +109,8 @@ export default function page() {
 
             {/* Help & Feedback */}
             <section>
-                <h2 className="font-bold mb-2 text-lg">{reviewPolicy.helpFeedback.title}</h2>
-                <p>{reviewPolicy.helpFeedback.description}</p>
+                <h2 className="font-bold mb-2 text-lg">{reviewTerms.helpFeedback.title}</h2>
+                <p>{reviewTerms.helpFeedback.description}</p>
             </section>
         </div>
     );

@@ -21,7 +21,7 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
     const currentUser = user?.user;
 
     return (
-        <header className="bg-white shadow-md py-2 sticky z-10 top-0 font-semibold">
+        <header className="bg-white shadow-md py-2 sticky z-20 top-0 font-semibold">
             {/* DESKTOPS */}
             <div className="flex justify-between w-full mx-auto px-6 py-3 items-center">
                 <Link href='/' onClick={() => setIsMenuOpen(false)} className='flex items-end'>
