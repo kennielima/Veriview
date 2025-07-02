@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Veriview: Trusted Reviews Platform",
+  title: "Veriview: Authentic Reviews Platform",
   description: "Review brands, companies, products and services",
   icons: {
     icon: "/icon1.svg",

@@ -3,7 +3,7 @@ import DeleteComponent from '@/app/reviews/[id]/components/Delete'
 import RenderedStars from '@/components/renderStars'
 import { RatedHelpful, Review, User } from '@/lib/types'
 import { formatDateTime } from '@/lib/utils'
-import { ArrowLeft, CircleArrowLeft, CircleArrowRight, ThumbsUp } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, ChevronRight, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
@@ -108,8 +108,8 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                     <div className='relative flex items-center justify-center'>
                                         <button
                                             disabled={currImageIndex === 0}>
-                                            <CircleArrowLeft
-                                                className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 cursor-pointer z-10`}
+                                            <ChevronLeft
+                                                className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-100 cursor-pointer z-10 bg-indigo-500 hover:bg-indigo-600 rounded-full`}
                                                 onClick={() => {
                                                     setCurrImage(review.images![currImageIndex - 1]);
                                                     setCurrImageIndex((prevIndex) => (prevIndex - 1));
@@ -132,8 +132,8 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         <button
                                             disabled={currImageIndex === review.images!.length - 1}
                                         >
-                                            <CircleArrowRight
-                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer rounded-full`}
+                                            <ChevronRight
+                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-100 cursor-pointer bg-indigo-500 hover:bg-indigo-600 rounded-3xl`}
                                                 onClick={() => {
                                                     setCurrImage(review.images![currImageIndex + 1]);
                                                     setCurrImageIndex((prevIndex) => (prevIndex + 1));
