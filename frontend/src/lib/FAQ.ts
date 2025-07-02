@@ -1,7 +1,7 @@
 export const FAQS = [
     {
         question: "How is the Average brand rating calculated?",
-        answer: "The average brand rating is an average of all user reviews and rating. Review ratings and direct ratings carry equal weight. The aggregate of CURRENT reviews and ratings is tallied and divided by the number of raters to get an aggregate. We neither factor in review or rating recency nor helpfulness votes from other users."
+        answer: "The average brand rating is an average of all user reviews and rating. Review ratings and direct ratings carry equal weight. The aggregate of CURRENT reviews and ratings is tallied and divided by the number of raters to get an aggregate. If a review is deleted, it's rating is also dropped from the aggregate. We neither factor in review/rating recency nor helpful votes for this."
     },
     {
         question: "Can I rate a brand without reviewing?",
@@ -30,6 +30,10 @@ export const FAQS = [
     {
         question: "Can I delete my review?",
         answer: "Yes! Navigate to your userpage to find the review. Click on it and you will see the delete option."
+    },
+    {
+        question: "Can I remove a direct rating?",
+        answer: "No! You cannot delete a direct rating, you can however re-rate the brand."
     },
     {
         question: "Can I sort reviews by specific criteria?",

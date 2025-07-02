@@ -6,6 +6,7 @@ import { logout } from '../services/useLogin';
 import { User } from '@/lib/types';
 import SearchBar from '../../components/Searchbar';
 import Image from 'next/image';
+import { getInitials } from '@/lib/utils';
 
 export type UserTypeProps = {
     loggedIn: boolean;
@@ -45,11 +46,13 @@ const HeaderClient = ({ user }: { user: UserTypeProps }) => {
                             <button className='bg-indigo-600 hover:bg-indigo-700 rounded-md text-white px-4 py-2 font-bold'> Log in </button>
                         </Link>
                         :
-                        // <Link href='/users' className='p-3 rounded-full bg-indigo-600 mr-2 text-white'>{getInitials(currentUser.fullName)}}
-                        <Link href='/users/me' className='text-base flex gap-1 cursor-pointer items-center text-black hover:text-gray-700 transition font-semibold'>
-                            <UserIcon className='sm:w-5 sm:h-5' />
-                            <span className='hidden sm:flex'>{currentUser?.username} </span>
-                        </Link>
+                        <>
+                            <Link href='/users/me' className='flex md:hidden p-2 rounded-full bg-indigo-600 text-white'>{getInitials(currentUser.fullName)}</Link>
+                            <Link href='/users/me' className='hidden md:flex text-base gap-1 cursor-pointer items-center text-black hover:text-gray-700 transition font-semibold'>
+                                <UserIcon className='sm:w-5 sm:h-5' />
+                                <span className='hidden sm:flex'>{currentUser?.username} </span>
+                            </Link>
+                        </>
                     }
                     <button
                         onClick={toggleMenu}

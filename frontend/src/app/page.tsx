@@ -25,7 +25,7 @@ const page = async () => {
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Find and Share Authentic Brand Experiences</h1>
             <p className="text-indigo-100 text-lg mb-8">Join other users who trust Veriview to discover honest reviews and make informed decisions.</p>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center w-full space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="flex gap-2 md:gap-4 justify-center items-center w-full">
               <Link href='/create-review'>
                 <button className="w-full sm:w-auto px-6 py-3 bg-white text-indigo-600 font-medium rounded-md hover:bg-indigo-50 shadow-md">
                   Write a Review

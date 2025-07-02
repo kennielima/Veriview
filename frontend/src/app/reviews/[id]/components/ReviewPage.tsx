@@ -60,7 +60,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
             {review && (
                 <div className="container mx-auto px-4 py-8 max-w-5xl">
                     <Link href='#' onClick={(e) => { e.preventDefault(); router.back() }}>
-                        <button className="mb-6 flex items-center px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
+                        <button className="mb-6 flex items-center px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md transition-colors">
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Back to Reviews
                         </button>
@@ -82,19 +82,19 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                 <div className="grid md:grid-cols-2 gap-2 md:gap-4 text-sm text-gray-800">
                                     {review.brand && (
                                         <div>
-                                            <strong>Brand:</strong>
-                                            <Link href={`/products/${review?.productId}`} className='hover:text-gray-600'>
-                                                {" "}{review.brand}
+                                            <strong>Brand:{" "}</strong>
+                                            <Link href={`/products/${review?.productId}`} className='hover:text-indigo-700 text-indigo-600'>
+                                                {review.brand}
                                             </Link>
                                         </div>
                                     )}
                                     <div>
-                                        <strong>Reviewer: </strong>
+                                        <strong>Reviewer:{" "}</strong>
                                         @
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <Link href={`/users/${review.userId}`}><span>{review?.user?.username}</span></Link>
+                                            <Link href={`/users/${review.userId}`}><span className='hover:text-indigo-700 text-indigo-600'>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>
@@ -106,33 +106,34 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             {Array.isArray(review.images) && review.images.length > 0 && (
                                 <div>
                                     <div className='relative flex items-center justify-center'>
-                                        {/* <button disabled={currImageIndex === 0}> */}
-                                        <CircleArrowLeft
-                                            className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`}
-                                            onClick={() => {
-                                                setCurrImage(review.images![currImageIndex - 1]);
-                                                setCurrImageIndex((prevIndex) => (prevIndex - 1));
-                                            }}
-                                        />
+                                        <button disabled={currImageIndex === 0}>
+                                            <CircleArrowLeft
+                                                className={`${currImageIndex === 0 && 'opacity-50 cursor-default'} absolute left-4 size-12 text-indigo-600 opacit-80 cursor-pointer`}
+                                                onClick={() => {
+                                                    setCurrImage(review.images![currImageIndex - 1]);
+                                                    setCurrImageIndex((prevIndex) => (prevIndex - 1));
+                                                }}
+                                            />
+                                        </button>
                                         <Image
                                             src={currImage}
                                             onClick={() => setOpenImage(true)}
                                             key={currImage}
                                             alt={`review-image-${currImage}`}
-                                            className="w-full h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-pointer"
+                                            className="w-full h-[24rem] md:h-[32rem] object-cover rounded-lg mb-2 border border-gray-300 cursor-pointer"
                                             width={1000}
                                             height={1000}
                                         />
                                         <p className='absolute bottom-5 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-80 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
-                                        {/* <button disabled={currImageIndex === review.images!.length - 1}> */}
-                                        <CircleArrowRight
-                                            className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer`}
-                                            onClick={() => {
-                                                setCurrImage(review.images![currImageIndex + 1]);
-                                                setCurrImageIndex((prevIndex) => (prevIndex + 1));
-                                            }}
-                                        />
-                                        {/* </button> */}
+                                        <button disabled={currImageIndex === review.images!.length - 1}>
+                                            <CircleArrowRight
+                                                className={`${currImageIndex === review.images!.length - 1 && 'opacity-50 cursor-default'} absolute right-4 size-12 text-indigo-600 cursor-pointer backdrop-blur-lg backdrop-brightness-90 rounded-full`}
+                                                onClick={() => {
+                                                    setCurrImage(review.images![currImageIndex + 1]);
+                                                    setCurrImageIndex((prevIndex) => (prevIndex + 1));
+                                                }}
+                                            />
+                                        </button>
                                     </div>
 
                                     <div className="flex items-center gap-1 w-full overflow-x-scroll border border-gray-300 p-3 rounded-lg mb-4">
@@ -201,7 +202,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             e.preventDefault();
                             router.back()
                         }}>
-                        <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md transition-colors">
+                        <button className="mt-4 px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-md transition-colors">
                             Back to Reviews
                         </button>
                     </Link>
