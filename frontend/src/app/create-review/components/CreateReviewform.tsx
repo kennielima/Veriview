@@ -98,7 +98,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
 
         try {
             if (!user.loggedIn) setIsOpen(true);
-            await createReview(
+            const res = await createReview(
                 capitalizeFirstLetter(title.trimEnd().trimStart()),
                 capitalizeFirstLetter(brand.trimEnd().trimStart()),
                 content.trimEnd().trimStart(),
@@ -106,22 +106,26 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 anonymous,
                 images
             );
-            setIsOpen(true);
-            setTitle('');
-            setBrand('');
-            setContent('');
-            setRating(0);
-            setError('');
-            setAnonymous(false)
-            setImages([])
-            uploadRef.current?.resetPreviewPanel();
-            setIsLoading(false);
-
-        } catch (error: unknown) {
+            if (res?.error) {
+                setError(res.error);
+                return;
+            } else {
+                setIsOpen(true);
+                setTitle('');
+                setBrand('');
+                setContent('');
+                setRating(0);
+                setError('');
+                setAnonymous(false)
+                setImages([])
+                uploadRef.current?.resetPreviewPanel();
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.error('Unknown error:', error);
             if (error instanceof Error) {
                 setError(error.message)
             } else {
-                console.error(error);
                 setError(error as string);
             }
         } finally {

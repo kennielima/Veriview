@@ -3,12 +3,9 @@ import Product from "../models/Product";
 import Review from "../models/Review";
 import { calcAverageRating } from "../utils/calcAverageRating";
 import UserRating from "../models/UserRating";
-import authenticate from "../middleware/protectRoute";
 import RatedHelpful from "../models/RatedHelpful";
-import { Order, Sequelize } from "sequelize";
+import { Order } from "sequelize";
 import logger from "../utils/logger";
-import { postLimiter } from "../middleware/rate-limit";
-
 
 const AllProducts = async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 1;

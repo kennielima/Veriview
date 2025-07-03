@@ -64,10 +64,9 @@ const createReview = async (title: string, brand: string, content: string, ratin
     })
 
     if (!response.ok) {
-        const errorData = await response.json();
-        const message = errorData?.message || 'Failed to post review';
-        throw new Error(message || 'Failed to post review');
+        const errorData = await response.json() || 'Failed to post review';
+        console.log('Error posting review:', errorData?.message);
+        return { error: errorData?.message };
     }
 }
-
 export default createReview;

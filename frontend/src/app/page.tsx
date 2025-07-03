@@ -20,7 +20,7 @@ const page = async () => {
       {/* FEED */}
       <div className="space-y-4 w-full md:w-2/3 lg:w-3/4 md:overflow-scroll h-full no-scrollbar">
 
-        <div className="max-w-7xl py-10 md:py-16 px-6 bg-indigo-600 text-white">
+        <div className="w-full py-10 md:py-16 px-6 bg-indigo-600 text-white">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Find and Share Authentic Brand Experiences</h1>
             <p className="text-indigo-100 text-lg mb-8">Join other users who trust Veriview to discover honest reviews and make informed decisions.</p>
@@ -105,7 +105,7 @@ const page = async () => {
         {(user && user.loggedIn) &&
           <div className='flex flex-col gap-2 justify-end'>
             <hr className='hidden md:flex w-auto' />
-            <div className='rounded-md hover:bg-indigo-200 transition-colors duration-300 mx-2 p-2'>
+            <div className='rounded-md hover:bg-indigo-100 transition-colors duration-200 mx-2 p-2'>
               <LogoutClient user={user.user} />
             </div>
           </div>
