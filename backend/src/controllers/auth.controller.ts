@@ -19,7 +19,12 @@ const Signup = async (request: Request, response: Response) => {
         const existingUser = await User.findOne({ where: { email } })
         if (existingUser) {
             logger.warn("User already exists");
-            return response.status(401).json({ message: 'User already exists with this email, use a different email or login instead' })
+            return response.status(400).json({ message: 'User already exists with this email, use a different email or login instead' })
+        }
+        const existingUsername = await User.findOne({ where: { username } })
+        if (existingUsername) {
+            logger.warn("Username already exists");
+            return response.status(400).json({ message: 'Username already taken, please use a different username' })
         }
 
         const hashedPassword = await bcryptjs.hash(password, 10)
@@ -50,11 +55,11 @@ const Login = async (request: Request, response: Response) => {
         }
         const user = await User.findOne({ where: { email } })
         if (!user) {
-            return response.status(401).json({ message: "User doesn't exist, signup instead" })
+            return response.status(404).json({ message: "User doesn't exist, signup instead" })
         }
         const isPasswordValid = await bcryptjs.compare(password, user.password)
         if (!isPasswordValid) {
-            return response.status(400).json({ message: "Invalid credentials" })
+            return response.status(401).json({ message: "Invalid credentials" })
         }
 
         generateTokenSetCookies(user.id, response);

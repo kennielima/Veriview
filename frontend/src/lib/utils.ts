@@ -66,6 +66,7 @@ export const capitalizeFirstLetter = (text: string) => {
 
 export const getInitials = (name: string) => {
   if (!name) return;
+  if (!name.includes(' ')) name = `${name} ${name}`;
   return name
     .split(' ')
     .map(part => part[0])

@@ -103,9 +103,11 @@ const page = async () => {
           </div>
         </div>
         {(user && user.loggedIn) &&
-          <div className='flex flex-col gap-4 justify-end'>
+          <div className='flex flex-col gap-2 justify-end'>
             <hr className='hidden md:flex w-auto' />
-            <LogoutClient />
+            <div className='rounded-md hover:bg-indigo-200 transition-colors duration-300 mx-2 p-2'>
+              <LogoutClient user={user.user} />
+            </div>
           </div>
         }
       </div>

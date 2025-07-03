@@ -100,7 +100,7 @@ const Login = () => {
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            {isLoading ? <Loader /> : <span>Submit</span>}
+                            {isLoading ? <Loader className='animate-spin' /> : <span>Submit</span>}
                         </button>
                     </div>
                     {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}

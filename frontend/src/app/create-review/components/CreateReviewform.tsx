@@ -99,9 +99,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
         try {
             if (!user.loggedIn) setIsOpen(true);
             await createReview(
-                capitalizeFirstLetter(title),
-                capitalizeFirstLetter(brand),
-                content,
+                capitalizeFirstLetter(title.trimEnd().trimStart()),
+                capitalizeFirstLetter(brand.trimEnd().trimStart()),
+                content.trimEnd().trimStart(),
                 rating,
                 anonymous,
                 images
@@ -119,9 +119,9 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
 
         } catch (error: unknown) {
             if (error instanceof Error) {
-                console.log(error.message);
                 setError(error.message)
             } else {
+                console.error(error);
                 setError(error as string);
             }
         } finally {
@@ -254,7 +254,7 @@ const CreateReviewForm: React.FC<CreateReviewTypeProps> = ({ brands, user }) => 
                 >
                     {isLoading ? (
                         <>
-                            <Loader className="mr-2 h-4 w-4" />
+                            <Loader className="mr-2 h-4 w-4 animate-spin" />
                             <span>Submitting</span>
                         </>
                     ) : (

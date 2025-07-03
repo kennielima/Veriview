@@ -45,6 +45,6 @@ export const FAQS = [
     },
     {
         question: "Can I upload photos with my review?",
-        answer: "No. Not at the moment. Our team is currently working on this feature and it will be released in a future update."
+        answer: "Yes! You can upload a maximum of 10 pictures while creating a review."
     }
 ];

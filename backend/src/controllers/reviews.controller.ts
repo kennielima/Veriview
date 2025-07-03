@@ -70,7 +70,7 @@ const CreateReview = async (req: Request, res: Response) => {
             }
         })
         if (existingProductReview) {
-            return res.status(500).json({ message: 'You cannot review a product twice' })
+            return res.status(403).json({ message: 'You cannot review a product twice' })
         }
 
         const newReview = await Review.create({

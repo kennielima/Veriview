@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
     return createPortal(
         <div
-            className="fixed px-12 inset-0 z-50 flex items-center justify-center bg-black/40"
+            className="fixed px-8 md:px-12 inset-0 z-50 flex items-center justify-center bg-black/40"
             onClick={onClose}
         >
             <div

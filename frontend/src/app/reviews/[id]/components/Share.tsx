@@ -34,7 +34,7 @@ const Share = ({ reviewId }: { reviewId: string }) => {
                 >
                     <X />
                 </div>
-                <div className='flex items-center justify-center gap-5 my-2'>
+                <div className='flex items-center justify-center gap-3 md:gap-5 my-2'>
                     <div
                         className='flex flex-col justify-center items-center gap-1 cursor-pointer text-gray-800'
                         onClick={copyToClipboard}
