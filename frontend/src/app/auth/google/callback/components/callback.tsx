@@ -15,7 +15,7 @@ const CallbackPage = ({ user }: { user: UserTypeProps }) => {
         } else {
             const timer = setTimeout(() => {
                 setAuthFailed(true);
-            }, 500);
+            }, 800);
             const redirect = setTimeout(() => {
                 router.push('/auth');
             }, 1500);

@@ -33,6 +33,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const ratedhelpfulCount = ratedHelpfulArray.length;
     const userRatedHelpful = ratedHelpfulArray?.find((ratedhelpful: RatedHelpful) => currentUser?.user?.id === ratedhelpful?.userId);
     const [isRatedHelpful, setIsRatedHelpful] = useState(userRatedHelpful ? true : false);
+    const [isRatedClient, setIsRatedClient] = useState<null | boolean>(null);
     const [openImage, setOpenImage] = useState(false);
     const [currImage, setCurrImage] = useState(review?.images?.[0] || '');
     const [currImageIndex, setCurrImageIndex] = useState(0);
@@ -46,8 +47,9 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
     const thumbsUpHandler = async () => {
         const newRateHelpful = !isRatedHelpful;
         setIsRatedHelpful(newRateHelpful);
+        setIsRatedClient(isRatedClient === null ? newRateHelpful : !isRatedClient);
         await rateHelpful(newRateHelpful, id)
-        router.push(`/reviews/${id}`)
+        // router.push(`/reviews/${id}`)
     }
 
     const slides = Array.isArray(review.images) && review.images.length > 0
@@ -184,11 +186,24 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                             <div className='flex items-center gap-1 cursor-pointer hover:text-black'>
                                 <ThumbsUp
                                     className={`size-5 cursor-pointer ${isRatedHelpful && 'text-gray-600 hover:text-gray-900'}`}
-                                    onClick={thumbsUpHandler}
+                                    onClick={currentUser.loggedIn
+                                        ? thumbsUpHandler
+                                        : () => router.push('/auth')
+                                    }
                                     fill={isRatedHelpful ? 'currentColor' : 'none'}
                                     stroke="currentColor"
                                 />
-                                <p className='text-xs'>Helpful ({ratedhelpfulCount})</p>
+                                <p className='text-xs'>
+                                    Helpful{" "}
+                                    <span>
+                                        (
+                                        {(isRatedClient === false) && ratedhelpfulCount - 1}
+                                        {(isRatedClient === true) && (
+                                            !userRatedHelpful ? ratedhelpfulCount + 1 : ratedhelpfulCount
+                                        )}
+                                        {(isRatedClient === null) && ratedhelpfulCount}
+                                        )</span>
+                                </p>
                             </div>
                             <Share reviewId={review.id} />
                             {review.userId === currentUser?.user?.id && (
