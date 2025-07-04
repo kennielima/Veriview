@@ -1,10 +1,11 @@
 import express from "express";
 import authenticate from "../middleware/protectRoute";
 import { CreateReview, PresignImages, GetAllReviews, GetReview, DeleteReview, RateAsHelpful } from "../controllers/reviews.controller";
+import { postLimiter } from "../middleware/rate-limit";
 
 const router = express.Router()
 
-router.post("/api/create-review", authenticate, CreateReview)
+router.post("/api/create-review", authenticate, postLimiter, CreateReview)
 
 router.post("/api/presign-images", authenticate, PresignImages)
 
