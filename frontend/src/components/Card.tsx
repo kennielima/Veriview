@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { getInitials, timeAgo, truncate, truncateSm } from '@/lib/utils';
+import { getInitials, timeAgo, truncate } from '@/lib/utils';
 import { Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 import { Clock } from 'lucide-react';
@@ -36,21 +36,27 @@ const ReviewCard = ({ review }: { review: Review }) => {
                         />
                         <span className='absolute left-1 bottom-1 w-6 h-6 flex justify-center items-center text-sm bg-black bg-opacity-70 rounded-md text-white'>{review?.images?.length}</span>
                         <>
-                            <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex">
-                                {truncate(review.content)}
+                            <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden lg:flex">
+                                {truncate(review.content, 250)}
+                            </p>
+                            <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex lg:hidden">
+                                {truncate(review.content, 200)}
                             </p>
                             <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-24 overflow-hidden sm:hidden">
-                                {truncateSm(review.content)}
+                                {truncate(review.content, 85)}
                             </p>
                         </>
                     </div>
                 ) : (
                     <div className='mb-4'>
-                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex">
-                            {truncate(review.content)}
+                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden lg:flex">
+                            {truncate(review.content, 300)}
+                        </p>
+                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex lg:hidden">
+                            {truncate(review.content, 250)}
                         </p>
                         <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-24 overflow-hidden sm:hidden">
-                            {truncateSm(review.content)}
+                            {truncate(review.content, 140)}
                         </p>
                     </div>
                 )}

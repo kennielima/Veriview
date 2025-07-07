@@ -128,7 +128,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                             height={1000}
                                         />
                                         <p className='absolute bottom-5 right-50 left-50 flex justify-center font-semibold text-lg bg-gray-700 bg-opacity-80 p-2 rounded-lg text-white'>{currImageIndex + 1} of {review.images.length}</p>
-                                        <span className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-xs px-3 py-1 rounded">
+                                        <span className="md:opacity-50 absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white text-xs px-3 py-1 rounded">
                                             Tap to zoom
                                         </span>
                                         <button

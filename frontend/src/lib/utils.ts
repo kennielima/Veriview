@@ -74,15 +74,9 @@ export const getInitials = (name: string) => {
     .toUpperCase();
 };
 
-export function truncate(input: string) {
-  if (input.length > 250) {
-    return input.substring(0, 250) + '...';
-  }
-  return input;
-};
-export function truncateSm(input: string) {
-  if (input.length > 100) {
-    return input.substring(0, 100) + '...';
+export function truncate(input: string, length: number) {
+  if (input.length > length) {
+    return input.substring(0, length) + '...';
   }
   return input;
 };
