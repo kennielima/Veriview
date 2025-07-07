@@ -96,7 +96,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         {review.anonymous ? (
                                             <span>Anonymous</span>
                                         ) : (
-                                            <Link href={`/users/${currentUser.user.id === review.userId ? "me" : review.userId}`}><span className='hover:text-indigo-700 text-indigo-600'>{review?.user?.username}</span></Link>
+                                            <Link href={`/users/${currentUser?.user?.id === review.userId ? "me" : review.userId}`}><span className='hover:text-indigo-700 text-indigo-600'>{review?.user?.username}</span></Link>
                                         )}
                                     </div>
                                     <div>
@@ -155,7 +155,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                                 }}
                                                 key={index}
                                                 alt={`review-image-${index}`}
-                                                className={` ${currImageIndex === index && 'border-2 border-indigo-500'} w-28 h-28 object-cover rounded-lg hover:cursor-pointer border hover:border-2 border-gray-300 hover:border-indigo-500 transition-colors`}
+                                                className={` ${currImageIndex === index && 'border-2 border-indigo-500'} w-16 md:w-28 h-16 md:h-28 object-cover rounded-lg hover:cursor-pointer border hover:border-2 border-gray-300 hover:border-indigo-500 transition-colors`}
                                                 width={600}
                                                 height={600}
                                             />
@@ -167,15 +167,7 @@ const ReviewPage: React.FC<reviewTypeProps> = ({ reviewData, currentUser, id }) 
                                         slides={slides}
                                         plugins={[Thumbnails]}
                                         thumbnails={{ width: 100, height: 100, position: 'bottom' }}
-                                    // styles={{
-                                    //     container: {
-                                    //         maxWidth: '800px',
-                                    //         maxHeight: '80vh',
-                                    //         margin: 'auto',
-                                    //         borderRadius: '16px',
-                                    //         overflow: 'hidden',
-                                    //     }
-                                    // }}
+                                    // styles={{ container: { maxWidth: '800px',maxHeight: '80vh',margin: 'auto',borderRadius: '16px',overflow: 'hidden' } }}
                                     />
                                 </div>
                             )}
