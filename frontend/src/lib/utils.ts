@@ -80,3 +80,9 @@ export function truncate(input: string) {
   }
   return input;
 };
+export function truncateSm(input: string) {
+  if (input.length > 100) {
+    return input.substring(0, 100) + '...';
+  }
+  return input;
+};

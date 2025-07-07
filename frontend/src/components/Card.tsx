@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import { getInitials, timeAgo, truncate } from '@/lib/utils';
+import { getInitials, timeAgo, truncate, truncateSm } from '@/lib/utils';
 import { Review } from '@/lib/types';
 import RenderedStars from './renderStars';
 import { Clock } from 'lucide-react';
@@ -19,9 +19,11 @@ const ReviewCard = ({ review }: { review: Review }) => {
                         <RenderedStars rating={review.rating} />
                     </div>
                 </div>
-                <p className="text-indigo-600 md:mb-3 mt-1 text-start">{review.brand}</p>
-                <div className="flex mb-3 md:hidden mt-1">
-                    <RenderedStars rating={review.rating} />
+                <div className='flex justify-between'>
+                    <p className="text-indigo-600 md:mb-3 mt-1 text-start">{review.brand}</p>
+                    <div className="flex mb-3 md:hidden mt-1">
+                        <RenderedStars rating={review.rating} />
+                    </div>
                 </div>
                 {image ? (
                     <div className='flex relative gap-4 mb-4 justify-start'>
@@ -30,17 +32,27 @@ const ReviewCard = ({ review }: { review: Review }) => {
                             height={500}
                             src={image}
                             alt='review-image-card'
-                            className='w-28 h-28 object-cover rounded-lg border border-gray-200'
+                            className='w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg border border-gray-200'
                         />
                         <span className='absolute left-1 bottom-1 w-6 h-6 flex justify-center items-center text-sm bg-black bg-opacity-70 rounded-md text-white'>{review?.images?.length}</span>
-                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
-                            {truncate(review.content)}
-                        </p>
+                        <>
+                            <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex">
+                                {truncate(review.content)}
+                            </p>
+                            <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-24 overflow-hidden sm:hidden">
+                                {truncateSm(review.content)}
+                            </p>
+                        </>
                     </div>
                 ) : (
-                    <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden">
-                        {truncate(review.content)}
-                    </p>
+                    <div className='mb-4'>
+                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-20 overflow-hidden hidden sm:flex">
+                            {truncate(review.content)}
+                        </p>
+                        <p className="text-start line-clamp-2 break-words max-w-[80ch] min-h-24 overflow-hidden sm:hidden">
+                            {truncateSm(review.content)}
+                        </p>
+                    </div>
                 )}
                 <div className="flex justify-between items-center text-sm text-gray-500">
                     <div className='flex gap-1 items-center'>
