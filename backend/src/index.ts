@@ -13,6 +13,8 @@ import { BASE_URL, PORT } from "./utils/config";
 const app = express();
 dotenv.config();
 
+app.set('trust proxy', 1);
+
 const port = process.env.PORT || 4000;
 
 app.use(express.json())
