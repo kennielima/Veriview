@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import { rateLimit } from 'express-rate-limit'
 
 export const authLimiter = rateLimit({
@@ -9,6 +8,9 @@ export const authLimiter = rateLimit({
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     keyGenerator: (req, res): any => {
         return req.ip;
+        // const userAgent = req.get('User-Agent') || 'unknown';
+        // const key = `${req.ip}:${userAgent.slice(0, 50)}`;
+        // return key;
     },
 })
 export const postLimiter = rateLimit({
